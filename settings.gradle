@@ -1,0 +1,1 @@
+include ':example', ':xiaoyun_annotations', ':xiaoyun_compiler', ':xiaoyun_core', ':xiaoyun_ec'
