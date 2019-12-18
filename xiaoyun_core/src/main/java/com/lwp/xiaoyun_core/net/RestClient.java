@@ -4,6 +4,7 @@ import com.lwp.xiaoyun_core.net.callback.IError;
 import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
+import com.lwp.xiaoyun_core.net.callback.RequestCallBacks;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -11,6 +12,7 @@ import java.util.WeakHashMap;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * <pre>
@@ -58,6 +60,7 @@ public class RestClient {
         return new RestClientBuilder();
     }
 
+    //封装请求操作
     private void request(HttpMethod method) {
         //获取为 Retrofit 框架 准备的 接口对象实例
         final RestService service = RestCreator.getRestService();
@@ -88,7 +91,19 @@ public class RestClient {
 
         if (call != null) {
             //选择异步请求方式
-            call.enqueue();
+            call.enqueue(getRequestCallback());
         }
     }
+
+    //返回一个 RequestCallBacks 实例
+    private Callback<String> getRequestCallback() {
+        return new RequestCallBacks(
+                REQUEST,
+                SUCCESS,
+                FAILURE,
+                ERROR
+        );
+    }
+
+
 }

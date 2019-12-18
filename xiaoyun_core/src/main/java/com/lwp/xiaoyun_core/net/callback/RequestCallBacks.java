@@ -12,13 +12,13 @@ import retrofit2.Response;
  *              封装，请求成功时，请求失败时，需要做的事情！
  * </pre>
  */
-public class RequestCallBack implements Callback<String> {
+public class RequestCallBacks implements Callback<String> {
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
     private final IError ERROR;
 
-    public RequestCallBack(IRequest request, ISuccess success, IFailure failure, IError error) {
+    public RequestCallBacks(IRequest request, ISuccess success, IFailure failure, IError error) {
         REQUEST = request;
         SUCCESS = success;
         FAILURE = failure;
