@@ -32,7 +32,9 @@ public class RestClientBuilder {
     //请求体
     private  RequestBody mBody;
 
-    //除了 RestClient ，不允许外部 直接new 创建
+    //除了 RestClient（同包内的类），不允许外部 直接new 创建！！！
+    //这里没 声明权限，即使用 Java 的 默认权限，
+    // 即 只有 本类+同包 可以访问！！！只有 同包内的子类可以继承！！！！！
     RestClientBuilder() {
     }
 
@@ -44,13 +46,13 @@ public class RestClientBuilder {
         1.可以 Product 类中 除了准备 成员字段，还为每一个 成员字段 准备 set方法；构造方法为空！
         在 concreteBuilder 中声明一个 Product 全局实例，在 concreteBuilder 中的每一个组装方法中，
         都调用这个 Product 全局实例 的对应的 成员字段的 set方法，来接收 传进组装方法（如下的url()/params()等） 的参数，以完成组装；
-        组装方法返回值设置为 concreteBuilder ，即可完成 链式调用；
+        组装方法返回值设置为 concreteBuilder （return this），即可完成 链式调用；
         最后 build 的时候，返回这个 组装好的 Product 全局实例；完毕！
 
         2.也可以如下，Product 类中 只是准备 成员字段，构造方法需初始化 所有字段！ 需要不可改 可以设置 final；
         在 concreteBuilder 中 也准备好同 Product 类型 一模一样的成员字段，
         在 concreteBuilder 中的每一个组装方法中，调用 concreteBuilder 自身 对应的成员字段，来接收 传进组装方法 的参数，以完成组装；
-        组装方法返回值设置为 concreteBuilder ，即可完成 链式调用；
+        组装方法返回值设置为 concreteBuilder （return this），即可完成 链式调用；
         最后 build 的时候，把 concreteBuilder 的所有字段（没配置的字段要初始化） 通过 new 赋给 Product 的构造函数，
         然后返回这个 接收了 concreteBuilder所有字段的 Product实例，完毕！
      */
