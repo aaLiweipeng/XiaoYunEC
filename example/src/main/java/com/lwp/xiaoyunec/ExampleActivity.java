@@ -1,5 +1,6 @@
 package com.lwp.xiaoyunec;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,6 +13,14 @@ import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 
 
 public class ExampleActivity extends ProxyActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        XiaoYun.init(this)
+                .withApiHost("http://127.0.0.1/")
+                .configure();
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public XiaoYunDelegate setRootDelegate() {

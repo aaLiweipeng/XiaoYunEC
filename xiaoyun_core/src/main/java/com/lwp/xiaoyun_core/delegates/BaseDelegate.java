@@ -1,6 +1,5 @@
 package com.lwp.xiaoyun_core.delegates;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,11 +29,14 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     //其名为set，什么时候set？即在子类继承本类时，需要强制实现本方法，
     // 到那个时候，在子类实现的这个方法中，使用 return 的方式 “传入”布局——可以是layout的id 也可以是是个View
     // 实现之后，只要调用setLayout() ，就会通过return 把 “传入”的布局 返回
+    // **
+    // 在 onCreateView() 中，用来绑定根视图！！！
     public abstract Object setLayout();
 
-    //视图绑定完成之后，有 **一系列的操作** 是必须进行的，
-    // 把这些操作逻辑封装起来，放在下面这个方法中，强制子类必须 `实现`并`执行`
-    // 这里的“强制”，通过abstract 可以实现
+    //视图绑定完成之后！！！ 需要进行的 **一系列的操作** ，封装在下面这个方法中，
+    // 通过 abstract 强制子类必须 `实现`并`执行`
+    // **
+    //在 onCreateView() 中，绑定根视图完成后调用！！！
     public abstract void onBindView(@Nullable Bundle savedInstanceState, View rootView);
 
     @Nullable

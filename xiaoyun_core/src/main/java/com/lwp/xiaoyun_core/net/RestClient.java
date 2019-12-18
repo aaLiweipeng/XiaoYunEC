@@ -62,7 +62,7 @@ public class RestClient {
 
     //封装请求操作
     private void request(HttpMethod method) {
-        //获取为 Retrofit 框架 准备的 接口对象实例
+        //获取为 Retrofit 框架 准备的 接口对象实例！！！
         final RestService service = RestCreator.getRestService();
 
         //用来接请求操作
@@ -90,7 +90,8 @@ public class RestClient {
         }
 
         if (call != null) {
-            //选择异步请求方式
+            //如果 call不空，说明 需要进行请求的操作和参数 已经设定完毕
+            //这里是选enqueue() 进行 异步请求方式，执行请求
             call.enqueue(getRequestCallback());
         }
     }
@@ -105,5 +106,17 @@ public class RestClient {
         );
     }
 
-
+    //增删改查，依次如下
+    public final void post() {
+        request(HttpMethod.POST);
+    }
+    public final void delete() {
+        request(HttpMethod.DELETE);
+    }
+    public final void put() {
+        request(HttpMethod.PUT);
+    }
+    public final void get() {
+        request(HttpMethod.GET);
+    }
 }
