@@ -3,6 +3,7 @@ package com.lwp.xiaoyun_core.net;
 import com.lwp.xiaoyun_core.app.ConfigType;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -17,6 +18,20 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * </pre>
  */
 public class RestCreator {
+
+    //惰性加载参数
+    private static final class ParamsHolder {
+        //键值对是可以丢失的，使用弱哈希(WeakHash)；更精确一些管理内存；
+        // 因为请求的时候，其中存储的 用不上的 值，最好让系统 及时回收掉！！！
+        // .
+        //在这里已经初始化完毕！
+        private static final WeakHashMap<String, Object> PARAMS = new WeakHashMap<>();
+    }
+
+    public static WeakHashMap<String, Object> getParams() {
+        return ParamsHolder.PARAMS;
+    }
+
 
     public static RestService getRestService() {
         return RestServiceHolder.REST_SERVICE;
@@ -45,6 +60,7 @@ public class RestCreator {
                 .build();
     }
 
+    //返回 Retrofit 要求提供的 接口对象实例
     //对 RestService 创造 一个 内部类
     // 同样完成初始化
     private static final class RestServiceHolder {

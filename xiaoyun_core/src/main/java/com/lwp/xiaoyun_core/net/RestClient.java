@@ -6,8 +6,11 @@ import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 
 import java.util.Map;
+import java.util.WeakHashMap;
+
 
 import okhttp3.RequestBody;
+import retrofit2.Call;
 
 /**
  * <pre>
@@ -26,7 +29,7 @@ public class RestClient {
     //URL
     private final String URL;
     //参数
-    private final Map<String,Object> PARAMS;
+    private  static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
     //回调
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
@@ -42,16 +45,50 @@ public class RestClient {
                       IFailure failure,
                       IError error,
                       RequestBody body) {
-        URL = url;
-        PARAMS = params;
-        REQUEST = request;
-        SUCCESS = success;
-        FAILURE = failure;
-        ERROR = error;
-        BODY = body;
+        this.URL = url;
+        PARAMS.putAll(params);
+        this.REQUEST = request;
+        this.SUCCESS = success;
+        this.FAILURE = failure;
+        this.ERROR = error;
+        this.BODY = body;
     }
 
     public static RestClientBuilder builder() {
         return new RestClientBuilder();
+    }
+
+    private void request(HttpMethod method) {
+        //获取为 Retrofit 框架 准备的 接口对象实例
+        final RestService service = RestCreator.getRestService();
+
+        //用来接请求操作
+        Call<String> call = null;
+
+        if (REQUEST != null) {
+            REQUEST.onRequestStart();
+        }
+
+        switch (method) {
+            case GET:
+                call = service.get(URL, PARAMS);
+                break;
+            case POST:
+                call = service.post(URL, PARAMS);
+                break;
+            case PUT:
+                call = service.put(URL, PARAMS);
+                break;
+            case DELETE:
+                call = service.delete(URL, PARAMS);
+                break;
+            default:
+                break;
+        }
+
+        if (call != null) {
+            //选择异步请求方式
+            call.enqueue();
+        }
     }
 }

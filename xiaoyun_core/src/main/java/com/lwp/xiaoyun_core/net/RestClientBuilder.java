@@ -23,7 +23,7 @@ public class RestClientBuilder {
     //URL
     private  String mUrl;
     //参数
-    private  Map<String,Object> mParams;
+    private  static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
     //回调
     private  IRequest mIRequest;
     private  ISuccess mISuccess;
@@ -63,18 +63,13 @@ public class RestClientBuilder {
         return this;
     }
 
-    public final RestClientBuilder params(Map<String, Object> params) {
-        this.mParams = params;
+    public final RestClientBuilder params(WeakHashMap<String, Object> params) {
+        PARAMS.putAll(params);
         return this;
     }
 
     public final RestClientBuilder params(String key, Object value) {
-        if (mParams == null) {
-            //键值对是可以丢失的，使用弱哈希；更精确一些管理内存；
-            // 因为请求的时候，其中存储的 用不上的 值，最好让系统 及时回收掉！！！
-            mParams = new WeakHashMap<>();
-        }
-        this.mParams.put(key, value);
+        PARAMS.put(key, value);
         return this;
     }
 
@@ -105,22 +100,22 @@ public class RestClientBuilder {
         return this;
     }
 
-    //检查mParams 是否为空
-    //restful 不允许 空的Map
-    private Map<String, Object> checkParams() {
-        if (mParams == null) {
-            //键值对是可以丢失的，使用弱哈希；更精确一些管理内存；
-            // 因为请求的时候，其中存储的 用不上的 值，最好让系统 及时回收掉！！！
-           return new WeakHashMap<>();
-        }
-        return mParams;
-    }
+//    //检查mParams 是否为空
+//    //restful 不允许 空的Map
+//    private Map<String, Object> checkParams() {
+//        if (mParams == null) {
+//            //键值对是可以丢失的，使用弱哈希；更精确一些管理内存；
+//            // 因为请求的时候，其中存储的 用不上的 值，最好让系统 及时回收掉！！！
+//           return new WeakHashMap<>();
+//        }
+//        return mParams;
+//    }
 
     /**
      * 最终方法，返回 构建组装 完毕的 RestClient
      * @return
      */
     public final RestClient build() {
-        return new RestClient(mUrl, mParams, mIRequest, mISuccess, mIFailure, mIError, mBody);
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody);
     }
 }
