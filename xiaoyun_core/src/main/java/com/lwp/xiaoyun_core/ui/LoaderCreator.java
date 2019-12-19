@@ -29,6 +29,17 @@ public final class LoaderCreator {
     //有些实例如果太久没用了，可以先回收，用 Weak ！！，万一再用时，重新加载就是了！！！
     private static final WeakHashMap<String, Indicator> LOADING_MAP = new WeakHashMap<>();
 
+    /**
+     * 传进来 Loader 的 名字， 以及对应应用处的 context，
+     * 为 context 创建 AVLoadingIndicatorView 实例；
+     * 完成加载/取出 Loader，
+     * 把 加载/取出 好的 Loader（indicator） set进 context 对应的 AVLoadingIndicatorView 实例中；
+     * 返回这个 AVLoadingIndicatorView 实例！！！
+     *
+     * @param type
+     * @param context
+     * @return
+     */
     static AVLoadingIndicatorView create(String type, Context context) {
 
         final AVLoadingIndicatorView avLoadingIndicatorView = new AVLoadingIndicatorView(context);
