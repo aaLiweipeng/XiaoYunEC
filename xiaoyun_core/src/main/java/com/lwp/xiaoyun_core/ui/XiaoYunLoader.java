@@ -39,6 +39,14 @@ public class XiaoYunLoader {
     private static final String DEFAULT_LOADER = LoaderStyle.BallClipRotatePulseIndicator.name();
 
     /**
+     * 创建Dialog并显示！ 重载，兼容枚举！！
+     * @param context
+     * @param type
+     */
+    public static void showLoading(Context context, Enum<LoaderStyle> type) {
+        showLoading(context, type.name());
+    }
+    /**
      * 创建Dialog并显示！
      * @param context 对应显示的Context
      * @param type  需要显示的 Loader 名字

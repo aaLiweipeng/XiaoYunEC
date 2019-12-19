@@ -1,5 +1,14 @@
 package com.lwp.xiaoyun_core.net.callback;
 
+import android.os.Handler;
+import android.support.v4.content.Loader;
+
+import com.lwp.xiaoyun_core.app.XiaoYun;
+import com.lwp.xiaoyun_core.ui.LoaderStyle;
+import com.lwp.xiaoyun_core.ui.XiaoYunLoader;
+
+import java.util.logging.LogRecord;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,12 +26,15 @@ public class RequestCallBacks implements Callback<String> {
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
     private final IError ERROR;
+    private final LoaderStyle LOADER_STYLE;
+    private static final Handler HANDLER = new Handler();
 
-    public RequestCallBacks(IRequest request, ISuccess success, IFailure failure, IError error) {
+    public RequestCallBacks(IRequest request, ISuccess success, IFailure failure, IError error, LoaderStyle loaderStyle) {
         REQUEST = request;
         SUCCESS = success;
         FAILURE = failure;
         ERROR = error;
+        LOADER_STYLE = loaderStyle;
     }
 
     @Override
@@ -40,6 +52,18 @@ public class RequestCallBacks implements Callback<String> {
             if (ERROR != null) {
                 ERROR.onError(response.code(), response.message());
             }
+        }
+
+        //请求结束时候 关闭 Loader！！
+        if (LOADER_STYLE != null) {
+            //延迟两秒调用，用于测试
+            HANDLER.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //关闭 Loader！！
+                    XiaoYunLoader.stopLoading();
+                }
+            },2000);
         }
     }
 

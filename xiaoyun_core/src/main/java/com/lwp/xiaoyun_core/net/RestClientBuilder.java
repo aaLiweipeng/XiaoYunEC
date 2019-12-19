@@ -1,11 +1,13 @@
 package com.lwp.xiaoyun_core.net;
 
+import android.content.Context;
+
 import com.lwp.xiaoyun_core.net.callback.IError;
 import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
+import com.lwp.xiaoyun_core.ui.LoaderStyle;
 
-import java.util.Map;
 import java.util.WeakHashMap;
 
 import okhttp3.MediaType;
@@ -21,16 +23,20 @@ import okhttp3.RequestBody;
  */
 public class RestClientBuilder {
     //URL
-    private  String mUrl;
+    private  String mUrl = null;
     //参数
     private  static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
     //回调
-    private  IRequest mIRequest;
-    private  ISuccess mISuccess;
-    private  IFailure mIFailure;
-    private  IError mIError;
+    private  IRequest mIRequest = null;
+    private  ISuccess mISuccess = null;
+    private  IFailure mIFailure = null;
+    private  IError mIError = null;
     //请求体
-    private  RequestBody mBody;
+    private  RequestBody mBody = null;
+
+    //Loader
+    private Context mContext = null;
+    private LoaderStyle mLoaderStyle = null;
 
     //除了 RestClient（同包内的类），不允许外部 直接new 创建！！！
     //这里没 声明权限，即使用 Java 的 默认权限，
@@ -62,41 +68,44 @@ public class RestClientBuilder {
         this.mUrl = url;
         return this;
     }
-
     public final RestClientBuilder params(WeakHashMap<String, Object> params) {
         PARAMS.putAll(params);
         return this;
     }
-
     public final RestClientBuilder params(String key, Object value) {
         PARAMS.put(key, value);
         return this;
     }
-
     public final RestClientBuilder raw(String raw) {
         this.mBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), raw);
         return this;
     }
-
     //不用写 set什么什么 ，直接简单明了写个success、写个raw、写个params，
     // 中心突出，简洁明了
     public final RestClientBuilder success(ISuccess iSuccess) {
         this.mISuccess = iSuccess;
         return this;
     }
-
     public final RestClientBuilder failure(IFailure iFailure) {
         this.mIFailure = iFailure;
         return this;
     }
-
     public final RestClientBuilder error(IError iError) {
         this.mIError = iError;
         return this;
     }
-
     public final RestClientBuilder onRequest(IRequest iRequest) {
         this.mIRequest = iRequest;
+        return this;
+    }
+    public final RestClientBuilder loader(Context context,LoaderStyle style) {
+        this.mContext = context;
+        this.mLoaderStyle = style;
+        return this;
+    }
+    public final RestClientBuilder loader(Context context) {
+        this.mContext = context;
+        this.mLoaderStyle = LoaderStyle.BallClipRotatePulseIndicator;
         return this;
     }
 
@@ -116,6 +125,6 @@ public class RestClientBuilder {
      * @return
      */
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody);
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody, mContext, mLoaderStyle);
     }
 }

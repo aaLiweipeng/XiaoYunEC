@@ -1,10 +1,15 @@
 package com.lwp.xiaoyun_core.net;
 
+import android.content.Context;
+
+import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.callback.IError;
 import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.net.callback.RequestCallBacks;
+import com.lwp.xiaoyun_core.ui.LoaderStyle;
+import com.lwp.xiaoyun_core.ui.XiaoYunLoader;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -40,13 +45,19 @@ public class RestClient {
     //请求体
     private final RequestBody BODY;
 
+    //Loader
+    private final LoaderStyle LOADER_STYLE;
+    private final Context CONTEXT;
+
     public RestClient(String url,
                       Map<String, Object> params,
                       IRequest request,
                       ISuccess success,
                       IFailure failure,
                       IError error,
-                      RequestBody body) {
+                      RequestBody body,
+                      Context context,
+                      LoaderStyle loaderStyle) {
         this.URL = url;
         PARAMS.putAll(params);
         this.REQUEST = request;
@@ -54,6 +65,8 @@ public class RestClient {
         this.FAILURE = failure;
         this.ERROR = error;
         this.BODY = body;
+        this.CONTEXT = context;
+        this.LOADER_STYLE = loaderStyle;
     }
 
     public static RestClientBuilder builder() {
@@ -70,6 +83,12 @@ public class RestClient {
 
         if (REQUEST != null) {
             REQUEST.onRequestStart();
+        }
+
+        //展示 Loading！！（请求开始时）
+        // 对应的 关闭的话在 RequestCallBacks 中 实现（请求结束时关闭！！）
+        if (LOADER_STYLE != null) {
+            XiaoYunLoader.showLoading(CONTEXT, LOADER_STYLE);
         }
 
         switch (method) {
@@ -102,7 +121,8 @@ public class RestClient {
                 REQUEST,
                 SUCCESS,
                 FAILURE,
-                ERROR
+                ERROR,
+                LOADER_STYLE
         );
     }
 
