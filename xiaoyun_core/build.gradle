@@ -55,4 +55,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 //    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'//对应Retrofit的 转换器 可以返回String类型
+    //Loading
+    implementation 'com.wang.avi:library:2.1.3'
 }
