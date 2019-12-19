@@ -53,18 +53,8 @@ public class RequestCallBacks implements Callback<String> {
                 ERROR.onError(response.code(), response.message());
             }
         }
+        stopLoading();//请求结束时候 关闭 Loader！！
 
-        //请求结束时候 关闭 Loader！！
-        if (LOADER_STYLE != null) {
-            //延迟两秒调用，用于测试
-            HANDLER.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //关闭 Loader！！
-                    XiaoYunLoader.stopLoading();
-                }
-            },2000);
-        }
     }
 
     @Override
@@ -74,6 +64,21 @@ public class RequestCallBacks implements Callback<String> {
         }
         if (REQUEST != null) {
             REQUEST.onRequestEnd();
+        }
+        stopLoading();//请求结束时候 关闭 Loader！！
+    }
+
+    //请求结束时候 关闭 Loader！！
+    private void stopLoading() {
+        if (LOADER_STYLE != null) {
+            //延迟两秒调用，用于测试
+            HANDLER.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //关闭 Loader！！
+                    XiaoYunLoader.stopLoading();
+                }
+            },2000);
         }
     }
 }

@@ -89,6 +89,8 @@ public class RestClient {
         // 对应的 关闭的话在 RequestCallBacks 中 实现（请求结束时关闭！！）
         if (LOADER_STYLE != null) {
             XiaoYunLoader.showLoading(CONTEXT, LOADER_STYLE);
+        } else {
+            XiaoYunLoader.showLoading(CONTEXT);
         }
 
         switch (method) {

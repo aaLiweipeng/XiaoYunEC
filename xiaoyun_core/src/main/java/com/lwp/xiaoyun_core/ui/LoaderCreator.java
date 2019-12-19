@@ -1,6 +1,7 @@
 package com.lwp.xiaoyun_core.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.wang.avi.AVLoadingIndicatorView;
 import com.wang.avi.Indicator;
@@ -73,7 +74,7 @@ public final class LoaderCreator {
             //因为框架的每一个 AVLoading 都是在这么一个包下 —— com.wang.avi.indicators.！！！！
             // 所以这里直接就拼接进来，具体可以查看AVLoadingIndicatorView 的源码！！！
             drawableClassName.append(defaultPackageName)
-                    .append("indicators")
+                    .append(".indicators")
                     .append(".");
 
             //到此完成 "com.wang.avi.indicators." 的拼接，后面再加入传入的 最后类名即可

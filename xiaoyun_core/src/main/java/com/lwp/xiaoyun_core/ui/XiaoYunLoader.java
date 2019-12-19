@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/19 16:51
- *     desc   : 封装 Loader 的显示和取消显示
+ *     desc   : 封装 Loader 的创建！！、显示！！ 和 取消显示！！
  *
  *              框架的 加载动画Loader 是直接在 View 中显示出来的，这样子不行，
  *              我们需要整一个自己的 Dialog 去承载这些个Loader！
