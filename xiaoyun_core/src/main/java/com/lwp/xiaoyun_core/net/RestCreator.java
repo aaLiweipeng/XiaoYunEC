@@ -1,11 +1,13 @@
 package com.lwp.xiaoyun_core.net;
 
-import com.lwp.xiaoyun_core.app.ConfigType;
+import com.lwp.xiaoyun_core.app.ConfigKeys;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -41,7 +43,8 @@ public class RestCreator {
         //这里取到了 全局应用配置数据Map中的  HOST 值！！！！赋给局部变量！
         // 这个值便 来自于 框架初始化的时候，
         // XiaoYun.init(this).withApiHost("http://127.0.0.1/").configure(); 中，.withApiHost()配置的值！！！
-        private static final String BASE_URL = (String) XiaoYun.getConfigurations().get(ConfigType.API_HOST.name());
+        private static final String BASE_URL = (String) XiaoYun.getConfiguration(ConfigKeys.API_HOST);
+//        private static final String BASE_URL = (String) XiaoYun.getConfigurations().get(ConfigKeys.API_HOST.name()); //旧版写法
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()//这里是 Android简化版的 建造者模式
                 .baseUrl(BASE_URL)
                 .client(OKHttpHolder.OK_HTTP_CLIENT)
@@ -53,6 +56,8 @@ public class RestCreator {
     // 比如说 对OkHttp 进行一个 惰性的初始化
     private static final class OKHttpHolder {
         private static final int TIME_OUT = 60;
+        private static final ArrayList<Interceptor> INTERCEPTORS = XiaoYun.getConfiguration(ConfigKeys.INTERCEPTOR);
+
 
         //同样是 建造者模式
         private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder()
