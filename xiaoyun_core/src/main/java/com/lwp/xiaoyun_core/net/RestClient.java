@@ -1,6 +1,7 @@
 package com.lwp.xiaoyun_core.net;
 
 import android.content.Context;
+import android.support.v4.math.MathUtils;
 
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.callback.IError;
@@ -11,13 +12,17 @@ import com.lwp.xiaoyun_core.net.callback.RequestCallBacks;
 import com.lwp.xiaoyun_core.ui.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.XiaoYunLoader;
 
+import java.io.File;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.http.HTTP;
 
 /**
  * <pre>
@@ -44,10 +49,11 @@ public class RestClient {
     private final IError ERROR;
     //请求体
     private final RequestBody BODY;
-
     //Loader
     private final LoaderStyle LOADER_STYLE;
     private final Context CONTEXT;
+    //文件上传
+    private final File FILE;
 
     public RestClient(String url,
                       Map<String, Object> params,
@@ -56,6 +62,7 @@ public class RestClient {
                       IFailure failure,
                       IError error,
                       RequestBody body,
+                      File file,
                       Context context,
                       LoaderStyle loaderStyle) {
         this.URL = url;
@@ -65,6 +72,7 @@ public class RestClient {
         this.FAILURE = failure;
         this.ERROR = error;
         this.BODY = body;
+        this.FILE = file;
         this.CONTEXT = context;
         this.LOADER_STYLE = loaderStyle;
     }
@@ -100,11 +108,25 @@ public class RestClient {
             case POST:
                 call = service.post(URL, PARAMS);
                 break;
+            case POST_RAW:
+                call = service.postRaw(URL, BODY);
+                break;
             case PUT:
                 call = service.put(URL, PARAMS);
                 break;
+            case PUT_RAW:
+                call = service.putRaw(URL, BODY);
+                break;
             case DELETE:
                 call = service.delete(URL, PARAMS);
+                break;
+            case UPLOAD:
+                final RequestBody requestBody =
+                        RequestBody.create(MediaType.parse(MultipartBody.FORM.toString()),FILE);
+                //以 Form 的方式 提交
+                final MultipartBody.Part body =
+                        MultipartBody.Part.createFormData("file", FILE.getName(),requestBody);
+                call = service.upload(URL, body);
                 break;
             default:
                 break;
@@ -130,13 +152,43 @@ public class RestClient {
 
     //增删改查，依次如下
     public final void post() {
-        request(HttpMethod.POST);
+        //BODY 或者 PARAMS 为不为空，就看 RestClientBuilder 构建时有没有配置；
+        // RestClientBuilder 构建时 有配置的 字段，则不空，否则默认为空
+
+        if (BODY == null) {
+            //如果 BODY 为空，即是 一般的 PARAMS post 方式
+            request(HttpMethod.POST);
+        } else {
+            //如果 BODY 不空，那只能是 post原始数据 BODY ！！
+            if (!PARAMS.isEmpty()) {
+                //如果 BODY 不空，那只能是 post原始数据 BODY，
+                // 这种 post 情况的话，要求参数 PARAMS 必须为空！
+                //如果参数 PARAMS 不空
+                throw new RuntimeException("params must be null");
+            }
+            //如果参数 PARAMS 为空
+            request(HttpMethod.POST_RAW);
+
+        }
     }
     public final void delete() {
         request(HttpMethod.DELETE);
     }
     public final void put() {
-        request(HttpMethod.PUT);
+        if (BODY == null) {
+            //如果 BODY 为空，即是 一般的 PARAMS put 方式
+            request(HttpMethod.PUT);
+        } else {
+            //如果 BODY 不空，那只能是 put原始数据 BODY ！！
+            if (!PARAMS.isEmpty()) {
+                //如果 BODY 不空，那只能是 put原始数据 BODY，
+                // 这种 put 情况的话，要求参数 PARAMS 必须为空！
+                //如果参数 PARAMS 不空
+                throw new RuntimeException("params must be null");
+            }
+            //如果参数 PARAMS 为空
+            request(HttpMethod.PUT_RAW);
+        }
     }
     public final void get() {
         request(HttpMethod.GET);

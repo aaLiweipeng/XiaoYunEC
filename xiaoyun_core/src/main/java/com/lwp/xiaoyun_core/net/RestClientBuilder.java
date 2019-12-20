@@ -8,6 +8,7 @@ import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.ui.LoaderStyle;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 import okhttp3.MediaType;
@@ -33,10 +34,11 @@ public class RestClientBuilder {
     private  IError mIError = null;
     //请求体
     private  RequestBody mBody = null;
-
     //Loader
     private Context mContext = null;
     private LoaderStyle mLoaderStyle = null;
+    //文件上传
+    private File mFile = null;
 
     //除了 RestClient（同包内的类），不允许外部 直接new 创建！！！
     //这里没 声明权限，即使用 Java 的 默认权限，
@@ -74,6 +76,14 @@ public class RestClientBuilder {
     }
     public final RestClientBuilder params(String key, Object value) {
         PARAMS.put(key, value);
+        return this;
+    }
+    public final RestClientBuilder file(File file) {
+        this.mFile = file;
+        return this;
+    }
+    public final RestClientBuilder file(String file) {
+        this.mFile = new File(file);
         return this;
     }
     public final RestClientBuilder raw(String raw) {
@@ -125,6 +135,6 @@ public class RestClientBuilder {
      * @return
      */
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody, mContext, mLoaderStyle);
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody,mFile, mContext, mLoaderStyle);
     }
 }
