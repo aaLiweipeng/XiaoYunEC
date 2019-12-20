@@ -1,4 +1,4 @@
-package com.lwp.xiaoyun_core.util;
+package com.lwp.xiaoyun_core.util.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
@@ -15,13 +15,13 @@ import com.lwp.xiaoyun_core.app.XiaoYun;
 public class DimenUtil {
 
     public static int getScreenWidth() {
-        final Resources resources = XiaoYun.getApplication().getResources();
+        final Resources resources = XiaoYun.getApplicationContext().getResources();
         final DisplayMetrics dm = resources.getDisplayMetrics();
         return dm.widthPixels;
     }
 
     public static int getScreenHeight() {
-        final Resources resources = XiaoYun.getApplication().getResources();
+        final Resources resources = XiaoYun.getApplicationContext().getResources();
         final DisplayMetrics dm = resources.getDisplayMetrics();
         return dm.heightPixels;
     }

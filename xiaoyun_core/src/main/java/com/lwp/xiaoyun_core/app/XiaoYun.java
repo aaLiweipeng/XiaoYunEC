@@ -20,7 +20,7 @@ public final class XiaoYun {
     }
 
     //返回 全局应用Context
-    public static Context getApplication() {
+    public static Context getApplicationContext() {
         return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
     }
 }

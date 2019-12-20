@@ -39,6 +39,10 @@ public class RestClientBuilder {
     private LoaderStyle mLoaderStyle = null;
     //文件上传
     private File mFile = null;
+    //文件下载用 变量
+    private String mDownloadDir = null;//指定 下载文件 在本地sd卡的 目录名
+    private String mExtension = null;
+    private String mName = null;
 
     //除了 RestClient（同包内的类），不允许外部 直接new 创建！！！
     //这里没 声明权限，即使用 Java 的 默认权限，
@@ -108,6 +112,7 @@ public class RestClientBuilder {
         this.mIRequest = iRequest;
         return this;
     }
+    //Loader
     public final RestClientBuilder loader(Context context,LoaderStyle style) {
         this.mContext = context;
         this.mLoaderStyle = style;
@@ -116,6 +121,19 @@ public class RestClientBuilder {
     public final RestClientBuilder loader(Context context) {
         this.mContext = context;
         this.mLoaderStyle = LoaderStyle.BallClipRotatePulseIndicator;
+        return this;
+    }
+    //文件下载
+    public final RestClientBuilder name(String name) {
+        this.mName = name;
+        return this;
+    }
+    public final RestClientBuilder dir(String dir) {
+        this.mDownloadDir = dir;
+        return this;
+    }
+    public final RestClientBuilder extension(String extension) {
+        this.mExtension = extension;
         return this;
     }
 
@@ -135,6 +153,10 @@ public class RestClientBuilder {
      * @return
      */
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody,mFile, mContext, mLoaderStyle);
+        return new RestClient(mUrl, PARAMS,
+                mDownloadDir, mExtension, mName,
+                mIRequest, mISuccess, mIFailure,
+                mIError, mBody,mFile, mContext,
+                mLoaderStyle);
     }
 }

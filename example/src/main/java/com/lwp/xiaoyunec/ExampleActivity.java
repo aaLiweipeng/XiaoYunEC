@@ -53,7 +53,7 @@ public class ExampleActivity extends ProxyActivity {
 ////        //如果成功弹出Toast，
 ////        // 证明Application Context 已经成功传入配置到 Configurator的 配置信息Map中
 ////        // 也证明 XiaoYun.java 中的 init()初始化成功了，代码没有问题
-////        Toast.makeText(XiaoYun.getApplication(), "测试XiaoYun.getApplication()成功", Toast.LENGTH_SHORT).show();
+////        Toast.makeText(XiaoYun.getApplicationContext(), "测试XiaoYun.getApplicationContext()成功", Toast.LENGTH_SHORT).show();
 //
 //    }
 

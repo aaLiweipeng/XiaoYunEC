@@ -7,7 +7,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.lwp.xiaoyun_core.R;
-import com.lwp.xiaoyun_core.util.DimenUtil;
+import com.lwp.xiaoyun_core.util.dimen.DimenUtil;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;

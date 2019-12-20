@@ -9,6 +9,7 @@ import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.net.callback.RequestCallBacks;
+import com.lwp.xiaoyun_core.net.download.DownloadHandler;
 import com.lwp.xiaoyun_core.ui.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.XiaoYunLoader;
 
@@ -42,11 +43,15 @@ public class RestClient {
     private final String URL;
     //参数
     private  static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
-    //回调
+    //回调接口
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
     private final IError ERROR;
+    //文件下载用 变量，注意，一般！！传入了前两个就不用传入NAME，传入NAME了就不用传入前两个
+    private String DOWNLOAD_DIR;//指定 下载文件 在本地sd卡的 目录名
+    private String EXTENSION;//文件后缀名
+    private String NAME;//完整的文件名
     //请求体
     private final RequestBody BODY;
     //Loader
@@ -57,6 +62,9 @@ public class RestClient {
 
     public RestClient(String url,
                       Map<String, Object> params,
+                      String downloadDir,
+                      String extension,
+                      String name,
                       IRequest request,
                       ISuccess success,
                       IFailure failure,
@@ -67,6 +75,9 @@ public class RestClient {
                       LoaderStyle loaderStyle) {
         this.URL = url;
         PARAMS.putAll(params);
+        this.DOWNLOAD_DIR = downloadDir;
+        this.EXTENSION = extension;
+        this.NAME = name;
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;
@@ -92,7 +103,6 @@ public class RestClient {
         if (REQUEST != null) {
             REQUEST.onRequestStart();
         }
-
         //展示 Loading！！（请求开始时）
         // 对应的 关闭的话在 RequestCallBacks 中 实现（请求结束时关闭！！）
         if (LOADER_STYLE != null) {
@@ -150,6 +160,13 @@ public class RestClient {
         );
     }
 
+    /*
+           提供给外部调用的操作封装方法！！
+
+           所有调用 RestService 获取 Call 对象实例的 调用逻辑，以及 call 的请求执行逻辑，
+           都是在 RestClient 这里完成的，只有 download 的 RestService调用以及 call 的请求执行，
+           是跳转到 DownloadHandler 中完成的
+     */
     //增删改查，依次如下
     public final void post() {
         //BODY 或者 PARAMS 为不为空，就看 RestClientBuilder 构建时有没有配置；
@@ -192,5 +209,17 @@ public class RestClient {
     }
     public final void get() {
         request(HttpMethod.GET);
+    }
+
+    //文件上传
+    public final void upload() {
+        request(HttpMethod.UPLOAD);
+    }
+
+    //文件下载
+    public final void download() {
+        new DownloadHandler(URL, PARAMS,REQUEST, DOWNLOAD_DIR, EXTENSION, NAME,
+                SUCCESS, FAILURE, ERROR)
+                .handleDownload();
     }
 }

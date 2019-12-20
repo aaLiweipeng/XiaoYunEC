@@ -42,6 +42,7 @@ public interface RestService {
     @POST
     Call<String> post(@Url String url, @FieldMap Map<String, Object> params);
 
+    //提交时，上传一个 原始的数据
     @POST
     Call<String> postRaw(@Url String url, @Body RequestBody body);
 
@@ -49,25 +50,28 @@ public interface RestService {
     @PUT
     Call<String> put(@Url String url, @FieldMap Map<String, Object> params);
 
+    //更改时，上传一个 原始的数据
     @PUT
     Call<String> putRaw(@Url String url, @Body RequestBody body);
 
     @DELETE
     Call<String> delete(@Url String url, @QueryMap Map<String, Object> params);
 
-    //Retrofit 默认的下载方式是把 文件 一次性下载到内存里，
-    // 当下载完毕之后  再统一地写到 文件系统 里
-    // 这种方式存在很大的问题，当文件过大的时候，会导致内存溢出！！！
-    // .
-    //故而加入 @Streaming  注解，更改下载方式为——边下载文件 边将之写入 文件系统，
-    // 应用的时候 需要把 文件的写入操作 单独放在一个线程里，异步处理
-    // 这样就避免了 一次性在内存中写入过大的文件 导致内存溢出 造成APP崩溃、报错
-    @Streaming
-    @GET
-    Call<ResponseBody> download(@Url String url, @QueryMap Map<String, Object> params);
-
+    //上传文件
     @Multipart
     @POST
     Call<String> upload(@Url String url, @Part MultipartBody.Part file);
 
+    //下载文件
+    //@Streaming  注解 的 使用原因
+    //Retrofit 默认的下载方式是把 文件 整个全部下载到内存里，
+    // 当下载完毕之后  再统一地写到 文件系统 里
+    // 这种方式存在很大的问题，当文件过大的时候，会导致内存溢出！！！
+    // .
+    //故而加入 @Streaming  注解，更改下载方式为 —— 边下载文件到内存 边将之写入 文件系统，
+    // 应用的时候 需要把 文件的写入操作 单独放在一个线程里，异步 处理！！！call.enqueue()
+    // 这样就避免了 一次性在内存中写入过大的文件 导致内存溢出 造成APP崩溃、报错
+    @Streaming
+    @GET
+    Call<ResponseBody> download(@Url String url, @QueryMap Map<String, Object> params);
 }

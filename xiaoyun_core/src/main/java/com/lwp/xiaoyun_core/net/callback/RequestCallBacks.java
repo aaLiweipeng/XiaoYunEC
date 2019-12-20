@@ -1,13 +1,9 @@
 package com.lwp.xiaoyun_core.net.callback;
 
 import android.os.Handler;
-import android.support.v4.content.Loader;
 
-import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.ui.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.XiaoYunLoader;
-
-import java.util.logging.LogRecord;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +14,7 @@ import retrofit2.Response;
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/18 17:34
  *     desc   : 提供给RestClient 中的 Call.enqueue()
- *              封装，请求成功时，请求失败时，需要做的事情！
+ *              封装，请求成功时，请求失败时，需要做的事情！！！
  * </pre>
  */
 public class RequestCallBacks implements Callback<String> {
