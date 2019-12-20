@@ -77,7 +77,7 @@ public class Configurator {
         initIcons();//字体图标库是非常通用的，写在这里保证初始化完成时图标库也初始化完成
         XIAOYUN_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
     }
-    //拦截器
+    //配置 拦截器
     public final Configurator withInterceptor(Interceptor interceptor) {
         INTERCEPTORS.add(interceptor);
         XIAOYUN_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);

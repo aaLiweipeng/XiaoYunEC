@@ -56,11 +56,26 @@ public class RestCreator {
     // 比如说 对OkHttp 进行一个 惰性的初始化
     private static final class OKHttpHolder {
         private static final int TIME_OUT = 60;
-        private static final ArrayList<Interceptor> INTERCEPTORS = XiaoYun.getConfiguration(ConfigKeys.INTERCEPTOR);
+
+        private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
+        private static final ArrayList<Interceptor> INTERCEPTORS =
+                XiaoYun.getConfiguration(ConfigKeys.INTERCEPTOR);
+
+        private static OkHttpClient.Builder addInterceptor() {
+
+            //把初始时 配置到 Configurator 中(数据Map XIAOYUN_CONFIGS)的 拦截器列表 INTERCEPTORS，
+            // 依次 添加到这里的 局部变量 OkHttpClient.Builder BUILDER 中
+            if (INTERCEPTORS != null && !INTERCEPTORS.isEmpty()) {
+                for (Interceptor interceptor : INTERCEPTORS) {
+                    BUILDER.addInterceptor(interceptor);
+                }
+            }
+            return BUILDER;
+        }
 
 
         //同样是 建造者模式
-        private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder()
+        private static final OkHttpClient OK_HTTP_CLIENT = addInterceptor()
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS) //设置延时数值，以秒为单位
                 .build();
     }
