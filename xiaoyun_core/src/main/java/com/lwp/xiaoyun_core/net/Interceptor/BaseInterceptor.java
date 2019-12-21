@@ -22,12 +22,6 @@ import okhttp3.Response;
  */
 public abstract class BaseInterceptor implements Interceptor {
 
-
-    @Override
-    public Response intercept(Chain chain) throws IOException {
-        return null;
-    }
-
     //面向get请求，获取 URL！！ 里面的参数,存进有序的LinkedHashMap中，
     // 返回这个Map
     protected LinkedHashMap<String, String> getUrlParameters(Chain chain) {
