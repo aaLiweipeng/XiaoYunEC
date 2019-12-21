@@ -14,7 +14,8 @@ import retrofit2.Response;
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/18 17:34
  *     desc   : 提供给RestClient 中的 Call.enqueue()
- *              封装，请求成功时，请求失败时，需要做的事情！！！
+ *              封装，请求开始、成功时、失败时、错误时、结束时，需要做的事情！！！
+ *              以及封装Loader！
  * </pre>
  */
 public class RequestCallBacks implements Callback<String> {

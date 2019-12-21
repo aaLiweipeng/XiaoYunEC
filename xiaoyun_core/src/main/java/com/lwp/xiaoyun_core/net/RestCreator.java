@@ -16,9 +16,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/16 23:04
- *     desc   : 本类中 准备各种 静态内部类，
- *              利用静态内部类 的方式 初始化各种实例，（跟Rest请求有关的实例）
- *              并提供 get方法 用于获取
+ *     desc   : 本类中 准备各种 静态内部类；
+ *              利用静态内部类 的方式 初始化各种实例，（跟Rest请求有关的实例）并提供 getter；
+ *              OKHttpHolder、RetrofitHolder、RestServiceHolder、RxRestServiceHolder
  * </pre>
  */
 public class RestCreator {
@@ -52,6 +52,7 @@ public class RestCreator {
                 .addConverterFactory(ScalarsConverterFactory.create()) //Gradle处引入的 对应Retrofit的 转换器 可以返回String类型
                 .build();
     }
+
     //对 RestService 创造 一个 静态内部类
     // 同样完成初始化 Retrofit 要求提供的 接口对象实例
     private static final class RestServiceHolder {

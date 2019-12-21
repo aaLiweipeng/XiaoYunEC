@@ -4,8 +4,8 @@ package com.lwp.xiaoyun_core.app;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/10/6 1:25
- *     desc   :枚举类，为 Configurator中的 数据Map 提供 Key,
- *             其实就是明了显式地展现 其数据Map 用到的、需要用到的 Key
+ *     desc   :枚举类，为 Configurator 中的 数据Map 等 存储配置信息的集合 提供 Key,
+ *             明了显式地展现 其数据Map 用到的、需要用到的 Key，方便调用、逻辑清晰
  * </pre>
  */
 public enum ConfigKeys {

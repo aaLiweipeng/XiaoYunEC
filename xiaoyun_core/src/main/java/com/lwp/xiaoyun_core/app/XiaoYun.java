@@ -2,12 +2,25 @@ package com.lwp.xiaoyun_core.app;
 
 import android.content.Context;
 
+/**
+ * <pre>
+ *     author : 李蔚蓬（简书_凌川江雪）
+ *     time   : 2019/10/6 1:12
+ *     desc   : 依赖于 Configurator ，
+ *              提供 应用配置字段的初始化方法，
+ *
+ *              提供 Configurator 的 getter 及其中 各种 配置字段值 的 getter，
+ *              区别， Configurator 的getter 中 封装了各种逻辑，提供给 XiaoYun Class
+ *              这里的getter 只需要调用 Configurator 封装好的getter函数就好，往往一行完成get获取
+ * </pre>
+ */
 public final class XiaoYun {
 
-    //初始化App
+    //初始化App，返回 Configurator 实例，
+    // 只能在初始化的时候调用一次！！
     public static Configurator init(Context context) {
         //初始化的时候获取配置类实例，同时把AppContext配置好
-        Configurator.getInstance()
+        getConfigurator()
                 .getXiaoyunConfigs()
                 .put(ConfigKeys.APPLICATION_CONTEXT,
                         context.getApplicationContext());
@@ -19,6 +32,7 @@ public final class XiaoYun {
         return Configurator.getInstance();
     }
 
+    //获取 Configurator 实例
     public static Configurator getConfigurator() {
         return Configurator.getInstance();
     }

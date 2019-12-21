@@ -1,9 +1,7 @@
 package com.lwp.xiaoyun_core.net;
 
 import android.content.Context;
-import android.support.v4.math.MathUtils;
 
-import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.callback.IError;
 import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.IRequest;
@@ -17,13 +15,11 @@ import java.io.File;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.http.HTTP;
 
 /**
  * <pre>
