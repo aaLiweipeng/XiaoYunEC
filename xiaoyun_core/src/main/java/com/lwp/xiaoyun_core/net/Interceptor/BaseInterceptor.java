@@ -13,9 +13,11 @@ import okhttp3.Response;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/22 0:57
- *     desc   :
+ *     desc   : 封装 拦截器从请求中 获取参数的方法；
+ *
  *          模拟服务器，需要获取参数，
- *          get请求方法就要从其 URL 获取参数；post 则从 请求体获取参数
+ *          get请求方法就要从其 URL 获取参数；
+ *          post 则从 请求体获取参数
  *
  *          HashMap 是无序的 ； LinkedHashMap 有序；！！！！
  * </pre>

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lwp.xiaoyun_core.activities.ProxyActivity;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
@@ -43,7 +45,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //根视图！
-        View rootView = null;
+        final View rootView;
 
         if (setLayout() instanceof Integer) {
             //如果setLayout() 返回的是一个Layout 的id
@@ -52,17 +54,20 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         } else if (setLayout() instanceof View) {
             //如果setLayout() 返回的是一个 View
             rootView = (View)setLayout();
-
+        }else{
+            //setLayout() 返回的类型，必须是 id 或者 View 类型！！
+            throw new ClassCastException("setLayout() type must be int or View!!!");
         }
-
-        if (rootView != null) {
-            //如果rootView 不为空， 则开始绑定资源,
-            //将本Fragment 跟 根视图 **绑定** 起来
-            mUnbinder = ButterKnife.bind(this, rootView);
-            onBindView(savedInstanceState, rootView);
-        }
+        //如果rootView 不为空， 则开始绑定资源,
+        //将本Fragment 跟 根视图 **绑定** 起来
+        mUnbinder = ButterKnife.bind(this, rootView);
+        onBindView(savedInstanceState, rootView);
 
         return rootView;
+    }
+
+    public final ProxyActivity getProxyActivity() {
+        return (ProxyActivity) _mActivity;
     }
 
     //记得最后处理一下 UnBinder
