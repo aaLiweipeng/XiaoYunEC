@@ -10,6 +10,7 @@ import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun_core.activities.ProxyActivity;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
 
 
 public class ExampleActivity extends ProxyActivity {
@@ -17,6 +18,7 @@ public class ExampleActivity extends ProxyActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         XiaoYun.init(this)
+                .withInterceptor(new DebugInterceptor("index", R.raw.test))
                 .withApiHost("http://127.0.0.1/")
                 .configure();
         super.onCreate(savedInstanceState);

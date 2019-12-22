@@ -41,7 +41,7 @@ public class ExampleDelegate extends XiaoYunDelegate {
         //构建完毕之后调用get()方法，后续程序就会 进到 RestClient 中的 request()，
         // 通过 switch 初始化了 call 之后，用 enqueue() 异步执行请求
         RestClient.builder()
-                .url("http://news.baidu.com/")
+                .url("http://127.0.0.1/index")
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override
