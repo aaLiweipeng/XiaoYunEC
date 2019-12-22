@@ -39,6 +39,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     // 通过 abstract 强制子类必须 `实现`并`执行`
     // **
     //在 onCreateView() 中，绑定根视图完成后调用！！！
+    // 如果绑定根视图完成后， 有什么需要进行的逻辑，就写在这里！！！！
     public abstract void onBindView(@Nullable Bundle savedInstanceState, View rootView);
 
     @Nullable

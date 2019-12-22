@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.icon.FontEcModule;
+import com.lwp.xiaoyun.ec.launcher.LauncherDelegate;
 import com.lwp.xiaoyun_core.activities.ProxyActivity;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
@@ -32,7 +33,10 @@ public class ExampleActivity extends ProxyActivity {
         // 通过 ProxyActivity . onCreate . initContainer，
         // 又把 **Fragment（Delegate）** 绑定到 id 又到 new FrameLayout(this); 即 绑定到了Activity中 （的 this Context 对应的 FrameLayout中）
         // 然后 setContentView(FrameLayout); 最后显示出来在屏幕上，这就是框架的魅力！！！
-        return new ExampleDelegate();
+//        return new ExampleDelegate();
+
+        //测试倒计时启动图
+        return new LauncherDelegate();
     }
 
 //    @Override

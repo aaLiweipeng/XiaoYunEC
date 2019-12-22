@@ -45,7 +45,7 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
     private void initTimer() {
         mTimer = new Timer();
         final BaseTimerTask task = new BaseTimerTask(this);
-        //立即执行 每秒执行一次
+        //立即执行任务 每秒执行一次
         mTimer.schedule(task,0,1000);
     }
 
@@ -54,9 +54,10 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
         return R.layout.delegate_launcher;
     }
 
+    //别忘了这里要 初始化Timer 启动 计时任务！！
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-
+        initTimer();
     }
 
     @Override
