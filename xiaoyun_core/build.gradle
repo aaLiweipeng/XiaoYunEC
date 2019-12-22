@@ -57,4 +57,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'//对应Retrofit的 转换器 可以返回String类型
     //Loading
     implementation 'com.wang.avi:library:2.1.3'
+    //Banner依赖
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+//    implementation 'androidx.recyclerview:recyclerview:1.0.0+'
+    //Json 处理  用的是阿里巴巴的框架，解析的速度和应用性应该比Google的GSON和Jackson好很多
+    implementation 'com.alibaba:fastjson:1.1.68.android'
 }
