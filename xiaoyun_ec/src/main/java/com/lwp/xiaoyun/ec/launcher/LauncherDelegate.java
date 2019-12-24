@@ -70,6 +70,7 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
     private void checkIsShowScroll() {
         if (!XiaoyunPreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())) {
             //如果 HAS_FIRST_LAUNCHER_APP 为空，证明 滚动启动页 还没有被启动过
+
             //那这里就 直接启动 滚动启动页
             //SINGLETASK 是模仿 Activity启动栈 的
             start(new LauncherScrollDelegate(), SINGLETASK);
@@ -89,10 +90,12 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
                     mTvTimer.setText(MessageFormat.format("跳过\n{0}s",mCount));
                     mCount--;
                     if (mCount < 0) {
-                        //倒计时 数完了 技术任务就可以取消了
+                        //倒计时 数完了 要做的事情
                         if (mTimer != null) {
+                            //计时任务 就可以取消了
                             mTimer.cancel();
                             mTimer = null;
+                            //滚动图 相关判断
                             checkIsShowScroll();
                         }
                     }

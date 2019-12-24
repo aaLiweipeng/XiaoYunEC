@@ -1,6 +1,7 @@
 package com.lwp.xiaoyunec;
 
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -19,10 +20,17 @@ public class ExampleActivity extends ProxyActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //隐藏 ActionBar
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
         XiaoYun.init(this)
                 .withInterceptor(new DebugInterceptor("index", R.raw.test))
                 .withApiHost("http://127.0.0.1/")
                 .configure();
+
         super.onCreate(savedInstanceState);
     }
 
@@ -37,10 +45,10 @@ public class ExampleActivity extends ProxyActivity {
 //        return new ExampleDelegate();
 
         //测试倒计时启动图
-//        return new LauncherDelegate();
+        return new LauncherDelegate();
 
         //测试 滚动启动图
-        return new LauncherScrollDelegate();
+//        return new LauncherScrollDelegate();
 
     }
 
