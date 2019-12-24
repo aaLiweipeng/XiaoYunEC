@@ -7,6 +7,7 @@ import android.view.View;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.ui.launcher.LauncherHolderCreator;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,8 @@ public class LauncherScrollDelegate extends XiaoYunDelegate {
         INTEGERS.add(R.mipmap.launcher_04);
         INTEGERS.add(R.mipmap.launcher_05);
         mConvenientBanner
-                .setPages()
+                .setPages(new LauncherHolderCreator(), INTEGERS)
+                .setPageIndicator();
 
     }
 
