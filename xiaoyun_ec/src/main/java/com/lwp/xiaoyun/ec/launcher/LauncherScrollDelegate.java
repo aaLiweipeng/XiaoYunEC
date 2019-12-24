@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.ui.launcher.LauncherHolderCreator;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  *     desc   :
  * </pre>
  */
-public class LauncherScrollDelegate extends XiaoYunDelegate {
+public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemClickListener {
 
     //查看源码，可以看到这里的 ConvenientBanner的泛型，
     //就是 数据的类型；
@@ -36,7 +37,10 @@ public class LauncherScrollDelegate extends XiaoYunDelegate {
         INTEGERS.add(R.mipmap.launcher_05);
         mConvenientBanner
                 .setPages(new LauncherHolderCreator(), INTEGERS)
-                .setPageIndicator();
+                .setPageIndicator(new int[]{R.drawable.dot_normal,R.drawable.dot_focus})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)//设置指示器点的位置
+                .setOnItemClickListener(this)
+                .setCanLoop(false);//设置可以循环
 
     }
 
@@ -53,6 +57,11 @@ public class LauncherScrollDelegate extends XiaoYunDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        initBanner();
+    }
+
+    @Override
+    public void onItemClick(int position) {
 
     }
 }
