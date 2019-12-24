@@ -10,13 +10,15 @@ import com.bigkoo.convenientbanner.holder.Holder;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/24 14:40
- *     desc   : 用来存储 轮播图资源 ， 图片 id 都是 int，
+ *     desc   : 用来存储 轮播图资源 ，
+ *              图片 id 都是 int，
  *              所以这里泛型为 int；
  * </pre>
  */
 public class LauncherHolder implements Holder<Integer> {
 
-    //因为这里 轮播图滚动组件的 每一个子View 都是一张图片，所以这里声明一个ImageView
+    //因为这里 轮播图滚动组件的 每一个子View 都是一张图片，
+    // 所以这里声明一个ImageView
     private AppCompatImageView mImageView = null;
 
     /*

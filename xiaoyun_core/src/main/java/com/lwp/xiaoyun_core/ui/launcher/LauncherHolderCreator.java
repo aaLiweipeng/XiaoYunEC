@@ -9,10 +9,12 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
  *     desc   :
  * </pre>
  */
-public class LauncherHolderCreator implements CBViewHolderCreator<> {
+public class LauncherHolderCreator implements CBViewHolderCreator<LauncherHolder> {
 
     @Override
-    public Object createHolder() {
-        return null;
+    public LauncherHolder createHolder() {
+        return new LauncherHolder();
     }
+
+
 }
