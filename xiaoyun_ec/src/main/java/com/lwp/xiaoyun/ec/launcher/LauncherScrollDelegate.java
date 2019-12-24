@@ -9,6 +9,8 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.ui.launcher.LauncherHolderCreator;
+import com.lwp.xiaoyun_core.ui.launcher.ScrollLauncherTag;
+import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,15 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
 
     @Override
     public void onItemClick(int position) {
+        //如果点击了最后一个滚动图
+        if (position == INTEGERS.size() - 1) {
+            //sharePreference 工具
+            // 设置一个标志键值
+            //用于 判断APP是不是第一次进入
+            //第一次使用，传入键值为true，之后就不用再使用 滚动启动图组件了； 非第一次使用，就false
+            XiaoyunPreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(), true);
 
+            //检查用户是否已经登录
+        }
     }
 }

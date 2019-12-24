@@ -18,6 +18,7 @@ public final class XiaoyunPreference {
      */
     private static final SharedPreferences PREFERENCES =
             PreferenceManager.getDefaultSharedPreferences(XiaoYun.getApplicationContext());
+
     //包名_preferences.xml 文件下 存储数据的 key值
     private static final String APP_PREFERENCES_KEY = "profile";
 
@@ -57,13 +58,15 @@ public final class XiaoyunPreference {
 
     //设置一个标志键值
     //用于 判断APP是不是第一次进入
-    //第一次使用，传入键值为true； 非第一次使用，就false
+    //第一次使用，传入键值为true，之后就不用再使用 滚动启动图组件了；
+    // 非第一次使用，就false；没有这个键，默认为 false
     public static void setAppFlag(String key, boolean flag) {
         getAppPreference()
                 .edit()
                 .putBoolean(key, flag)
                 .apply();
     }
+    //没有这个键，默认为 false
     public static boolean getAppFlag(String key) {
         return getAppPreference()
                 .getBoolean(key, false);

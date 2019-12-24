@@ -8,6 +8,8 @@ import android.view.View;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.ui.launcher.ScrollLauncherTag;
+import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
 import com.lwp.xiaoyun_core.util.timer.BaseTimerTask;
 import com.lwp.xiaoyun_core.util.timer.ITimerListener;
 
@@ -39,7 +41,11 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
 
     @OnClick(R2.id.tv_launcher_timer)
     void onClickTimerView() {
-
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+            checkIsShowScroll();
+        }
     }
 
     private void initTimer() {
@@ -60,6 +66,18 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
         initTimer();
     }
 
+    //判断是否显示滑动启动页
+    private void checkIsShowScroll() {
+        if (!XiaoyunPreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())) {
+            //如果 HAS_FIRST_LAUNCHER_APP 为空，证明 滚动启动页 还没有被启动过
+            //那这里就 直接启动 滚动启动页
+            //SINGLETASK 是模仿 Activity启动栈 的
+            start(new LauncherScrollDelegate(), SINGLETASK);
+        } else {
+            //检查用户是否登录了 APP
+        }
+    }
+
     @Override
     public void onTimer() {
         getProxyActivity().runOnUiThread(new Runnable() {
@@ -75,6 +93,7 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
                         if (mTimer != null) {
                             mTimer.cancel();
                             mTimer = null;
+                            checkIsShowScroll();
                         }
                     }
                 }
