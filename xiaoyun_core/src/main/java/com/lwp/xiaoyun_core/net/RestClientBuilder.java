@@ -6,7 +6,7 @@ import com.lwp.xiaoyun_core.net.callback.IError;
 import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
-import com.lwp.xiaoyun_core.ui.LoaderStyle;
+import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.WeakHashMap;

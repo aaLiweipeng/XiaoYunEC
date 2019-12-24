@@ -8,8 +8,8 @@ import com.lwp.xiaoyun_core.net.callback.IRequest;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.net.callback.RequestCallBacks;
 import com.lwp.xiaoyun_core.net.download.DownloadHandler;
-import com.lwp.xiaoyun_core.ui.LoaderStyle;
-import com.lwp.xiaoyun_core.ui.XiaoYunLoader;
+import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
+import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 
 import java.io.File;
 import java.util.Map;

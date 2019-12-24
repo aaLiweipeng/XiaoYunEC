@@ -28,16 +28,23 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     @SuppressWarnings("SpellCheckingInspection")
     private Unbinder mUnbinder = null;
 
-    //其名为set，什么时候set？即在子类继承本类时，需要强制实现本方法，
-    // 到那个时候，在子类实现的这个方法中，使用 return 的方式 “传入”布局——可以是layout的id 也可以是是个View
-    // 实现之后，只要调用setLayout() ，就会通过return 把 “传入”的布局 返回
-    // **
+    //！！用法： ！！！
+    //1.其名为set，什么时候set？即在子类继承本类时，需要强制实现本方法，
+    // 到那个时候，在子类实现的这个方法中，
+    // 使用 return 的方式 “传入”布局——可以是layout的id 也可以是是个View ！！！！！！！
+    // 实现之后，只要调用setLayout() ，
+    // 就会通过return 把 “传入”的布局 返回 ！！！！！
+    // ------
+    // 2.因为 本方法在 onCreateView() 的时候会自动调用，（见 BaseDelegate）
+    //   所以除了用来配置布局，用来 初始化组件 也是不错的选择 （见 LauncherScrollDelegate）
+    // *****************************************
     // 在 onCreateView() 中，用来绑定根视图！！！
     public abstract Object setLayout();
 
     //视图绑定完成之后！！！ 需要进行的 **一系列的操作** ，封装在下面这个方法中，
     // 通过 abstract 强制子类必须 `实现`并`执行`
-    // **
+    // *******************************
+    //！！用法： ！！！
     //在 onCreateView() 中，绑定根视图完成后调用！！！
     // 如果绑定根视图完成后， 有什么需要进行的逻辑，就写在这里！！！！
     public abstract void onBindView(@Nullable Bundle savedInstanceState, View rootView);

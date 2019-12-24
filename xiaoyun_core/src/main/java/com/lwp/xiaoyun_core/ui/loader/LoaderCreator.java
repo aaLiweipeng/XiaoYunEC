@@ -1,4 +1,4 @@
-package com.lwp.xiaoyun_core.ui;
+package com.lwp.xiaoyun_core.ui.loader;
 
 import android.content.Context;
 import android.graphics.Color;

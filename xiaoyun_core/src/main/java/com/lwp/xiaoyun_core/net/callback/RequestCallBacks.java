@@ -2,8 +2,8 @@ package com.lwp.xiaoyun_core.net.callback;
 
 import android.os.Handler;
 
-import com.lwp.xiaoyun_core.ui.LoaderStyle;
-import com.lwp.xiaoyun_core.ui.XiaoYunLoader;
+import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
+import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 
 import retrofit2.Call;
 import retrofit2.Callback;
