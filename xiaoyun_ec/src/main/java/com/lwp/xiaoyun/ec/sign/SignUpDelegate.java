@@ -59,6 +59,11 @@ public class SignUpDelegate extends XiaoYunDelegate {
 
     }
 
+    @OnClick(R2.id.tv_link_sign_in)
+    void onClickLink() {
+        start(new SignInDelegate());
+    }
+
     //验证 输入信息 是否符合格式
     private boolean checkForm() {
         final String name = mName.getText().toString();
