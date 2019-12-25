@@ -12,6 +12,7 @@ import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
+import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,22 +44,27 @@ public class SignUpDelegate extends XiaoYunDelegate {
         if (checkForm()) {
             //如果 用户输入的注册信息没问题
 
-//            RestClient.builder()
-//                    .url("sign_up")
-//                    .params("","")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//
-//                        }
-//                    })
-//                    .build()
-//                    .post();
+            RestClient.builder()
+                    .url("http://lcjxg.cn/RestServer/data/user_profile.json")
+                    .loader(getContext())
+                    .params("name",mName.getText().toString())
+                    .params("email",mEmail.getText().toString())
+                    .params("phone",mPhone.getText().toString())
+                    .params("password",mPassword.getText().toString())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            XiaoYunLogger.json("USER_PROFILE",response);
+                        }
+                    })
+                    .build()
+                    .post();
             Toast.makeText(getContext(), "验证通过", Toast.LENGTH_LONG).show();
         }
 
     }
 
+    //点击Link 跳转到 登录碎片
     @OnClick(R2.id.tv_link_sign_in)
     void onClickLink() {
         start(new SignInDelegate());

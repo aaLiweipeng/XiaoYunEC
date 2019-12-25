@@ -10,6 +10,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun.ec.launcher.LauncherDelegate;
 import com.lwp.xiaoyun.ec.launcher.LauncherScrollDelegate;
+import com.lwp.xiaoyun.ec.sign.SignInDelegate;
 import com.lwp.xiaoyun.ec.sign.SignUpDelegate;
 import com.lwp.xiaoyun_core.activities.ProxyActivity;
 import com.lwp.xiaoyun_core.app.XiaoYun;
@@ -30,6 +31,7 @@ public class ExampleActivity extends ProxyActivity {
         XiaoYun.init(this)
                 .withInterceptor(new DebugInterceptor("index", R.raw.test))
                 .withApiHost("http://127.0.0.1/")
+                .withIcon(new FontAwesomeModule())
                 .configure();
 
         super.onCreate(savedInstanceState);
@@ -51,9 +53,8 @@ public class ExampleActivity extends ProxyActivity {
         //测试 滚动启动图
 //        return new LauncherScrollDelegate();
 
-        //测试登录碎片
+        //测试注册碎片、登录碎片（注册碎片中的Link 可以跳转到 登录碎片）
         return new SignUpDelegate();
-
     }
 
 //    @Override

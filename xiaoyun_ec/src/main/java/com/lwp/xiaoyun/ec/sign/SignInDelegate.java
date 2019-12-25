@@ -17,7 +17,7 @@ import butterknife.OnClick;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/26 1:32
- *     desc   :
+ *     desc   : 登录逻辑实现
  * </pre>
  */
 public class SignInDelegate extends XiaoYunDelegate {
@@ -41,7 +41,7 @@ public class SignInDelegate extends XiaoYunDelegate {
 
     }
 
-    //还没有注册的情况
+    //还没有注册的情况，跳转到 注册碎片
     @OnClick(R2.id.tv_link_sign_up)
     void onClickLink() {
         start(new SignUpDelegate());

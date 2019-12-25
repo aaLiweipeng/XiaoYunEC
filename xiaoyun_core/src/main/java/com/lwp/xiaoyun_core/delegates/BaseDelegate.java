@@ -63,6 +63,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
             //如果setLayout() 返回的是一个 View
             rootView = (View)setLayout();
         }else{
+            //出现问题时可以 快速找到 案发现场！！！
             //setLayout() 返回的类型，必须是 id 或者 View 类型！！
             throw new ClassCastException("setLayout() type must be int or View!!!");
         }
