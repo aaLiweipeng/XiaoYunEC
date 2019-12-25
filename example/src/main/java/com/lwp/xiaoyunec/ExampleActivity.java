@@ -10,6 +10,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun.ec.launcher.LauncherDelegate;
 import com.lwp.xiaoyun.ec.launcher.LauncherScrollDelegate;
+import com.lwp.xiaoyun.ec.sign.SignUpDelegate;
 import com.lwp.xiaoyun_core.activities.ProxyActivity;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
@@ -45,10 +46,13 @@ public class ExampleActivity extends ProxyActivity {
 //        return new ExampleDelegate();
 
         //测试倒计时启动图
-        return new LauncherDelegate();
+//        return new LauncherDelegate();
 
         //测试 滚动启动图
 //        return new LauncherScrollDelegate();
+
+        //测试登录碎片
+        return new SignUpDelegate();
 
     }
 
