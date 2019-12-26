@@ -41,9 +41,11 @@ public class DatabaseManager {
         final Database db = helper.getWritableDb();
         //句柄 新建 会话
         mDaoSession = new DaoMaster(db).newSession();
+        //获取 会话的 Dao
         mDao = mDaoSession.getUserProfileDao();
     }
 
+    //获取 会话的 Dao
     public final UserProfileDao getDao() {
         return mDao;
     }
