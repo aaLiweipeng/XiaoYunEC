@@ -27,13 +27,6 @@ public class ExampleActivity extends ProxyActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-
-        XiaoYun.init(this)
-                .withInterceptor(new DebugInterceptor("index", R.raw.test))
-                .withApiHost("http://127.0.0.1/")
-                .withIcon(new FontAwesomeModule())
-                .configure();
-
         super.onCreate(savedInstanceState);
     }
 

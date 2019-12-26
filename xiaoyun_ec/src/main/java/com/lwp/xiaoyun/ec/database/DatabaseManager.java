@@ -20,9 +20,9 @@ public class DatabaseManager {
     private DatabaseManager() {
     }
 
-    private DatabaseManager init(Context context) {
+    public DatabaseManager init(Context context) {
         initDao(context);
-        return this;
+        return this;//返回 初始化好 UserProfileDao 的 DatabaseManager
     }
 
     //静态内部类 单例模式

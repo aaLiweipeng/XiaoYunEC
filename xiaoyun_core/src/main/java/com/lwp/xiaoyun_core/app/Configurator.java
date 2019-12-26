@@ -27,7 +27,7 @@ import okhttp3.Interceptor;
  */
 public class Configurator {
 
-    //建立一个存储 配置信息的 数据结构
+    //建立一个存储!!! 配置信息的 数据结构
     //这里的 Key 不再用String 而是用 Object ，这样一来，
     // 用int、float、Enum、String等任何类型来做key都可以，提高程序灵活性
     private static final HashMap<Object, Object> XIAOYUN_CONFIGS = new HashMap<>();
