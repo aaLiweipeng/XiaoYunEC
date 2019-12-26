@@ -99,6 +99,7 @@ public class RestClient {
         if (REQUEST != null) {
             REQUEST.onRequestStart();
         }
+
         //展示 Loading！！（请求开始时）
         // 对应的 关闭的话在 RequestCallBacks 中 实现（请求结束时关闭！！）
         if (LOADER_STYLE != null) {

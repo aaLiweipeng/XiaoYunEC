@@ -1,6 +1,7 @@
 package com.lwp.xiaoyun_core.net.Interceptor;
 
 import android.support.annotation.RawRes;
+import android.util.Log;
 
 import com.lwp.xiaoyun_core.util.file.FileUtil;
 
@@ -19,6 +20,8 @@ import okhttp3.ResponseBody;
  * </pre>
  */
 public class DebugInterceptor extends BaseInterceptor {
+
+    private static final String TAG = "DebugInterceptor";
 
     //模拟URL（Debug URL）
     private final String DEBUG_URL;
@@ -65,6 +68,8 @@ public class DebugInterceptor extends BaseInterceptor {
             // ！调用  DebugInterceptor(String debugUrl, int rawId) 来设定！！！
             return debugResponse(chain, DEBUG_RAW_ID);
         }
-        return chain.proceed(chain.request());
+
+        Log.d(TAG, "intercept: 拦截成功!!!");
+        return chain.proceed(chain.request().newBuilder().build());
     }
 }

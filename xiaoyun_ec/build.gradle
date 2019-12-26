@@ -68,4 +68,6 @@ dependencies {
     //数据库依赖
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'
+    //Log
+    implementation 'com.orhanobut:logger:2.2.0'
 }

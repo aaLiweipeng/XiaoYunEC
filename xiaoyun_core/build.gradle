@@ -64,7 +64,7 @@ dependencies {
     //Json 处理  用的是阿里巴巴的框架，解析的速度和应用性应该比Google的GSON和Jackson好很多
     implementation 'com.alibaba:fastjson:1.1.68.android'
     //Log
-    implementation 'com.orhanobut:logger:2.1.1'
+    implementation 'com.orhanobut:logger:2.2.0'
     //数据库依赖
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'

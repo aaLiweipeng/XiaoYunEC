@@ -44,21 +44,24 @@ public class SignUpDelegate extends XiaoYunDelegate {
         if (checkForm()) {
             //如果 用户输入的注册信息没问题
 
-            RestClient.builder()
-                    .url("http://lcjxg.cn/RestServer/data/user_profile.json")
-                    .loader(getContext())
-                    .params("name",mName.getText().toString())
-                    .params("email",mEmail.getText().toString())
-                    .params("phone",mPhone.getText().toString())
-                    .params("password",mPassword.getText().toString())
-                    .success(new ISuccess() {
-                        @Override
-                        public void onSuccess(String response) {
-                            XiaoYunLogger.json("USER_PROFILE",response);
-                        }
-                    })
-                    .build()
-                    .post();
+//            RestClient.builder()
+//                    .url("http://lcjxg.cn/RestServer/data/user_profile.json")
+//                    .loader(getContext())
+//                    .params("name",mName.getText().toString())
+//                    .params("email",mEmail.getText().toString())
+//                    .params("phone",mPhone.getText().toString())
+//                    .params("password",mPassword.getText().toString())
+//                    .success(new ISuccess() {
+//                        @Override
+//                        public void onSuccess(String response) {
+//                            XiaoYunLogger.json("USER_PROFILE",response);
+//                        }
+//                    })
+//                    .build()
+//                    .post();
+
+
+
             Toast.makeText(getContext(), "验证通过", Toast.LENGTH_LONG).show();
         }
 

@@ -6,6 +6,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.database.DatabaseManager;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
+import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 /**
  * <pre>

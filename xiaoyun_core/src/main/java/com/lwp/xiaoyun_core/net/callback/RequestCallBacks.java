@@ -1,6 +1,7 @@
 package com.lwp.xiaoyun_core.net.callback;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
@@ -19,6 +20,9 @@ import retrofit2.Response;
  * </pre>
  */
 public class RequestCallBacks implements Callback<String> {
+
+    private static final String TAG = "RequestCallBacks";
+
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
@@ -38,6 +42,8 @@ public class RequestCallBacks implements Callback<String> {
     public void onResponse(Call<String> call, Response<String> response) {
         if (response.isSuccessful()) {
             //如果请求成功
+
+            Log.d(TAG, "onResponse: response返回成功，走onSuccess ");
             if (call.isExecuted()) {
                 //如果 RestClient 中的 Call 已经执行了
                 //严谨地多一层判空之后，调用onSuccess方法
@@ -46,17 +52,20 @@ public class RequestCallBacks implements Callback<String> {
                 }
             }
         } else {
+            Log.d(TAG, "onResponse: response没有返回成功，走onError ");
+
             if (ERROR != null) {
                 ERROR.onError(response.code(), response.message());
             }
         }
         stopLoading();//请求结束时候 关闭 Loader！！
-
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
+        
         if (FAILURE != null) {
+            Log.d(TAG, "onFailure: 请求取消，走onFailure()");
             FAILURE.onFailure();
         }
         if (REQUEST != null) {
@@ -75,7 +84,7 @@ public class RequestCallBacks implements Callback<String> {
                     //关闭 Loader！！
                     XiaoYunLoader.stopLoading();
                 }
-            },2000);
+            },1000);
         }
     }
 }

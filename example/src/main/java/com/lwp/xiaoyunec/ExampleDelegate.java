@@ -34,6 +34,13 @@ public class ExampleDelegate extends XiaoYunDelegate {
         testRestClient();
     }
 
+
+
+    //http://mock.fulingjie.com/mock-android/data/user_profile.json
+    //http://lcjxg.cn/RestServer/data/user_profile.json
+    //https://news.baidu.com   可以
+    //http://127.0.0.1/index   可以
+
     private void testRestClient() {
         Toast.makeText(getContext(), "开始testRestClient()", Toast.LENGTH_LONG).show();
 
@@ -41,7 +48,7 @@ public class ExampleDelegate extends XiaoYunDelegate {
         //构建完毕之后调用get()方法，后续程序就会 进到 RestClient 中的 request()，
         // 通过 switch 初始化了 call 之后，用 enqueue() 异步执行请求
         RestClient.builder()
-                .url("http://127.0.0.1/index")
+                .url("http://lcjxg.cn/RestServer/data/user_profile.json")
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override

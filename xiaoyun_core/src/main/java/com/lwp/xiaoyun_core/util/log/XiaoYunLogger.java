@@ -1,5 +1,6 @@
 package com.lwp.xiaoyun_core.util.log;
 
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -17,6 +18,10 @@ public final class XiaoYunLogger {
 
     //控制log等级
     private static int LEVEL = VERBOSE;
+
+    public static void init() {
+        Logger.addLogAdapter(new AndroidLogAdapter());
+    }
 
     public static void v(String tag, String message) {
         if (LEVEL <= VERBOSE) {

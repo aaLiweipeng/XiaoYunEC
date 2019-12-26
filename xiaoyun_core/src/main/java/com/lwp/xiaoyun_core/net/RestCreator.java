@@ -42,8 +42,8 @@ public class RestCreator {
 
         //这里取到了 全局应用配置数据Map中的  HOST 值！！！！赋给局部变量！
         // 这个值便 来自于 框架初始化的时候，
-        // XiaoYun.init(this).withApiHost("http://127.0.0.1/").configure(); 中，.withApiHost()配置的值！！！
-        private static final String BASE_URL = (String) XiaoYun.getConfiguration(ConfigKeys.API_HOST);
+        // XiaoYun.init(this).withApiHost("https://127.0.0.1/").configure(); 中，.withApiHost()配置的值！！！
+        private static final String BASE_URL = XiaoYun.getConfiguration(ConfigKeys.API_HOST);
 //        private static final String BASE_URL = (String) XiaoYun.getConfigurations().get(ConfigKeys.API_HOST.name()); //旧版写法
 
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()//这里是 Android简化版的 建造者模式

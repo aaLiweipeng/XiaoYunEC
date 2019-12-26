@@ -2,6 +2,8 @@ package com.lwp.xiaoyun_core.app;
 
 import android.content.Context;
 
+import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
+
 /**
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
@@ -24,6 +26,8 @@ public final class XiaoYun {
                 .getXiaoyunConfigs()
                 .put(ConfigKeys.APPLICATION_CONTEXT,
                         context.getApplicationContext());
+        //初始化Logger
+        XiaoYunLogger.init();
 
         //旧版写法
 //        getConfigurations().

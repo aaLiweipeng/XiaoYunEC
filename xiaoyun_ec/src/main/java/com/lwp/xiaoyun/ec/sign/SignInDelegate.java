@@ -5,10 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.net.RestClient;
+import com.lwp.xiaoyun_core.net.callback.IError;
+import com.lwp.xiaoyun_core.net.callback.IFailure;
+import com.lwp.xiaoyun_core.net.callback.ISuccess;
+import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,9 +37,40 @@ public class SignInDelegate extends XiaoYunDelegate {
 
     @OnClick(R2.id.btn_sign_in)
     void onClickSignIn() {
-        //点击 登录按钮
-        if (checkForm()) {
 
+
+        //https://mock.fulingjie.com/mock-android/data/user_profile.json
+        //http://lcjxg.cn/RestServer/data/user_profile.json
+        //https://news.baidu.com/   可以
+        //http://127.0.0.1/index   可以
+
+        //点击 登录按钮
+        RestClient.builder()
+                .url("http://lcjxg.cn/RestServer/data/user_profile.json")
+                .loader(getContext())
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        XiaoYunLogger.json("USER_PROFILE",response);
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                    }
+                })
+                .failure(new IFailure() {
+                    @Override
+                    public void onFailure() {
+                        Toast.makeText(getContext(), "请求失败", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .error(new IError() {
+                    @Override
+                    public void onError(int code, String msg) {
+
+                    }
+                })
+                .build()
+                .get();
+
+        if (checkForm()) {
         }
     }
 
