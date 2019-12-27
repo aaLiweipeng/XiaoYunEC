@@ -2,6 +2,7 @@ package com.lwp.xiaoyunec;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.database.DatabaseManager;
 import com.lwp.xiaoyun_core.app.XiaoYun;
@@ -26,5 +27,15 @@ public class ExampleApp extends Application {
                 .withIcon(new FontAwesomeModule())
                 .configure();
         DatabaseManager.getInstance().init(this);
+        initStetho();
+    }
+
+    private void initStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build()
+        );
     }
 }
