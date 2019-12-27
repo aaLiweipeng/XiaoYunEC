@@ -2,12 +2,10 @@ package com.lwp.xiaoyunec;
 
 import android.app.Application;
 
-import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.database.DatabaseManager;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
-import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 /**
  * <pre>
@@ -27,15 +25,17 @@ public class ExampleApp extends Application {
                 .withIcon(new FontAwesomeModule())
                 .configure();
         DatabaseManager.getInstance().init(this);
-        initStetho();
+
+
+//        initStetho();
     }
 
-    private void initStetho() {
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                        .build()
-        );
-    }
+//    private void initStetho() {
+//        Stetho.initialize(
+//                Stetho.newInitializerBuilder(this)
+//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+//                        .build()
+//        );
+//    }
 }
