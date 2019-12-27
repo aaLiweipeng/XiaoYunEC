@@ -69,7 +69,8 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
             //sharePreference 工具
             // 设置一个标志键值
             //用于 判断APP是不是第一次进入
-            //第一次使用，传入键值为true，之后就不用再使用 滚动启动图组件了； 非第一次使用，就false
+            //第一次使用，传入键值为true，之后就不用再使用 滚动启动图组件了；
+            // 非第一次使用，就false；没有这个键，默认为 false
             XiaoyunPreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(), true);
 
             //检查用户是否已经登录

@@ -76,6 +76,7 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
             start(new LauncherScrollDelegate(), SINGLETASK);
         } else {
             //检查用户是否登录了 APP
+
         }
     }
 
