@@ -21,8 +21,8 @@ public class ExampleApp extends Application {
         super.onCreate();
 
         XiaoYun.init(this)
-                .withInterceptor(new DebugInterceptor("index", R.raw.test))
-                .withApiHost("http://127.0.0.1/")
+                .withInterceptor(new DebugInterceptor("user_profile", R.raw.user_profile))
+                .withApiHost("https://127.0.0.1/")
                 .withIcon(new FontAwesomeModule())
                 .configure();
         DatabaseManager.getInstance().init(this);

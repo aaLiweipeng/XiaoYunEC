@@ -11,6 +11,8 @@ import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.RestClient;
+import com.lwp.xiaoyun_core.net.callback.IError;
+import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
@@ -38,9 +40,42 @@ public class SignUpDelegate extends XiaoYunDelegate {
     @BindView(R2.id.edit_sign_up_re_password)
     TextInputEditText mRePassword = null;
 
+
+    //http://mock.fulingjie.com/mock-android/data/user_profile.json
+    //http://lcjxg.cn/RestServer/data/user_profile.json
+    //https://news.baidu.com/   可以
+
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         //点击 注册按钮
+
+        RestClient.builder()
+                .url("http://mock.fulingjie.com/mock-android/data/user_profile.json")
+                .loader(getContext())
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        XiaoYunLogger.json("USER_PROFILE",response);
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        SignHandler.onSignUp(response);
+                    }
+                })
+                .failure(new IFailure() {
+                    @Override
+                    public void onFailure() {
+                        Toast.makeText(getContext(), "请求失败", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .error(new IError() {
+                    @Override
+                    public void onError(int code, String msg) {
+
+                    }
+                })
+                .build()
+                .get();
+
+
         if (checkForm()) {
             //如果 用户输入的注册信息没问题
 
@@ -59,6 +94,7 @@ public class SignUpDelegate extends XiaoYunDelegate {
 //                    })
 //                    .build()
 //                    .post();
+
 
 
 
