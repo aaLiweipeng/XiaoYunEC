@@ -10,6 +10,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun.ec.launcher.LauncherDelegate;
 import com.lwp.xiaoyun.ec.launcher.LauncherScrollDelegate;
+import com.lwp.xiaoyun.ec.sign.ISignListener;
 import com.lwp.xiaoyun.ec.sign.SignInDelegate;
 import com.lwp.xiaoyun.ec.sign.SignUpDelegate;
 import com.lwp.xiaoyun_core.activities.ProxyActivity;
@@ -18,7 +19,7 @@ import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
 
 
-public class ExampleActivity extends ProxyActivity {
+public class ExampleActivity extends ProxyActivity implements ISignListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +49,16 @@ public class ExampleActivity extends ProxyActivity {
 
         //测试注册碎片、登录碎片（注册碎片中的Link 可以跳转到 登录碎片）
         return new SignUpDelegate();
+    }
+
+    @Override
+    public void onSignInSuccess() {
+
+    }
+
+    @Override
+    public void onSignUpSuccess() {
+        Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
     }
 
 //    @Override

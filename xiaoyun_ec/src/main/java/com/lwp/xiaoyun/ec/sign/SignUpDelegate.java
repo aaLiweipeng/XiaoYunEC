@@ -1,5 +1,6 @@
 package com.lwp.xiaoyun.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -40,6 +41,17 @@ public class SignUpDelegate extends XiaoYunDelegate {
     @BindView(R2.id.edit_sign_up_re_password)
     TextInputEditText mRePassword = null;
 
+    private ISignListener mISignListener = null;
+
+    //注意这里是 Support Activity 中的 onAttach
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            //如果绑定的 Activity 实现了 ISignListener！！！
+            mISignListener = (ISignListener) activity;
+        }
+    }
 
     //http://mock.fulingjie.com/mock-android/data/user_profile.json
     //http://lcjxg.cn/RestServer/data/user_profile.json
@@ -57,7 +69,7 @@ public class SignUpDelegate extends XiaoYunDelegate {
                     public void onSuccess(String response) {
                         XiaoYunLogger.json("USER_PROFILE",response);
                         Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
-                        SignHandler.onSignUp(response);
+                        SignHandler.onSignUp(response, mISignListener);
                     }
                 })
                 .failure(new IFailure() {
