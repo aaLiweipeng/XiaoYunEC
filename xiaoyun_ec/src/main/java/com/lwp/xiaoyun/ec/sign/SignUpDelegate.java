@@ -69,6 +69,7 @@ public class SignUpDelegate extends XiaoYunDelegate {
                     public void onSuccess(String response) {
                         XiaoYunLogger.json("USER_PROFILE",response);
                         Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        //注册逻辑调用
                         SignHandler.onSignUp(response, mISignListener);
                     }
                 })

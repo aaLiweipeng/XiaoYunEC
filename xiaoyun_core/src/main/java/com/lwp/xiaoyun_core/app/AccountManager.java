@@ -6,7 +6,8 @@ import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/27 19:30
- *     desc   : 管理用户登录状态， 根据用户登录状态 执行相关回调
+ *     desc   : 管理用户登录状态，
+ *              根据用户登录状态(是否有登录，是否有用户信息） 执行相关回调
  * </pre>
  */
 public class AccountManager {

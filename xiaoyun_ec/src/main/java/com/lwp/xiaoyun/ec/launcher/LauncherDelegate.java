@@ -1,5 +1,6 @@
 package com.lwp.xiaoyun.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
@@ -7,7 +8,11 @@ import android.view.View;
 
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
+import com.lwp.xiaoyun_core.app.AccountManager;
+import com.lwp.xiaoyun_core.app.IUserChecker;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.ui.launcher.ILauncherListener;
+import com.lwp.xiaoyun_core.ui.launcher.OnLauncherFinishTag;
 import com.lwp.xiaoyun_core.ui.launcher.ScrollLauncherTag;
 import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
 import com.lwp.xiaoyun_core.util.timer.BaseTimerTask;
@@ -39,6 +44,8 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
     //倒计时 5s
     private int mCount = 5;
 
+    private ILauncherListener mILauncherListener = null;
+
     @OnClick(R2.id.tv_launcher_timer)
     void onClickTimerView() {
         if (mTimer != null) {
@@ -48,11 +55,20 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
         }
     }
 
+
     private void initTimer() {
         mTimer = new Timer();
         final BaseTimerTask task = new BaseTimerTask(this);
         //立即执行任务 每秒执行一次
         mTimer.schedule(task,0,1000);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) activity;
+        }
     }
 
     @Override
@@ -76,7 +92,21 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
             start(new LauncherScrollDelegate(), SINGLETASK);
         } else {
             //检查用户是否登录了 APP
+            AccountManager.checkAccout(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
 
+                @Override
+                public void onNoSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 
