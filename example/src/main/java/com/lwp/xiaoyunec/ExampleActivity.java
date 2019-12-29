@@ -17,9 +17,13 @@ import com.lwp.xiaoyun_core.activities.ProxyActivity;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
+import com.lwp.xiaoyun_core.ui.launcher.ILauncherListener;
+import com.lwp.xiaoyun_core.ui.launcher.OnLauncherFinishTag;
 
 
-public class ExampleActivity extends ProxyActivity implements ISignListener {
+public class ExampleActivity extends ProxyActivity implements
+        ISignListener,
+        ILauncherListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,13 +46,13 @@ public class ExampleActivity extends ProxyActivity implements ISignListener {
 //        return new ExampleDelegate();
 
         //测试倒计时启动图
-//        return new LauncherDelegate();
+        return new LauncherDelegate();
 
         //测试 滚动启动图
 //        return new LauncherScrollDelegate();
 
         //测试注册碎片、登录碎片（注册碎片中的Link 可以跳转到 登录碎片）
-        return new SignUpDelegate();
+//        return new SignUpDelegate();
     }
 
     @Override
@@ -59,6 +63,22 @@ public class ExampleActivity extends ProxyActivity implements ISignListener {
     @Override
     public void onSignUpSuccess() {
         Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onLauncherFinish(OnLauncherFinishTag tag) {
+        switch (tag) {
+            case SIGNED:
+                Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_SHORT).show();
+                break;
+
+            case NOT_SIGNED:
+                Toast.makeText(this, "启动结束，用户没登录", Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                break;
+        }
     }
 
 //    @Override

@@ -1,5 +1,6 @@
 package com.lwp.xiaoyun.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -7,8 +8,12 @@ import android.view.View;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.lwp.xiaoyun.ec.R;
+import com.lwp.xiaoyun_core.app.AccountManager;
+import com.lwp.xiaoyun_core.app.IUserChecker;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.ui.launcher.ILauncherListener;
 import com.lwp.xiaoyun_core.ui.launcher.LauncherHolderCreator;
+import com.lwp.xiaoyun_core.ui.launcher.OnLauncherFinishTag;
 import com.lwp.xiaoyun_core.ui.launcher.ScrollLauncherTag;
 import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
 
@@ -18,7 +23,7 @@ import java.util.ArrayList;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/23 3:35
- *     desc   :
+ *     desc   : 轮播图启动图逻辑
  * </pre>
  */
 public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemClickListener {
@@ -30,6 +35,9 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
     private ConvenientBanner<Integer> mConvenientBanner = null;
     //用于存储图片（id） 的 ArrayList
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>();
+
+    private ILauncherListener mILauncherListener = null;
+
 
     private void initBanner() {
         INTEGERS.add(R.mipmap.launcher_01);
@@ -44,6 +52,14 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
                 .setOnItemClickListener(this)
                 .setCanLoop(false);//设置可以循环
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) activity;
+        }
     }
 
     //配置根视图布局 同时 初始化组件
@@ -64,7 +80,9 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
 
     @Override
     public void onItemClick(int position) {
-        //如果点击了最后一个滚动图
+        //如果点击了最后一个滚动图，
+        // 至此APP启动结束
+
         if (position == INTEGERS.size() - 1) {
             //sharePreference 工具
             // 设置一个标志键值
@@ -74,6 +92,21 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
             XiaoyunPreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(), true);
 
             //检查用户是否已经登录
+            AccountManager.checkAccout(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
+
+                @Override
+                public void onNoSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 }

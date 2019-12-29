@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/22 18:17
- *     desc   :
+ *     desc   : 倒计时启动图逻辑
  * </pre>
  */
 public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener {
@@ -82,7 +82,8 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
         initTimer();
     }
 
-    //判断是否显示滑动启动页
+    //倒计时启动图 的 计时任务结束了的时候 调用
+    // 判断是否显示滑动启动页
     private void checkIsShowScroll() {
         if (!XiaoyunPreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())) {
             //如果 HAS_FIRST_LAUNCHER_APP 为空，证明 滚动启动页 还没有被启动过
@@ -91,6 +92,10 @@ public class LauncherDelegate extends XiaoYunDelegate implements ITimerListener 
             //SINGLETASK 是模仿 Activity启动栈 的
             start(new LauncherScrollDelegate(), SINGLETASK);
         } else {
+            // HAS_FIRST_LAUNCHER_APP 不空，
+            // 证明 滚动启动页 已经被启动过，
+            // 至此APP启动完毕
+
             //检查用户是否登录了 APP
             AccountManager.checkAccout(new IUserChecker() {
                 @Override
