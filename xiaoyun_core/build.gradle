@@ -40,27 +40,26 @@ dependencies {
     //字体图标
     implementation 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
     implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
-
     // Fragmentation 依赖
     // appcompat-v7包是必须的
     implementation 'me.yokeyword:fragmentation:1.3.8'
-    implementation 'me.yokeyword:fragmentation-swipeback:1.3.8'//在边缘上滑动，可以回到上一个Fragment
-
+    implementation 'me.yokeyword:fragmentation-swipeback:1.3.8'
+    //在边缘上滑动，可以回到上一个Fragment
     //引入ButterKnife
     implementation 'com.jakewharton:butterknife:9.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0'
-
     //网络请求依赖
-    implementation("com.squareup.okhttp3:okhttp:3.14.0")
+    implementation 'com.squareup.okhttp3:okhttp:3.14.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-//    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'//对应Retrofit的 转换器 可以返回String类型
+    //    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    //对应Retrofit的 转换器 可以返回String类型
     //Loading
     implementation 'com.wang.avi:library:2.1.3'
     //Banner依赖
     implementation 'com.bigkoo:convenientbanner:2.0.5'
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
-//    implementation 'androidx.recyclerview:recyclerview:1.0.0+'
+    //    implementation 'androidx.recyclerview:recyclerview:1.0.0+'
     //Json 处理  用的是阿里巴巴的框架，解析的速度和应用性应该比Google的GSON和Jackson好很多
     implementation 'com.alibaba:fastjson:1.1.68.android'
     //Log
@@ -68,5 +67,4 @@ dependencies {
     //数据库依赖
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'
-
 }
