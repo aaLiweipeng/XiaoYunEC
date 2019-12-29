@@ -13,7 +13,7 @@ import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2019/12/26 16:19
- *     desc   : 注册成功时候回调
+ *     desc   : 登录、注册成功时候 回调
  * </pre>
  */
 public class SignHandler {
@@ -32,8 +32,10 @@ public class SignHandler {
         DatabaseManager.getInstance().getDao().insert(profile);
         XiaoYunLogger.v("SIGNHANDLER_INSERT", "插入数据库成功");
 
-        //保存用户状态，已经注册 并登录成功了
+        //保存用户状态！！！！已经注册 并登录成功了！！
         AccountManager.setSignState(true);
+
+        //登录成功 的回调
         signListener.onSignInSuccess();
     }
 
@@ -52,8 +54,10 @@ public class SignHandler {
         DatabaseManager.getInstance().getDao().insert(profile);
         XiaoYunLogger.v("SIGNHANDLER_INSERT", "插入数据库成功");
 
-        //保存用户状态，已经注册 并登录成功了
+        //保存用户状态！！！！已经注册 并登录成功了！！
         AccountManager.setSignState(true);
+
+        //注册成功 的回调
         signListener.onSignUpSuccess();
     }
 }

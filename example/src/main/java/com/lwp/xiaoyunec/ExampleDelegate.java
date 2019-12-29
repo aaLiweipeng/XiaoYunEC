@@ -31,7 +31,7 @@ public class ExampleDelegate extends XiaoYunDelegate {
     //在 onCreateView() 中，绑定根视图完成后调用！！！
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        testRestClient();
+//        testRestClient();
     }
 
 

@@ -66,7 +66,7 @@ public class SignInDelegate extends XiaoYunDelegate {
                     public void onSuccess(String response) {
                         XiaoYunLogger.json("USER_PROFILE",response);
                         Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
-                        //登录逻辑调用
+                        //登录成功逻辑 调用
                         SignHandler.onSignIn(response, mISignListener);
                     }
                 })

@@ -19,6 +19,7 @@ import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
 import com.lwp.xiaoyun_core.ui.launcher.ILauncherListener;
 import com.lwp.xiaoyun_core.ui.launcher.OnLauncherFinishTag;
+import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 
 public class ExampleActivity extends ProxyActivity implements
@@ -57,11 +58,13 @@ public class ExampleActivity extends ProxyActivity implements
 
     @Override
     public void onSignInSuccess() {
+        XiaoYunLogger.v("SIGN_IN_SUCCESS", "登录成功");
         Toast.makeText(this, "登录成功", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onSignUpSuccess() {
+        XiaoYunLogger.v("SIGN_UP_SUCCESS", "登录成功");
         Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
     }
 
@@ -70,10 +73,16 @@ public class ExampleActivity extends ProxyActivity implements
         switch (tag) {
             case SIGNED:
                 Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_SHORT).show();
+                //测试
+                startWithPop(new ExampleDelegate());
                 break;
 
             case NOT_SIGNED:
                 Toast.makeText(this, "启动结束，用户没登录", Toast.LENGTH_SHORT).show();
+                //在start 的同时 ，把栈中上一个元素清除掉，
+                // 启动图 完了之后就可以清除掉了（启动图模块 启动结束后 会调用到这里 ）
+                //进入 登录页面
+                startWithPop(new SignInDelegate());
                 break;
 
             default:
