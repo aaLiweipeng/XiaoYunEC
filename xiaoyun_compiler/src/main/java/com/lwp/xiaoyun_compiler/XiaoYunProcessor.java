@@ -59,8 +59,8 @@ public class XiaoYunProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-
-        return false;
+        generateEntryCode(roundEnvironment);
+        return true;
     }
 
     private void scan(RoundEnvironment env, Class<? extends Annotation> annotation,
@@ -85,8 +85,31 @@ public class XiaoYunProcessor extends AbstractProcessor {
     }
 
     //visitor 相当于 注解 所注解的类、变量、方法 里面 所传入的值
-
+    //本方法在 process() 中被调用
     private void generateEntryCode(RoundEnvironment env) {
 
+        final EntryVisitor entryVisitor = new EntryVisitor();
+
+        entryVisitor.setFiler(processingEnv.getFiler());
+
+        scan(env, EntryGenerator.class, entryVisitor);
+    }
+
+    private void generatePayEntryCode(RoundEnvironment env) {
+
+        final EntryVisitor entryVisitor = new EntryVisitor();
+
+        entryVisitor.setFiler(processingEnv.getFiler());
+
+        scan(env, EntryGenerator.class, entryVisitor);
+    }
+
+    private void generateAppRegisterCode(RoundEnvironment env) {
+
+        final EntryVisitor entryVisitor = new EntryVisitor();
+
+        entryVisitor.setFiler(processingEnv.getFiler());
+
+        scan(env, EntryGenerator.class, entryVisitor);
     }
 }

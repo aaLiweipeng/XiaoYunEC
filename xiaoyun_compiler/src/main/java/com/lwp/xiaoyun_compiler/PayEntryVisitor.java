@@ -18,7 +18,7 @@ import javax.lang.model.util.SimpleAnnotationValueVisitor7;
  *     desc   :
  * </pre>
  */
-public final class EntryVisitor extends SimpleAnnotationValueVisitor7<Void, Void> {
+public final class PayEntryVisitor extends SimpleAnnotationValueVisitor7<Void, Void> {
 
     private Filer mFiler = null;// XiaoYunProcessor.scan() 中 需要被遍历的东西
     private TypeMirror mTypeMirror = null;//要循环找的类型
@@ -49,9 +49,9 @@ public final class EntryVisitor extends SimpleAnnotationValueVisitor7<Void, Void
     private void generateJavaCode() {
 
         //classBuilder 传入 要生成的类的类名，
-        // 微信接入 要求的类是 WXEntryActivity、WXPayEntryActivity等
+        // 微信接入 要求的类是 WXEntryActivity
         final TypeSpec targetActivity =
-                TypeSpec.classBuilder("WXEntryActivity")
+                TypeSpec.classBuilder("WXPayEntryActivity等")
                         .addModifiers(Modifier.PUBLIC)
                         .addModifiers(Modifier.FINAL)
                         .superclass(TypeName.get(mTypeMirror))//要生成的类要继承的是 从注解中拿出来的 模板类类型
@@ -59,7 +59,7 @@ public final class EntryVisitor extends SimpleAnnotationValueVisitor7<Void, Void
 
         // JavaFile.builder( 最终包名 + 类名 )
         final JavaFile javaFile = JavaFile.builder(mPackageName+".wxapi",targetActivity)
-                .addFileComment("微信入口文件")// 文件注释
+                .addFileComment("微信支付入口文件")// 文件注释
                 .build();
 
         try {
