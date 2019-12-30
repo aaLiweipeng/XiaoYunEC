@@ -6,7 +6,6 @@ import com.lwp.xiaoyun_annotations.EntryGenerator;
 import com.lwp.xiaoyun_annotations.PayEntryGenerator;
 
 import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,21 +21,11 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
-/**
- * <pre>
- *     author : 李蔚蓬（简书_凌川江雪）
- *     time   : 2019/12/30 4:09
- *     desc   : 效仿 ButterKnifeProcessor 来完成
- *              https://github.com/JakeWharton/butterknife/blob/master/butterknife-compiler/src/main/java/butterknife/compiler/ButterKnifeProcessor.java
- * </pre>
- */
 
 @SuppressWarnings("unused")
-@AutoService(Processor.class)//使用AutoService 自动生成spi 信息代码
+@AutoService(Processor.class)
 public class XiaoYunProcessor extends AbstractProcessor {
 
-    //循环取出 getSupportedAnnotations() 中的 Set 的元素
-    //将 <Class<? extends Annotation> 类型的Set 迭代转化成 <String> 类型的 Set
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         final Set<String> types = new LinkedHashSet<>();
@@ -47,7 +36,6 @@ public class XiaoYunProcessor extends AbstractProcessor {
         return types;
     }
 
-    //用一个 Set 存储所有要用到的 注解类类型
     private Set<Class<? extends Annotation>> getSupportedAnnotations() {
 
         final Set<Class<? extends Annotation>> annotations = new LinkedHashSet<>();
@@ -68,12 +56,10 @@ public class XiaoYunProcessor extends AbstractProcessor {
     private void scan(RoundEnvironment env, Class<? extends Annotation> annotation,
                       AnnotationValueVisitor visitor) {
 
-        //env 类似相当于 整个代码的环境
         for (Element typeElement : env.getElementsAnnotatedWith(annotation)) {
             final List<? extends AnnotationMirror> annotationMirrors =
                     typeElement.getAnnotationMirrors();
 
-            //嵌套循环
             for (AnnotationMirror annotationMirror : annotationMirrors) {
                 final Map<? extends ExecutableElement, ? extends AnnotationValue> elementValues
                         = annotationMirror.getElementValues();
@@ -86,8 +72,6 @@ public class XiaoYunProcessor extends AbstractProcessor {
         }
     }
 
-    //visitor 相当于 注解 所注解的类、变量、方法 里面 所传入的值
-    //本方法在 process() 中被调用
     private void generateEntryCode(RoundEnvironment env) {
 
         final EntryVisitor entryVisitor = new EntryVisitor();
@@ -99,11 +83,11 @@ public class XiaoYunProcessor extends AbstractProcessor {
     private void generatePayEntryCode(RoundEnvironment env) {
         final PayEntryVisitor payEntryVisitor = new PayEntryVisitor();
         payEntryVisitor.setFiler(processingEnv.getFiler());
-        scan(env, EntryGenerator.class, payEntryVisitor);
+        scan(env, PayEntryGenerator.class, payEntryVisitor);
     }
     private void generateAppRegisterCode(RoundEnvironment env) {
         final AppRegisterVisitor appRegisterVisitor = new AppRegisterVisitor();
         appRegisterVisitor.setFiler(processingEnv.getFiler());
-        scan(env, EntryGenerator.class, appRegisterVisitor);
+        scan(env, AppRegisterGenerator.class, appRegisterVisitor);
     }
 }
