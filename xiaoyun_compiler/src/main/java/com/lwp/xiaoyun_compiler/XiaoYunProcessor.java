@@ -60,6 +60,8 @@ public class XiaoYunProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         generateEntryCode(roundEnvironment);
+        generatePayEntryCode(roundEnvironment);
+        generateAppRegisterCode(roundEnvironment);
         return true;
     }
 
@@ -94,22 +96,14 @@ public class XiaoYunProcessor extends AbstractProcessor {
 
         scan(env, EntryGenerator.class, entryVisitor);
     }
-
     private void generatePayEntryCode(RoundEnvironment env) {
-
-        final EntryVisitor entryVisitor = new EntryVisitor();
-
-        entryVisitor.setFiler(processingEnv.getFiler());
-
-        scan(env, EntryGenerator.class, entryVisitor);
+        final PayEntryVisitor payEntryVisitor = new PayEntryVisitor();
+        payEntryVisitor.setFiler(processingEnv.getFiler());
+        scan(env, EntryGenerator.class, payEntryVisitor);
     }
-
     private void generateAppRegisterCode(RoundEnvironment env) {
-
-        final EntryVisitor entryVisitor = new EntryVisitor();
-
-        entryVisitor.setFiler(processingEnv.getFiler());
-
-        scan(env, EntryGenerator.class, entryVisitor);
+        final AppRegisterVisitor appRegisterVisitor = new AppRegisterVisitor();
+        appRegisterVisitor.setFiler(processingEnv.getFiler());
+        scan(env, EntryGenerator.class, appRegisterVisitor);
     }
 }
