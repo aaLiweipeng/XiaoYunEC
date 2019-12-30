@@ -67,4 +67,7 @@ dependencies {
     //数据库依赖
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'
+    //微信依赖
+    //noinspection GradleDynamicVersion
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

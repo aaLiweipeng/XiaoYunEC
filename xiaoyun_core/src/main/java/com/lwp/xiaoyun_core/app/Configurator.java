@@ -1,5 +1,7 @@
 package com.lwp.xiaoyun_core.app;
 
+import android.app.Activity;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -83,11 +85,24 @@ public class Configurator {
         XIAOYUN_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
         return this;
     }
+    public final Configurator withWeChatAppId(String appId) {
+        XIAOYUN_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID, appId);
+        return this;
+    }
+    public final Configurator withWeChatAppSecret(String appSecret) {
+        XIAOYUN_CONFIGS.put(ConfigKeys.WE_CHAT_APP_SECRET, appSecret);
+        return this;
+    }
+    public final Configurator withActivity(Activity activity) {
+        XIAOYUN_CONFIGS.put(ConfigKeys.ACTIVITY, activity);
+        return this;
+    }
     //配置完成时，调用本方法，配置完成位置位
     public final void configure() {
         initIcons();//字体图标库是非常通用的，写在这里保证初始化完成时图标库也初始化完成
         XIAOYUN_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
     }
+
 
     //初始化字体图标库空间
     public void initIcons() {

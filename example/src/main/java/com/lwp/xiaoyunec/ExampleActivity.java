@@ -28,12 +28,13 @@ public class ExampleActivity extends ProxyActivity implements
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         //隐藏 ActionBar
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-        super.onCreate(savedInstanceState);
+        XiaoYun.getConfigurator().withActivity(this);//配置全局 Activity
     }
 
     @Override
