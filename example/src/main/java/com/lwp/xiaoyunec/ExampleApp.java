@@ -23,6 +23,8 @@ public class ExampleApp extends Application {
                 .withInterceptor(new DebugInterceptor("user_profile", R.raw.user_profile))
                 .withApiHost("https://127.0.0.1/")
                 .withIcon(new FontAwesomeModule())
+                .withWeChatAppId("")
+                .withWeChatAppSecret("")
                 .configure();
         DatabaseManager.getInstance().init(this);
 

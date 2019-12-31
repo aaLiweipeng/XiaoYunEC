@@ -10,12 +10,15 @@ import android.widget.Toast;
 
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
+import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.net.callback.IError;
 import com.lwp.xiaoyun_core.net.callback.IFailure;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
+import com.lwp.xiaoyun_core.wechat.XiaoYunWeChat;
+import com.lwp.xiaoyun_core.wechat.callbacks.IWeChatSignInCallback;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -92,7 +95,13 @@ public class SignInDelegate extends XiaoYunDelegate {
     //微信登录的内容
     @OnClick(R2.id.icon_sign_in_wechat)
     void onClickWeChat() {
+        //配置好接口，然后登录
+        XiaoYunWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
+            @Override
+            public void onSignInSuccess(String userInfo) {
 
+            }
+        }).signIn();
     }
 
     //还没有注册的情况，跳转到 注册碎片

@@ -20,7 +20,8 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
  */
 public abstract class BaseWXEntryActivity extends BaseWXActivity {
 
-    //用户登录成功后 回调
+    //用户登录成功后 回调，往下看， 在第二次向微信平台请求成功后调用这个方法，
+    // 这个方法在 WXEntryTemplate 中 覆盖实现
     protected abstract void onSignInSuccess(String userInfo);
 
     //微信 发送请求到 第三方应用 后的回调
@@ -30,6 +31,7 @@ public abstract class BaseWXEntryActivity extends BaseWXActivity {
     }
 
     //第三方应用 发送请求到 微信 后的回调
+    //即在 XiaoYunWeChat 中发送的请求 signIn()
     @Override
     public void onResp(BaseResp baseResp) {
 
