@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.lwp.xiaoyun_core.app.ConfigKeys;
 import com.lwp.xiaoyun_core.app.XiaoYun;
+import com.lwp.xiaoyun_core.wechat.callbacks.IWeChatSignInCallback;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -21,6 +22,8 @@ public class XiaoYunWeChat {
     public static final String APP_SECRET = XiaoYun.getConfiguration(ConfigKeys.WE_CHAT_APP_SECRET);
 
     private final IWXAPI WXAPI;
+
+    private IWeChatSignInCallback mSignInCallback = null;
 
     private static final class Holder {
         private static final XiaoYunWeChat INSTANCE = new XiaoYunWeChat();
@@ -39,6 +42,15 @@ public class XiaoYunWeChat {
 
     public final IWXAPI getWXAPI() {
         return WXAPI;
+    }
+
+    public XiaoYunWeChat onSignSuccess(IWeChatSignInCallback callback) {
+        //方便 链式配置
+        this.mSignInCallback = callback;
+        return this;
+    }
+    public IWeChatSignInCallback getSignInCallback() {
+        return mSignInCallback;
     }
 
     //微信规定的 登录api 的方法
