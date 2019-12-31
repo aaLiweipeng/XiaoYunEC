@@ -17,8 +17,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * </pre>
  */
 public class XiaoYunWeChat {
-    static final String APP_ID = XiaoYun.getConfiguration(ConfigKeys.WE_CHAT_APP_ID);
-    static final String APP_SECRET = XiaoYun.getConfiguration(ConfigKeys.WE_CHAT_APP_SECRET);
+    public static final String APP_ID = XiaoYun.getConfiguration(ConfigKeys.WE_CHAT_APP_ID);
+    public static final String APP_SECRET = XiaoYun.getConfiguration(ConfigKeys.WE_CHAT_APP_SECRET);
 
     private final IWXAPI WXAPI;
 
