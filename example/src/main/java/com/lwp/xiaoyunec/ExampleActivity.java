@@ -10,6 +10,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun.ec.launcher.LauncherDelegate;
 import com.lwp.xiaoyun.ec.launcher.LauncherScrollDelegate;
+import com.lwp.xiaoyun.ec.main.EcBottomDelegate;
 import com.lwp.xiaoyun.ec.sign.ISignListener;
 import com.lwp.xiaoyun.ec.sign.SignInDelegate;
 import com.lwp.xiaoyun.ec.sign.SignUpDelegate;
@@ -75,7 +76,8 @@ public class ExampleActivity extends ProxyActivity implements
             case SIGNED:
                 Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_SHORT).show();
                 //测试
-                startWithPop(new ExampleDelegate());
+//                startWithPop(new ExampleDelegate());
+                startWithPop(new EcBottomDelegate());
                 break;
 
             case NOT_SIGNED:

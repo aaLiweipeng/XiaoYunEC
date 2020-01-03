@@ -41,7 +41,7 @@ public abstract class BaseBottomDelegate extends XiaoYunDelegate implements View
     private int mCurrentDelegate = 0;
     //第一个要显示的Fragment的索引
     private int mIndexDelegate = 0;
-    //点击 tab 之后变色
+    //点击 tab 之后 要变的颜色 这里默认为蓝色
     private int mClickedColor = Color.BLUE;
 
     @BindView(R2.id.bottom_bar)
@@ -68,7 +68,9 @@ public abstract class BaseBottomDelegate extends XiaoYunDelegate implements View
 
         final ItemBuilder builder = ItemBuilder.builder();
         final LinkedHashMap<BottomTabBean, BottomItemDelegate> items = setItems(builder);
-        ITEMS.putAll(items);//把来自子类的 map 加到 本类的全局变量 中
+        //把来自子类的 map 加到 本类的全局变量 中
+        ITEMS.putAll(items);
+
         for (Map.Entry<BottomTabBean, BottomItemDelegate> item : ITEMS.entrySet()) {
             final BottomTabBean key = item.getKey();
             final BottomItemDelegate value = item.getValue();

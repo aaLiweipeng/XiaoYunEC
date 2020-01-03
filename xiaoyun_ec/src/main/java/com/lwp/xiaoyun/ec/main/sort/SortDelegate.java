@@ -1,4 +1,4 @@
-package com.lwp.xiaoyun.ec.main.index;
+package com.lwp.xiaoyun.ec.main.sort;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,10 +14,10 @@ import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
  *     desc   :
  * </pre>
  */
-public class IndexDelegate extends BottomItemDelegate {
+public class SortDelegate extends BottomItemDelegate {
     @Override
     public Object setLayout() {
-        return R.layout.delegate_index;
+        return R.layout.delegate_sort;
     }
 
     @Override
