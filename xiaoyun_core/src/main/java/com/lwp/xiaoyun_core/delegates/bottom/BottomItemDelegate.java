@@ -17,7 +17,7 @@ import java.io.PipedReader;
  *     desc   : 每一个页面的基类（父类）
  * </pre>
  */
-public abstract class BottomItemDelegate extends XiaoYunDelegate implements View.OnKeyListener {
+public abstract class BottomItemDelegate extends XiaoYunDelegate {
 
     // 再点一次退出程序时间设置
     private static final long WAIT_TIME = 2000L;
