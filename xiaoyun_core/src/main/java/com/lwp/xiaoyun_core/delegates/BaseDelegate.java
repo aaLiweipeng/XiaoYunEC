@@ -70,6 +70,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         //如果rootView 不为空， 则开始绑定资源,
         //将本Fragment 跟 根视图 **绑定** 起来
         mUnbinder = ButterKnife.bind(this, rootView);
+        //绑定根视图完成后， 有什么需要进行的逻辑，就写在这里！！！！由子类实现
         onBindView(savedInstanceState, rootView);
 
         return rootView;
