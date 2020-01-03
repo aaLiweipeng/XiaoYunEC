@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.lwp.xiaoyun_core.R;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 
 import java.util.ArrayList;
@@ -38,6 +39,10 @@ public abstract class BaseBottomDelegate extends XiaoYunDelegate {
     //这个注解，告诉编译器 这必须是一个颜色
     @ColorInt
     public abstract int setClickedColor();
+    @Override
+    public Object setLayout() {
+        return null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public abstract class BaseBottomDelegate extends XiaoYunDelegate {
         // 不能直接把 ITEMS.size(); 写在for语句中，
         // 必须先将其提取出来，不然每循环一次都需要 ITEMS.size();一次
         for (int i = 0; i < size; i++) {
-//            LayoutInflater.from(getContext(),)
+//            LayoutInflater.from(getContext()).inflate(R.layout.bottom_item_icon_text_layout,)
         }
     }
 }
