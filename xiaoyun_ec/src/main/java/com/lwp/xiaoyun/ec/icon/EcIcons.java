@@ -3,15 +3,12 @@ package com.lwp.xiaoyun.ec.icon;
 import com.joanzapata.iconify.Icon;
 
 /**
- * <pre>
- *     author : 李蔚蓬（简书_凌川江雪）
- *     time   : 2019/10/12 17:11
- *     desc   :
- * </pre>
+ * Created by 傅令杰 on 2017/3/29
  */
+
 public enum EcIcons implements Icon {
-    icon_ali_test1('\ue6b8'),
-    icon_ali_test2('\ue635');
+    icon_scan('\ue602'),
+    icon_ali_pay('\ue606');
 
     private char character;
 

@@ -4,21 +4,15 @@ import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconFontDescriptor;
 
 /**
- * <pre>
- *     author : 李蔚蓬（简书_凌川江雪）
- *     time   : 2019/10/12 17:05
- *     desc   :
- * </pre>
+ * Created by 傅令杰 on 2017/3/29
  */
-public class FontEcModule implements IconFontDescriptor {
 
-    //传进ttf文件
+public class FontEcModule implements IconFontDescriptor {
     @Override
     public String ttfFileName() {
         return "iconfont.ttf";
     }
 
-    //对应的一个Icon子类.values()
     @Override
     public Icon[] characters() {
         return EcIcons.values();
