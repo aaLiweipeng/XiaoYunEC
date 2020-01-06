@@ -1,6 +1,7 @@
 package com.lwp.xiaoyun_core.app;
 
 import android.content.Context;
+import android.os.Handler;
 
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
@@ -59,5 +60,9 @@ public final class XiaoYun {
         // 新版写法如上，封装了（拿到数据Map，然后get）的过程，
         // 直接传一个 ConfigKeys 即可
 //        return (Context) getConfigurations().get(ConfigKeys.APPLICATION_CONTEXT.name());
+    }
+
+    public static Handler getHandler() {
+        return getConfiguration(ConfigKeys.HANDLER);
     }
 }

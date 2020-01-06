@@ -1,6 +1,7 @@
 package com.lwp.xiaoyun_core.app;
 
 import android.app.Activity;
+import android.os.Handler;
 
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
@@ -41,11 +42,14 @@ public class Configurator {
     final HashMap<Object, Object> getXiaoyunConfigs(){
         return XIAOYUN_CONFIGS;
     }
+    //全局 Handler 实例
+    private static final Handler HANDLER = new Handler();
 
 
     //表示配置开始，false表示没有配置完成
     private Configurator() {
         XIAOYUN_CONFIGS.put(ConfigKeys.CONFIG_READY, false);
+        XIAOYUN_CONFIGS.put(ConfigKeys.HANDLER, HANDLER);
     }
     //静态内部类实现单例模式！！！！！！！！
     private static class Holder {
