@@ -15,7 +15,9 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
 
     private final SwipeRefreshLayout REFRESH_LAYOUT;
 
-    // 构造方法 接收外部传进来的 SwipeRefreshLayout实例 以及 设置监听器
+    // 构造方法 接收外部传进来的 SwipeRefreshLayout实例
+    // 以及 为之 设置 刷新监听器——即本类，（注意回顾 SwipeRefreshLayout的 刷新监听方法）
+    // 本类继承自 OnRefreshListener，可以封装实现更多的刷新逻辑，放置到 监听回调方法 中
     public RefreshHandler(SwipeRefreshLayout refresh_layout) {
         REFRESH_LAYOUT = refresh_layout;
         REFRESH_LAYOUT.setOnRefreshListener(this);
@@ -27,11 +29,12 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
         XiaoYun.getHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //刷新处理
+                //刷新处理——如 进行一些网络请求
 
-                REFRESH_LAYOUT.setRefreshing(false);//处理完毕，停止刷新动画
+                //处理完毕，停止刷新动画，可以放在网络请求的Success方法中
+                REFRESH_LAYOUT.setRefreshing(false);
             }
-        }, 2000);
+        }, 2000);//两秒后消失
     }
 
     @Override
