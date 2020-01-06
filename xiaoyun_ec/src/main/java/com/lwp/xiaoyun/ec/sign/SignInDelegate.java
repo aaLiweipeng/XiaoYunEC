@@ -55,7 +55,7 @@ public class SignInDelegate extends XiaoYunDelegate {
     void onClickSignIn() {
 
 
-        //https://mock.fulingjie.com/mock-android/data/user_profile.json
+        //http://mock.fulingjie.com/mock-android/data/user_profile.json
         //http://lcjxg.cn/RestServer/data/user_profile.json
         //https://news.baidu.com/   可以
         //http://127.0.0.1/index   可以
