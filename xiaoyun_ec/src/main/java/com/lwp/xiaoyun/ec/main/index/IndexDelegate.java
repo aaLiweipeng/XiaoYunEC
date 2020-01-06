@@ -35,6 +35,24 @@ public class IndexDelegate extends BottomItemDelegate {
     @BindView(R2.id.et_search_view)
     AppCompatEditText mSearchView = null;
 
+    private void initRefreshLayout() {
+        mRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_red_light,
+                android.R.color.holo_purple,
+                android.R.color.holo_blue_bright
+        );
+        //一参数：使得下拉过程中，加载动画球会 由小变大，
+        // 界面往上回弹的时候，又会 由大变小；
+        // 二三参指的是 动画球的起始高度和终止高度
+        mRefreshLayout.setProgressViewOffset(true,120,300);
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initRefreshLayout();
+    }
+
     @Override
     public Object setLayout() {
         return R.layout.delegate_index;
