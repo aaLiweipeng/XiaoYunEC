@@ -71,4 +71,6 @@ dependencies {
     //微信依赖
     //noinspection GradleDynamicVersion
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //RecyclerView 依赖
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.16'
 }

@@ -81,7 +81,6 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
 
                 Looper.prepare();
                 Toast.makeText(XiaoYun.getApplicationContext(), response.body().string(), Toast.LENGTH_SHORT).show();
-                XiaoYunLogger.v(TAG + " netWork onResponse:" , response.body().string());
                 Looper.loop();// 进入loop中的循环，查看消息队列
             }
         });
