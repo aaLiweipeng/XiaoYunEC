@@ -1,20 +1,32 @@
 package com.lwp.xiaoyun.ec.main.index;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
+import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
+import com.lwp.xiaoyun_core.net.OkHttpUtil;
+import com.lwp.xiaoyun_core.ui.recycle.MultipleFields;
+import com.lwp.xiaoyun_core.ui.recycle.MultipleItemEntity;
 import com.lwp.xiaoyun_core.ui.refresh.RefreshHandler;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import butterknife.BindView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * <pre>
@@ -37,10 +49,36 @@ public class IndexDelegate extends BottomItemDelegate {
     AppCompatEditText mSearchView = null;
 
     private RefreshHandler mRefreshHandler = null;
+    private static int HEHE = 0;
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mRefreshHandler = new RefreshHandler(mRefreshLayout);
+        if (HEHE == 0) {
+            OkHttpUtil.sendOkHttpRequest("http://lcjxg.cn/RestServer/api/index.php", new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final IndexDataConverter converter = new IndexDataConverter();
+                    converter.setJsonData(response.body().string());
+
+                    //拿到 转换结果——包含了 每一个Item数据 的 数据List
+                    final ArrayList<MultipleItemEntity> list = converter.convert();
+                    //取出 第二个Item数据来测试
+                    final String image = list.get(1).getField(MultipleFields.IMAGE_URL);
+                    //测试成功
+                    Looper.prepare();
+                    Toast.makeText(getContext(), image, Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+
+                }
+            });
+            HEHE++;
+        }
     }
 
     private void initRefreshLayout() {
@@ -59,7 +97,7 @@ public class IndexDelegate extends BottomItemDelegate {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
-        mRefreshHandler.firstPage("http://lcjxg.cn/RestServer/api/index.php");
+//        mRefreshHandler.firstPage("http://lcjxg.cn/RestServer/api/index.php");
     }
 
     @Override

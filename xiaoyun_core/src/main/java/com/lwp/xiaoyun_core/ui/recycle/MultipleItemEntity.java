@@ -52,6 +52,7 @@ public class MultipleItemEntity implements MultiItemEntity {
 
     //构造方法 在 MultipleEntityBuilder.build() 中使用
     MultipleItemEntity(LinkedHashMap<Object, Object> fields) {
+
         //FIELDS_REFERENCE.get() 是拿到一个 软引用的 LinkedHashMap
         FIELDS_REFERENCE.get().putAll(fields);
     }
