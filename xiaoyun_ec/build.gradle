@@ -70,4 +70,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     //Log
     implementation 'com.orhanobut:logger:2.2.0'
+    //RecyclerView 依赖
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.16'
 }

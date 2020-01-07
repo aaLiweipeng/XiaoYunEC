@@ -17,7 +17,7 @@ public class MultipleEntityBuilder {
     //没用的键值对 会自动回收
     private static final LinkedHashMap<Object, Object> FIELDS = new LinkedHashMap<>();
 
-    public MultipleEntityBuilder() {
+    MultipleEntityBuilder() {
         //注意这里清除是非常重要的，
         // 因为 使用Entity的时候，每次插入的都是 新的数据，
         // 不能把上次的数据也追加上来；本次就展示本次的数据即可，
