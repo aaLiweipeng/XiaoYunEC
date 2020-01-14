@@ -30,10 +30,10 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
 
     //查看源码，可以看到这里的 ConvenientBanner的泛型，
     //就是 数据的类型；
-    //这里要传入的数据其实就是资源文件，也就是图片，
+    //这里要传入的数据其实就是资源文件，也就是图片（资源id），
     // 所以要传入的泛型乃是Integer！
     private ConvenientBanner<Integer> mConvenientBanner = null;
-    //用于存储图片（id） 的 ArrayList
+    //用于存储图片（资源id） 的 ArrayList
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>();
 
     private ILauncherListener mILauncherListener = null;
@@ -45,11 +45,14 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
         INTEGERS.add(R.mipmap.launcher_03);
         INTEGERS.add(R.mipmap.launcher_04);
         INTEGERS.add(R.mipmap.launcher_05);
+
+        //setPages()这里，类似于RecyclerView的Adapter，
+        // 方法是用于 设置Banner页，一参为LauncherHolder，即实现页面内容的逻辑，二参为对应的数据
         mConvenientBanner
                 .setPages(new LauncherHolderCreator(), INTEGERS)
                 .setPageIndicator(new int[]{R.drawable.dot_normal,R.drawable.dot_focus})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)//设置指示器点的位置
-                .setOnItemClickListener(this)
+                .setOnItemClickListener(this)//设置 子项监听
                 .setCanLoop(false);//设置可以循环
 
     }
@@ -65,6 +68,8 @@ public class LauncherScrollDelegate extends XiaoYunDelegate implements OnItemCli
     //配置根视图布局 同时 初始化组件
     @Override
     public Object setLayout() {
+        /* 这里 动态添加 布局组件 */
+
         //因为 本方法在 onCreateView() 的时候会自动调用，（见 BaseDelegate）
         // 所以除了用来配置布局，用来 初始化组件 也是不错的选择
         mConvenientBanner = new ConvenientBanner<>(getContext());

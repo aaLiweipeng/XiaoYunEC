@@ -24,16 +24,19 @@ public class LauncherHolder implements Holder<Integer> {
     /*
         这里的两个重写方法，类似于 RecyclerView.Adapter 的 几个重写方法
      */
+    //实现 Item页面的组件
     @Override
     public View createView(Context context) {
         mImageView = new AppCompatImageView(context);
         return mImageView;
     }
 
-    //每次滑动触发的逻辑
+    //每次滑动触发的逻辑，为Item页面组件设置数据
     @Override
     public void UpdateUI(Context context, int position, Integer data) {
-        //图片 设置为background ， 而不是 src， 方便占据整个屏幕
+        //图片 设置为background ， 而不是 src， 方便占据整个屏幕,
+        // 数据来自于 LauncherScrollDelegate中
+        // mConvenientBanner.setPages(new LauncherHolderCreator(), INTEGERS)的 INTEGERS
         mImageView.setBackgroundResource(data);
 
     }

@@ -13,11 +13,10 @@ import android.widget.Toast;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
-import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun_core.ui.recycle.MultipleFields;
-import com.lwp.xiaoyun_core.ui.recycle.MultipleItemEntity;
+import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
+import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.ui.refresh.RefreshHandler;
 
 import java.io.IOException;

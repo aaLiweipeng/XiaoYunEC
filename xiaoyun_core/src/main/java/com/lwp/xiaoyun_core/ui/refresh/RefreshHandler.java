@@ -20,7 +20,7 @@ import okhttp3.Response;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/7 2:43
- *     desc   :
+ *     desc   : 封装 刷新逻辑
  *              可以在 delegate 的 onBindView中被 使用 并 初始化
  *
  *              private RefreshHandler mRefreshHandler = null;

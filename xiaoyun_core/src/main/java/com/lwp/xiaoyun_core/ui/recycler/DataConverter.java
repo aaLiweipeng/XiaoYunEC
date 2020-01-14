@@ -1,4 +1,4 @@
-package com.lwp.xiaoyun_core.ui.recycle;
+package com.lwp.xiaoyun_core.ui.recycler;
 
 import java.util.ArrayList;
 

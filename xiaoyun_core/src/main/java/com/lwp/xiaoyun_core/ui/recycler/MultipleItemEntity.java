@@ -1,4 +1,4 @@
-package com.lwp.xiaoyun_core.ui.recycle;
+package com.lwp.xiaoyun_core.ui.recycler;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/7 7:01
  *     desc   : 用来存储 RecycleView 的 每一个Item的 数据 ！！！
- *              一个 Item的数据 用一个 MultipleItemEntity实例 来存储 ！！！
+ *              一个 Item的数据 用一个 MultipleItemEntity / FIELDS_REFERENCE 实例 来存储 ！！！
  *
  *              每个Item的数据 用键值对的实行，有序存储在 软应用LinkedHashMap中
  *
@@ -75,7 +75,7 @@ public class MultipleItemEntity implements MultiItemEntity {
         return (T) FIELDS_REFERENCE.get().get(key);
     }
     public final LinkedHashMap<?, ?> getFields() {
-        // 返回存储一个Item数据 的 LinkedHashMap<Object, Object>
+        // 返回 存储了整一个Item数据 的 LinkedHashMap<Object, Object>
         return FIELDS_REFERENCE.get();
     }
     public final MultipleItemEntity setField(Object key, Object value) {
