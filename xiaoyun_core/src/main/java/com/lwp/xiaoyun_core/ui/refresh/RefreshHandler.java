@@ -5,6 +5,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
 import com.lwp.xiaoyun_core.net.RestClient;
@@ -12,6 +15,7 @@ import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.ui.recycler.DataConverter;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
+
 
 import java.io.IOException;
 
@@ -34,7 +38,8 @@ import okhttp3.Response;
  *              RecyclerView、Adapter、DataConverter、PagingBean
  * </pre>
  */
-public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
+public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
+        , BaseQuickAdapter.RequestLoadMoreListener {
 
     private final SwipeRefreshLayout REFRESH_LAYOUT;
     private final PagingBean BEAN;
@@ -91,6 +96,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
 //                })
 //                .build()
 //                .get();
+        BEAN.setDelayed(1000);//设置延迟，便于测试观察
         OkHttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -103,6 +109,15 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
 //                //测试成功
 //                Toast.makeText(XiaoYun.getApplicationContext(), response.body().string(), Toast.LENGTH_SHORT).show();
 //                Looper.loop();// 进入loop中的循环，查看消息队列
+                final JSONObject object = JSON.parseObject(response.body().string());
+                BEAN.setTotal(object.getInteger("total"))
+                        .setPageSize(object.getInteger("page_size"));
+                //设置Adapter
+                mAdapter = MultipleRecyclerAdapter.create(CONVERTER.setJsonData(response.body().string()));
+                mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLERVIEW);
+                RECYCLERVIEW.setAdapter(mAdapter);
+
+                BEAN.addIndex();
             }
         });
     }
@@ -110,5 +125,11 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
     @Override
     public void onRefresh() {
         refresh();
+    }
+
+    //上拉加载回调逻辑
+    @Override
+    public void onLoadMoreRequested() {
+
     }
 }
