@@ -52,32 +52,33 @@ public class IndexDelegate extends BottomItemDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        mRefreshHandler = new RefreshHandler(mRefreshLayout);
-        if (HEHE == 0) {
-            OkHttpUtil.sendOkHttpRequest("http://lcjxg.cn/RestServer/api/index.php", new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
+        mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, new IndexDataConverter());
+//        if (HEHE == 0) {
+//            OkHttpUtil.sendOkHttpRequest("http://lcjxg.cn/RestServer/api/index.php", new Callback() {
+//                @Override
+//                public void onFailure(Call call, IOException e) {
+//
+//                }
+//
+//                @Override
+//                public void onResponse(Call call, Response response) throws IOException {
+//                    final IndexDataConverter converter = new IndexDataConverter();
+//                    converter.setJsonData(response.body().string());
+//
+//                    //拿到 转换结果——包含了 每一个Item数据 的 数据List
+//                    final ArrayList<MultipleItemEntity> list = converter.convert();
+//                    //取出 第二个Item数据来测试
+//                    final String image = list.get(1).getField(MultipleFields.IMAGE_URL);
+//                    //测试成功
+//                    Looper.prepare();
+//                    Toast.makeText(getContext(), image, Toast.LENGTH_SHORT).show();
+//                    Looper.loop();// 进入loop中的循环，查看消息队列
+//
+//                }
+//            });
+//            HEHE++;
+//        }
 
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final IndexDataConverter converter = new IndexDataConverter();
-                    converter.setJsonData(response.body().string());
-
-                    //拿到 转换结果——包含了 每一个Item数据 的 数据List
-                    final ArrayList<MultipleItemEntity> list = converter.convert();
-                    //取出 第二个Item数据来测试
-                    final String image = list.get(1).getField(MultipleFields.IMAGE_URL);
-                    //测试成功
-                    Looper.prepare();
-                    Toast.makeText(getContext(), image, Toast.LENGTH_SHORT).show();
-                    Looper.loop();// 进入loop中的循环，查看消息队列
-
-                }
-            });
-            HEHE++;
-        }
     }
 
     private void initRefreshLayout() {

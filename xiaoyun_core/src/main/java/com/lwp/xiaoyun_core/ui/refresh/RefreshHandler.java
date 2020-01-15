@@ -49,7 +49,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
     // 以及 为之 设置 刷新监听器(OnRefreshListener)——即本类，
     // （注意回顾 SwipeRefreshLayout的 刷新监听方法）,监听回调方法为 onRefresh()
     // 本类继承自 OnRefreshListener，可以封装实现更多的刷新逻辑，放置到 监听回调方法 中
-    RefreshHandler(SwipeRefreshLayout swipeRefreshLayout,
+    private RefreshHandler(SwipeRefreshLayout swipeRefreshLayout,
                           RecyclerView recyclerView,DataConverter converter,
                           PagingBean bean) {
         REFRESH_LAYOUT = swipeRefreshLayout;
