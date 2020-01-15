@@ -42,7 +42,8 @@ public class Configurator {
     final HashMap<Object, Object> getXiaoyunConfigs(){
         return XIAOYUN_CONFIGS;
     }
-    //全局 Handler 实例
+
+    //全局 Handler 实例 <基于主线程！！！> 以便于在子线程中 随时随地把任务 post到主线程处理
     private static final Handler HANDLER = new Handler();
 
 

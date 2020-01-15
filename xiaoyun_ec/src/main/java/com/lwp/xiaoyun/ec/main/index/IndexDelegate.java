@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -48,7 +49,7 @@ public class IndexDelegate extends BottomItemDelegate {
     AppCompatEditText mSearchView = null;
 
     private RefreshHandler mRefreshHandler = null;
-    private static int HEHE = 0;
+//    private static int HEHE = 0;
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
@@ -93,11 +94,17 @@ public class IndexDelegate extends BottomItemDelegate {
         mRefreshLayout.setProgressViewOffset(true,120,300);
     }
 
+    private void initRecyclerView() {
+        final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+        mRecyclerView.setLayoutManager(manager);
+    }
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
-//        mRefreshHandler.firstPage("http://lcjxg.cn/RestServer/api/index.php");
+        initRecyclerView();
+        mRefreshHandler.firstPage("http://lcjxg.cn/RestServer/api/index.php");
     }
 
     @Override

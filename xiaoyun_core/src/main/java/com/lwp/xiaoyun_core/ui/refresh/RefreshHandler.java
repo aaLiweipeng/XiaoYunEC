@@ -1,5 +1,6 @@
 package com.lwp.xiaoyun_core.ui.refresh;
 
+import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +14,14 @@ import com.lwp.xiaoyun_core.net.OkHttpUtil;
 import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.ui.recycler.DataConverter;
+import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,6 +51,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
     private MultipleRecyclerAdapter mAdapter = null;
     private final DataConverter CONVERTER;
 
+    private List<MultipleItemEntity> data = new ArrayList<>();
 
     private static final String TAG = "RefreshHandler";
 
@@ -97,6 +102,12 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
 //                .build()
 //                .get();
         BEAN.setDelayed(1000);//设置延迟，便于测试观察
+        //设置Adapter
+        mAdapter = MultipleRecyclerAdapter.create(data);
+        mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLERVIEW);
+        RECYCLERVIEW.setAdapter(mAdapter);
+
+
         OkHttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -109,14 +120,17 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
 //                //测试成功
 //                Toast.makeText(XiaoYun.getApplicationContext(), response.body().string(), Toast.LENGTH_SHORT).show();
 //                Looper.loop();// 进入loop中的循环，查看消息队列
-                final JSONObject object = JSON.parseObject(response.body().string());
+                String jsonString = response.body().string();
+                final JSONObject object = JSON.parseObject(jsonString);
                 BEAN.setTotal(object.getInteger("total"))
                         .setPageSize(object.getInteger("page_size"));
-                //设置Adapter
-                mAdapter = MultipleRecyclerAdapter.create(CONVERTER.setJsonData(response.body().string()));
-                mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLERVIEW);
-                RECYCLERVIEW.setAdapter(mAdapter);
 
+                XiaoYun.getHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.setNewData(CONVERTER.setJsonData(jsonString).convert());
+                    }
+                });
                 BEAN.addIndex();
             }
         });
