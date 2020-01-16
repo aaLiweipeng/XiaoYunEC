@@ -3,6 +3,7 @@ package com.lwp.xiaoyun.ec.main.index;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +17,7 @@ import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
+import com.lwp.xiaoyun_core.ui.recycler.BaseDecoration;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.ui.refresh.RefreshHandler;
@@ -97,7 +99,8 @@ public class IndexDelegate extends BottomItemDelegate {
     private void initRecyclerView() {
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         mRecyclerView.setLayoutManager(manager);
-
+        mRecyclerView.addItemDecoration(
+                BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background),5));
     }
 
     @Override

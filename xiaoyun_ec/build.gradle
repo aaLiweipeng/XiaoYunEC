@@ -71,4 +71,6 @@ dependencies {
     implementation 'com.orhanobut:logger:2.2.0'
     //RecyclerView 依赖
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.16'
+    //RecyclerView 分隔线
+    implementation 'com.choices.divider:RecyclerView_Divider:1.0.0'
 }
