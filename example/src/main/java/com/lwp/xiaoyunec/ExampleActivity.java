@@ -22,6 +22,8 @@ import com.lwp.xiaoyun_core.ui.launcher.ILauncherListener;
 import com.lwp.xiaoyun_core.ui.launcher.OnLauncherFinishTag;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
+import qiu.niorgai.StatusBarCompat;
+
 
 public class ExampleActivity extends ProxyActivity implements
         ISignListener,
@@ -36,6 +38,7 @@ public class ExampleActivity extends ProxyActivity implements
             actionBar.hide();
         }
         XiaoYun.getConfigurator().withActivity(this);//配置全局 Activity
+        StatusBarCompat.translucentStatusBar(this, true);//沉浸式状态栏
     }
 
     @Override
