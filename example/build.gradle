@@ -58,4 +58,8 @@ dependencies {
     //    implementation 'com.facebook.stetho:stetho-okhttp3:1.4.2'
     implementation project(':xiaoyun_annotations')
     implementation project(':xiaoyun_compiler')
+    //沉浸式状态栏
+    implementation ('com.github.niorgai:StatusBarCompat:2.1.4', {
+        exclude group: 'com.android.support'
+    })
 }
