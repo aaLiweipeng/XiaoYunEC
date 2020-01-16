@@ -137,7 +137,8 @@ public class MultipleRecyclerAdapter extends
                         .diskCacheStrategy(DiskCacheStrategy.ALL)//磁盘缓存方式使用全缓存，原始图片和剪裁过后的图片都会被缓存起来
                         .dontAnimate()//这里已经有RecyclerView的动画，不需要图片的动画了
                         .centerCrop()
-                        .into((ImageView) holder.getView(R.id.img_single));
+                        .into((ImageView)
+                holder.getView(R.id.img_single));
                         //这里可以看一下 holder.getView()的源码 ，
                         // 是通过id 来返回一个 泛型View实例
                 break;
@@ -152,7 +153,8 @@ public class MultipleRecyclerAdapter extends
                         .diskCacheStrategy(DiskCacheStrategy.ALL)//磁盘缓存方式使用全缓存，原始图片和剪裁过后的图片都会被缓存起来
                         .dontAnimate()//这里已经有RecyclerView的动画，不需要图片的动画了
                         .centerCrop()
-                        .into((ImageView) holder.getView(R.id.img_multiple));
+                        .into((ImageView)
+                holder.getView(R.id.img_multiple));
                 break;
 
             case ItemType.BANNER:
@@ -200,6 +202,7 @@ public class MultipleRecyclerAdapter extends
         return MultipleViewHolder.create(view);
     }
 
+    //获得SpanSize，给布局用！！！
     @Override
     public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
         //getData() 获取的数据 来自于 构造方法，Items数据List

@@ -73,7 +73,8 @@ dependencies {
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //RecyclerView 依赖
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.16'
-
+    //RecyclerView 分隔线
+    implementation 'com.choices.divider:RecyclerView_Divider:1.0.0'
     //图片处理
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     //下面这个库 是为了让glide能使用OkHttp的网络层，

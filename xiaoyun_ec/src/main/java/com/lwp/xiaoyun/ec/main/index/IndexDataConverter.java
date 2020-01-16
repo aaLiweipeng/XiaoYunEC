@@ -51,6 +51,8 @@ public class IndexDataConverter extends DataConverter {
 
             //用来存储 banner数组 的值
             final ArrayList<String> bannersImages = new ArrayList<>();
+
+            //根据json数据 判断item的Type
             int type = 0;
             if (imageUrl == null && text != null) {
                 type = ItemType.TEXT;
