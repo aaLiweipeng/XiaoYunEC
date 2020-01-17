@@ -31,7 +31,10 @@ import okhttp3.Response;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/7 2:43
- *     desc   : 封装 刷新逻辑
+ *     desc   : 封装 数据刷新逻辑 ，即
+ *              第一次请求：firstPage()
+ *              上拉刷新：onLoadMoreRequested()、paging()
+ *              下拉刷新：onRefresh()
  *              可以在 delegate 的 onBindView中被 使用 并 初始化
  *
  *              private RefreshHandler mRefreshHandler = null;
@@ -104,6 +107,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
         BEAN.setDelayed(1000);//设置延迟，便于测试观察
         //设置Adapter
         mAdapter = MultipleRecyclerAdapter.create(data);
+        //设置上拉加载监听
         mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLERVIEW);
         RECYCLERVIEW.setAdapter(mAdapter);
 
@@ -111,7 +115,6 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
         OkHttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
 
             @Override
@@ -124,17 +127,96 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
                 final JSONObject object = JSON.parseObject(jsonString);
                 BEAN.setTotal(object.getInteger("total"))
                         .setPageSize(object.getInteger("page_size"));
+                data.addAll(CONVERTER.setJsonData(jsonString).convert());
 
                 XiaoYun.getHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                        mAdapter.setNewData(CONVERTER.setJsonData(jsonString).convert());
+                        mAdapter.setNewData(data);
                         mAdapter.notifyDataSetChanged();
                     }
                 });
+
+                //页码增加！！！
                 BEAN.addIndex();
             }
         });
+    }
+
+    //上拉刷新
+    private void paging(final String url) {
+        final int pageSize = BEAN.getPageSize();
+        final int currentCount = BEAN.getCurrentCount();
+        final int total = BEAN.getTotal();
+        final int index = BEAN.getPageIndex();
+
+        if (mAdapter.getData().size() < pageSize || currentCount >= total) {
+            //如果是最后一页了（最后一页的数据量 可能小于 普通一页的数据数量）
+            // 或者要显示的数据已经显示完了，则让加载停止
+            mAdapter.loadMoreEnd(true);
+
+            //否则进行网络请求
+        } else {
+
+            OkHttpUtil.sendOkHttpRequest(url + index, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                    String jsonString = response.body().string();
+
+                    XiaoYun.getHandler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //打印log
+                            XiaoYunLogger.json("paging", jsonString);
+
+                            //清楚转换器中的数据
+                            CONVERTER.clearData();
+                            data.addAll(CONVERTER.setJsonData(jsonString).convert());
+
+                            //新的数据加到转换器和Adapter
+                            mAdapter.setNewData(data);
+
+                            //累加已经显示的数据数量
+//                            BEAN.setCurrentCount(mAdapter.getData().size());
+                            //下面这个仅用于测试，假设数据展示完毕（
+                            // 因为服务器上的json数据是100条，即total：100）
+                            BEAN.setCurrentCount(100);
+                            //停止加载动画
+                            mAdapter.loadMoreComplete();
+                        }
+                    }, 1000);
+
+                    //页码增加！！！
+                    BEAN.addIndex();
+                }
+            });
+//            XiaoYun.getHandler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    RestClient.builder()
+//                            .url(url + index)
+//                            .success(new ISuccess() {
+//                                @Override
+//                                public void onSuccess(String response) {
+//                                    XiaoYunLogger.json("paging", response);
+//                                    CONVERTER.clearData();
+//                                    mAdapter.addData(CONVERTER.setJsonData(response).convert());
+//                                    //累加数量
+//                                    BEAN.setCurrentCount(mAdapter.getData().size());
+//                                    mAdapter.loadMoreComplete();
+//                                    BEAN.addIndex();
+//                                }
+//                            })
+//                            .build()
+//                            .get();
+//                }
+//            }, 1000);
+        }
     }
 
     @Override
@@ -142,9 +224,9 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
         refresh();
     }
 
-    //上拉加载回调逻辑
+    //上拉加载回调逻辑，监听器在firstPage()中设置了
     @Override
     public void onLoadMoreRequested() {
-
+        paging("http://lcjxg.cn/RestServer/api/refresh.php?index=");
     }
 }
