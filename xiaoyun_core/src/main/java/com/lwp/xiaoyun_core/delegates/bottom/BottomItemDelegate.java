@@ -14,7 +14,14 @@ import java.io.PipedReader;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/1 22:22
- *     desc   : 每一个页面的基类（父类）
+ *     desc   : 每一个子页面的基类（父类）
+ *              每一个子页面都要继承本类
+ *              如主页、分类页等
+ *
+ *              ！！！
+ *              作为 容器Fragment（BaseBottomDelegate） 中 FrameLayout 的 所有内容页面的父类
+ *
+ *              封装基本操作
  * </pre>
  */
 public abstract class BottomItemDelegate extends XiaoYunDelegate {

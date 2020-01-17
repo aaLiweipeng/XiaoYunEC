@@ -151,7 +151,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
         final int index = BEAN.getPageIndex();
 
         if (mAdapter.getData().size() < pageSize || currentCount >= total) {
-            //如果是最后一页了（最后一页的数据量 可能小于 普通一页的数据数量）
+            //如果是一页的数据量 可能小于 普通一页的数据数量（数据错误）
             // 或者要显示的数据已经显示完了，则让加载停止
             mAdapter.loadMoreEnd(true);
 
@@ -183,8 +183,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
 
                             //累加已经显示的数据数量
 //                            BEAN.setCurrentCount(mAdapter.getData().size());
-                            //下面这个仅用于测试，假设数据展示完毕（
-                            // 因为服务器上的json数据是100条，即total：100）
+                            //下面这个仅用于测试，假设数据展示完毕（因为服务器上的json数据是100条，即total：100）
                             BEAN.setCurrentCount(100);
                             //停止加载动画
                             mAdapter.loadMoreComplete();

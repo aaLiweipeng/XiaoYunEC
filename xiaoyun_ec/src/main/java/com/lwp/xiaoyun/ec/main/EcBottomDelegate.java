@@ -14,11 +14,13 @@ import java.util.LinkedHashMap;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/4 3:23
- *     desc   :
+ *     desc   : 页面容器Fragment 的 业务实现者
+ *              作为 Activity 的 第一个正文内容Fragment 启动
  * </pre>
  */
 public class EcBottomDelegate extends BaseBottomDelegate {
 
+    //一下三个方法，都是 BaseBottomDelegate 的抽象方法
     @Override
     public LinkedHashMap<BottomTabBean, BottomItemDelegate> setItems(ItemBuilder builder) {
         final LinkedHashMap<BottomTabBean, BottomItemDelegate> items = new LinkedHashMap<>();
