@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -19,6 +19,7 @@
     <!--初始颜色设定为透明的，向下滑动的时候 才能逐渐显现-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/tb_index"
+        app:layout_behavior="com.lwp.xiaoyun.ec.main.index.TranslucentBehavior"
         android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="80dp">
