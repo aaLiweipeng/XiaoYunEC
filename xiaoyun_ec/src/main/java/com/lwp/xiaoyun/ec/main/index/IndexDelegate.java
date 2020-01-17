@@ -103,7 +103,7 @@ public class IndexDelegate extends BottomItemDelegate {
         mRecyclerView.addItemDecoration(
                 BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background),5));
 
-        // 返回父级Delegate
+        // 返回 父级容器Delegate 本Delegate乃是位于 容器Delegate中的FrameLayout中
         final EcBottomDelegate ecBottomDelegate = getParentDelegate();
         mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));//添加点击事件
 

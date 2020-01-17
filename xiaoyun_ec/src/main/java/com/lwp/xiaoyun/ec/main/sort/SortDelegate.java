@@ -11,7 +11,7 @@ import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/4 3:25
- *     desc   :
+ *     desc   : 容器FrameLayout中的 分类页面 需要三个Fragment：底层、左边List、右边content
  * </pre>
  */
 public class SortDelegate extends BottomItemDelegate {
