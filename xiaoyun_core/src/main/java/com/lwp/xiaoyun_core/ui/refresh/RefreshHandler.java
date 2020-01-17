@@ -129,6 +129,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
                     @Override
                     public void run() {
                         mAdapter.setNewData(CONVERTER.setJsonData(jsonString).convert());
+                        mAdapter.notifyDataSetChanged();
                     }
                 });
                 BEAN.addIndex();

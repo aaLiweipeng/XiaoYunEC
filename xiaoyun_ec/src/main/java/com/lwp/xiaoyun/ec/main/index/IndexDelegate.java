@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
+import com.lwp.xiaoyun.ec.main.EcBottomDelegate;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
 import com.lwp.xiaoyun_core.ui.recycler.BaseDecoration;
@@ -101,6 +102,11 @@ public class IndexDelegate extends BottomItemDelegate {
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.addItemDecoration(
                 BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background),5));
+
+        // 返回父级Delegate
+        final EcBottomDelegate ecBottomDelegate = getParentDelegate();
+        mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));//添加点击事件
+
     }
 
     @Override
@@ -109,6 +115,7 @@ public class IndexDelegate extends BottomItemDelegate {
         initRefreshLayout();
         initRecyclerView();
         mRefreshHandler.firstPage("http://lcjxg.cn/RestServer/api/index.php");
+
     }
 
     @Override
