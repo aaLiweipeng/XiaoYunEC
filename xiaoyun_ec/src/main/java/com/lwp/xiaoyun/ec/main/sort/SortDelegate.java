@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.lwp.xiaoyun.ec.R;
+import com.lwp.xiaoyun.ec.main.sort.list.VerticalListDelegate;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 
 /**
@@ -33,5 +34,9 @@ public class SortDelegate extends BottomItemDelegate {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+
+        //加载根布局
+        final VerticalListDelegate listDelegate = new VerticalListDelegate();
+        loadRootFragment(R.id.vertical_list_container, listDelegate);
     }
 }
