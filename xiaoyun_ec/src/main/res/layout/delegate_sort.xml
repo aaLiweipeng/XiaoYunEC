@@ -24,11 +24,11 @@
 
     <!--底部容器，上面放着 左边一个List 右边一个content-->
     <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/app_background"
         android:baselineAligned="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="horizontal">
 
         <android.support.v7.widget.ContentFrameLayout
             android:id="@+id/vertical_list_container"
