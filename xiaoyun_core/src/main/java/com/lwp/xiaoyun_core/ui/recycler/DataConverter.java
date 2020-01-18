@@ -13,8 +13,10 @@ import java.util.ArrayList;
 public abstract class DataConverter {
 
     //一个 MultipleItemEntity实例 存储着一个 Item的数据，
-    // 这里用一个 ArrayList 存储所有的 MultipleItemEntity实例，用例见 IndexDataConverter
+    // 这里用一个 ArrayList 存储 属于某个RecyclerView的所有的 MultipleItemEntity实例，
+    // 用例见 IndexDataConverter
     protected final ArrayList<MultipleItemEntity> ENTITIES = new ArrayList<>();
+
     private String mJsonData = null;
 
     //用于实现 数据转化过程 Json to JavaBean/JavaEntity

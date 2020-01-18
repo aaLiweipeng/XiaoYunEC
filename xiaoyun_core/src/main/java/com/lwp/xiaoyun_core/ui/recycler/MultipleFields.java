@@ -15,5 +15,5 @@ public enum MultipleFields {
     SPAN_SIZE,
     ID,
     NAME,
-    TAG
+    TAG//VerticalListDelegate 中 每一个Item是否被点击的Tag，false表没点击，true表点击了
 }
