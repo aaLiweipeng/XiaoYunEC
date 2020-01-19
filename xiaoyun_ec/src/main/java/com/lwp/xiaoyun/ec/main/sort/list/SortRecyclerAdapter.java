@@ -26,6 +26,8 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
 
     //把容器Delegate传进来，用于控制作用的关联关系
     private final SortDelegate DELEGATE;
+    //记录上一个Item的位置，默认第一个item是选中的
+    private int mPrePosition = 0;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -43,10 +45,11 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
     }
 
     @Override
-    protected void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
+    protected void convert(final MultipleViewHolder holder, final MultipleItemEntity entity) {
         super.convert(holder, entity);
 
         switch (holder.getItemViewType()) {
+
             case ItemType.VERTICAL_MENU_LIST:
 
                 final String text = entity.getField(MultipleFields.TEXT);//item文本的内容
@@ -61,9 +64,33 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                     @Override
                     public void onClick(View v) {
 
+                        //拿到 当前被点击的item 的位置
+                        final int currentPosition = holder.getAdapterPosition();
+                        if (mPrePosition != currentPosition) {
+
+                            //如果上一个item位置 不等于 当前被点击的item的位置，
+                            // 则还原上一个 Item的样式——将TAG归位，并通知Adapter
+                            getData().get(mPrePosition).setField(MultipleFields.TAG, false);
+                            notifyItemChanged(mPrePosition);
+
+                            //更新 当前被选中的item的数据，通知Adapter ——
+                            // 这里的entity本就属于被点击的item的，所以更新被点击的item的数据直接拿entity操作即可，
+                            // 而上一个item的entity在这里（被选中的item的onClick中）是拿不到的，
+                            // 所以上面更新它的数据只能用getData()，通过修改Adapter中的数据去更新设置；
+                            entity.setField(MultipleFields.TAG, true);
+                            notifyItemChanged(currentPosition);
+
+                            //数据配置完毕了，“当前”就变成 下一轮“上一个”了（类似思想 见BaseBottomDelegate）
+                            mPrePosition = currentPosition;
+
+                            final int contentId = getData().get(currentPosition).getField(MultipleFields.ID);
+
+                        }
                     }
                 });
 
+                //onClick中调用notifyItemChanged()时 onBindViewHolder() 会重新回调，下面这个部分同样被回调，
+                // 则 Item样式 可以重新被 判断并渲染，即 局部刷新
                 if (!isClicked) {
                     //如果 当前item是 没有被点击的状态
                     line.setVisibility(View.INVISIBLE);//把 边框线设置为不可见
@@ -77,6 +104,7 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                     itemView.setBackgroundColor(Color.WHITE);
                 }
 
+                //设置文本
                 holder.setText(R.id.tv_vertical_item_name, text);//设置item文本
 
                 break;

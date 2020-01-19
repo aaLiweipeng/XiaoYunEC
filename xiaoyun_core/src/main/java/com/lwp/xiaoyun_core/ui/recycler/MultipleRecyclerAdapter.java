@@ -86,12 +86,13 @@ public class MultipleRecyclerAdapter extends
      * 本方法乃是 onBindViewHolder()中的一个 逻辑处理单元
      * 注意这个设计模式！！！
      *
-     * BaseQuickAdapter 中 写了一个 抽象方法 ——
+     * 是 BaseQuickAdapter 中 写的一个 抽象方法 ——
      *  Implement this method and use the helper to adapt the view to the given item.
      *  param helper A fully initialized helper.
      *  param item   The item that needs to be displayed.
      *
      *  protected abstract void convert(K helper, T item);
+     *
      *  然后在 BaseQuickAdapter.onBindViewHolder() 中 抽象调用，在本类中具体实现！！！！！
      * -----------------------------------------------------------------------
      * public void onBindViewHolder(K holder, int positions)
