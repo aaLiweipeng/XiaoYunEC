@@ -1,5 +1,11 @@
 package com.lwp.xiaoyun_core.net;
 
+import android.content.Context;
+import android.os.Handler;
+
+import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
+import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -24,14 +30,53 @@ import okhttp3.Request;
  */
 public class OkHttpUtil {
 
-    public static void sendOkHttpRequest(String address, okhttp3.Callback callback) {
-        OkHttpClient client = new OkHttpClient();
+    private static final Handler HANDLER = new Handler();
 
+    //Loader
+    private  LoaderStyle mLoaderStyle;
+    private  Context mContext;
+
+
+    public static OkHttpUtil build() {
+        return new OkHttpUtil();
+    }
+
+    public void sendOkHttpRequest(String address, okhttp3.Callback callback) {
+
+        //展示 Loading！！（请求开始时）
+        // 对应的 关闭的话在 RequestCallBacks 中 实现（请求结束时关闭！！）
+        if (mLoaderStyle != null) {
+            XiaoYunLoader.showLoading(mContext, mLoaderStyle);
+        }
+
+        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(address)
                 .build();
 
         client.newCall(request).enqueue(callback);
+
+        stopLoading();
+    }
+
+    //配置Loader
+    public final OkHttpUtil loader(Context context) {
+        mContext = context;
+        mLoaderStyle = LoaderStyle.BallClipRotatePulseIndicator;
+        return this;
+    }
+    //关闭 Loader
+    private void stopLoading() {
+        if (mLoaderStyle != null) {
+            //延迟两秒调用，用于测试
+            HANDLER.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //关闭 Loader！！
+                    XiaoYunLoader.stopLoading();
+                }
+            },1000);
+        }
     }
 
 

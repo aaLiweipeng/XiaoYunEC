@@ -114,6 +114,7 @@ public class IndexDelegate extends BottomItemDelegate {
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
         initRecyclerView();
+        mRefreshHandler.setContext(getContext());
         mRefreshHandler.firstPage("http://lcjxg.cn/RestServer/api/index.php");
 
     }

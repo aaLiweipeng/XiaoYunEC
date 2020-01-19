@@ -1,8 +1,10 @@
 package com.lwp.xiaoyun_core.ui.refresh;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
@@ -58,6 +60,11 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
 
     private static final String TAG = "RefreshHandler";
 
+    private Context mContext = null;
+    public void setContext(Context context) {
+        this.mContext = context;
+    }
+
     // 构造方法 接收外部传进来的 SwipeRefreshLayout实例
     // 以及 为之 设置 刷新监听器(OnRefreshListener)——即本类，
     // （注意回顾 SwipeRefreshLayout的 刷新监听方法）,监听回调方法为 onRefresh()
@@ -112,7 +119,9 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
         RECYCLERVIEW.setAdapter(mAdapter);
 
 
-        OkHttpUtil.sendOkHttpRequest(url, new Callback() {
+        OkHttpUtil.build()
+                .loader(mContext)
+                .sendOkHttpRequest(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -158,7 +167,8 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
             //否则进行网络请求
         } else {
 
-            OkHttpUtil.sendOkHttpRequest(url + index, new Callback() {
+            OkHttpUtil.build()
+                    .sendOkHttpRequest(url + index, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }

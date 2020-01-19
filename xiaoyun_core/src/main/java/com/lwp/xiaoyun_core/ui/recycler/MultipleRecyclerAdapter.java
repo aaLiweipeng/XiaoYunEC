@@ -47,7 +47,7 @@ public class MultipleRecyclerAdapter extends
      *             这里指的就是 包含了 RecycleView 的每一个Item的 数据 的List
      *
      */
-    private MultipleRecyclerAdapter(List<MultipleItemEntity> data) {
+    protected MultipleRecyclerAdapter(List<MultipleItemEntity> data) {
         super(data);
         //初始化，设置不同的item布局
         init();
