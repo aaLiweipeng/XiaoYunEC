@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.main.sort.SortDelegate;
+import com.lwp.xiaoyun.ec.main.sort.content.ContentDelegate;
+import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.ui.recycler.ItemType;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
@@ -14,6 +16,8 @@ import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleViewHolder;
 
 import java.util.List;
+
+import retrofit2.http.DELETE;
 
 /**
  * <pre>
@@ -24,8 +28,9 @@ import java.util.List;
  */
 public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
 
-    //把容器Delegate传进来，用于控制作用的关联关系
+    //把容器Delegate传进来，用于控制左右（list--content）的关联关系
     private final SortDelegate DELEGATE;
+
     //记录上一个Item的位置，默认第一个item是选中的
     private int mPrePosition = 0;
 
@@ -84,6 +89,7 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                             mPrePosition = currentPosition;
 
                             final int contentId = getData().get(currentPosition).getField(MultipleFields.ID);
+                            showContent(contentId);
 
                         }
                     }
@@ -110,6 +116,25 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * @param contentId 根据这个id 创建对应的 ContentDelegate实例,把这个实例 接力给 switchContent()
+     */
+    private void showContent(int contentId) {
+        final ContentDelegate delegate = ContentDelegate.newInstance(contentId);
+        switchContent(delegate);
+    }
+    /**
+     * @param delegate 接收到一个 ContentDelegate实例，
+     *                  判断 SortDelegate中是否有 ContentDelegate作子实例，
+     *                  是则将这个 ContentDelegate子实例 加载成 传进来的这个 ContentDelegate作子实例
+     */
+    private void switchContent(ContentDelegate delegate) {
+        final XiaoYunDelegate contentDelegate = DELEGATE.findChildFragment(ContentDelegate.class);
+        if (contentDelegate != null) {
+            contentDelegate.replaceFragment(delegate, false);//false 表示不加入返回栈顶
         }
     }
 }
