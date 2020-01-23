@@ -11,7 +11,8 @@ import java.util.List;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/20 6:06
- *     desc   : 将对应的服务器JSON数据 转化成 List<SectionBean>
+ *     desc   : 将对应的服务器JSON数据（分类页的content部分）
+ *              转化成 List<SectionBean>
  * </pre>
  */
 public class SectionDataConverter {

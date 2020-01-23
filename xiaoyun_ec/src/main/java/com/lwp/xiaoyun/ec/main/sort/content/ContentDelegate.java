@@ -13,6 +13,8 @@ import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -32,7 +34,8 @@ public class ContentDelegate extends XiaoYunDelegate {
     private static final String ARG_CONTENT_ID = "CONTENT_ID";//封装Bundle的键
     private int mContentId = -1;
 
-//    private List<SectionBean> mData = null;
+    //接收 服务器返回来并经过Converter处理的 数据
+    private List<SectionBean> mData = null;
 
     @BindView(R2.id.rv_list_content)
     RecyclerView mRecyclerView = null;
@@ -70,7 +73,7 @@ public class ContentDelegate extends XiaoYunDelegate {
 
     private void initData() {
         RestClient.builder()
-                .url("sort_content_list.php?contentId=" + mContentId)
+                .url("http://lcjxg.cn/RestServer/api/sort_content_list.php?contentId=" + mContentId)
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
@@ -93,6 +96,6 @@ public class ContentDelegate extends XiaoYunDelegate {
         final StaggeredGridLayoutManager manager =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
-
+        initData();
     }
 }
