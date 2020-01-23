@@ -88,6 +88,7 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                             //数据配置完毕了，“当前”就变成 下一轮“上一个”了（类似思想 见BaseBottomDelegate）
                             mPrePosition = currentPosition;
 
+                            //来自 VerticalListDataConverter 中设置的Id 根源就是JSON数据中的ListItem的id！
                             final int contentId = getData().get(currentPosition).getField(MultipleFields.ID);
                             showContent(contentId);
 
