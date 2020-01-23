@@ -2,11 +2,18 @@ package com.lwp.xiaoyun.ec.main.sort.content;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.lwp.xiaoyun.ec.R;
+import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.net.RestClient;
+import com.lwp.xiaoyun_core.net.callback.ISuccess;
+
+import butterknife.BindView;
 
 /**
  * <pre>
@@ -24,6 +31,13 @@ public class ContentDelegate extends XiaoYunDelegate {
     // 创建一个 ContentDelegate实例 的同时，把ID传进来 ContentDelegate，供其加载
     private static final String ARG_CONTENT_ID = "CONTENT_ID";//封装Bundle的键
     private int mContentId = -1;
+
+//    private List<SectionBean> mData = null;
+
+    @BindView(R2.id.rv_list_content)
+    RecyclerView mRecyclerView = null;
+
+
     public static ContentDelegate newInstance(int contentId) {
 
         //简单工厂创建实例，这里乃是Fragment实用的的创建方法
@@ -53,8 +67,32 @@ public class ContentDelegate extends XiaoYunDelegate {
         return R.layout.delegate_list_content;
     }
 
+
+    private void initData() {
+        RestClient.builder()
+                .url("sort_content_list.php?contentId=" + mContentId)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+//                        mData = new SectionDataConverter().convert(response);
+//                        final SectionAdapter sectionAdapter =
+//                                new SectionAdapter(R.layout.item_section_content,
+//                                        R.layout.item_section_header, mData);
+//                        mRecyclerView.setAdapter(sectionAdapter);
+                    }
+                })
+                .build()
+                .get();
+    }
+
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+
+        //初始化 RecyclerView
+        //一参 多少列；二参 形态
+        final StaggeredGridLayoutManager manager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(manager);
 
     }
 }

@@ -25,8 +25,8 @@ public class IndexDataConverter extends DataConverter {
      * 将含有 若干个Item数据 的 Json（JsonArray）
      * 转换成 一个包含了 若干个对应的 JavaBean/JavaEntity 的 ArrayList
      *
-     * 应用时，使用父类的DataConverter.setJsonData() 设置了Json数据 之后，
-     * 在这里 通过 继承得到的DataConverter.getJsonData() 获取这个 Json数据，
+     * 应用时，使用 父类的DataConverter.setJsonData() 设置了Json数据 之后，
+     * 在这里 通过 继承得到的 DataConverter.getJsonData() 获取这个 Json数据，
      * 然后实现 数据转化
      *
      * @return 返回转化结果，即上述的
