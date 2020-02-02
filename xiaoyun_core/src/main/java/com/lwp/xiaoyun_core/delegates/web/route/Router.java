@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
+import android.webkit.URLUtil;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.delegates.web.WebDelegate;
@@ -41,7 +44,7 @@ public class Router {
             return true;
         }
 
-        //进行原生的跳转，
+        //进行原生的跳转！！！！
         //首先判断 当前Delegate 有没有 上层容器Delegate，
         //有则从 上层容器Delegate 进行跳转，否则在当前跳转
         final XiaoYunDelegate parentDelegate = delegate.getParentDelegate();
@@ -58,6 +61,34 @@ public class Router {
         //----------
 
         return true;
+    }
+
+    //渲染页面
+    private void loadWebPage(WebView webView, String url) {
+        if (webView != null) {
+            //webView 页面渲染
+            webView.loadUrl(url);
+        } else {
+            throw new NullPointerException("WebView is Null ！！！");
+        }
+    }
+
+    //在项目的assets包下写的 js、html、样式，都会以！本地页面！的形式来进行 渲染
+    private void loadLocalPage(WebView webView, String url) {
+        //手动加个文件头 再渲染
+        loadWebPage(webView, "file:///android_asset/" + url);
+    }
+
+    private void loadPage(WebView webView, String url) {
+        if (URLUtil.isNetworkUrl(url) || URLUtil.isAssetUrl(url)) {
+            //是网络链接 或者 包含了asset文件头
+            loadWebPage(webView, url);
+        } else {
+            loadLocalPage(webView, url);
+        }
+    }
+    public final void loadPage(WebDelegate delegate, String url) {
+        loadPage(delegate.getWebView(), url);
     }
 
     //处理有 电话协议 的 url

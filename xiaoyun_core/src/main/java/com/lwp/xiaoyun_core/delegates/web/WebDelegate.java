@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference;
  *              这里使用 软引用/弱引用 来引用WebView，因为它内存比较敏感
  * </pre>
  */
-public abstract class WebDelegate extends XiaoYunDelegate {
+public abstract class WebDelegate extends XiaoYunDelegate implements IWebViewInitializer {
 
     private WebView mWebView = null;
     private final ReferenceQueue<WebView> WEB_VIEW_QUEUE = new ReferenceQueue<>();
@@ -43,6 +43,9 @@ public abstract class WebDelegate extends XiaoYunDelegate {
 
         final Bundle args = getArguments();
         mUrl = args != null ? args.getString(RouteKeys.URL.name()) : null;
+
+        initWebView();
+
     }
 
     //用于 初始化WebView
