@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 public interface IWebViewInitializer {
 
     //初始化 WebView
+    // WebView 自然是 基于Android原生组件View的角度来对 WebView进行逻辑控制
     WebView initWebView(WebView webView);
 
     // 初始化 WebViewClient

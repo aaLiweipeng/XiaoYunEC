@@ -8,13 +8,13 @@ import android.webkit.WebView;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/2 2:59
- *     desc   :
+ *     desc   : 主要用于 加工webView
  * </pre>
  */
 public class WebViewInitializer {
 
     //传进来一个WebView 加工之后 返回
-    public WebView createView(WebView webView) {
+    public WebView createWebView(WebView webView) {
 
         WebView.setWebContentsDebuggingEnabled(true);
 

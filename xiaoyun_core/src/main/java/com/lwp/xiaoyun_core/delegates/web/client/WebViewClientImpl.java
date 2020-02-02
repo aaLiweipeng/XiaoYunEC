@@ -13,13 +13,13 @@ import retrofit2.http.DELETE;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/1 15:43
- *     desc   :
+ *     desc   : 针对于浏览器本身行为的一个控制
+ *              如下面的 路由的截断和处理
  * </pre>
  */
 public class WebViewClientImpl extends WebViewClient {
 
     private final WebDelegate DELEGATE;
-
 
     public WebViewClientImpl(WebDelegate delegate) {
         DELEGATE = delegate;

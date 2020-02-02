@@ -8,6 +8,9 @@ import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun_core.delegates.web.WebDelegateImpl;
 
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
 /**
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
@@ -31,9 +34,15 @@ public class DiscoverDelegate extends BottomItemDelegate {
         super.onLazyInitView(savedInstanceState);
 
         final WebDelegateImpl delegate = WebDelegateImpl.create("index.html");
+        delegate.setTopDelegate(this.getParentDelegate());//即 EcBottomDelegate
 
         //文件加载到WebView上，webView设置在Delegate中，Delegate加载到 Framelayout上
         loadRootFragment(R.id.web_discovery_container, delegate);
+    }
 
+    @Override
+    public FragmentAnimator onCreateFragmentAnimator() {
+        //横向跳转动画
+        return new DefaultHorizontalAnimator();
     }
 }

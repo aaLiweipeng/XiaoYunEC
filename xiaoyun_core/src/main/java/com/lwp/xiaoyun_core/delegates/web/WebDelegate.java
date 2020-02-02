@@ -30,6 +30,8 @@ public abstract class WebDelegate extends XiaoYunDelegate implements IWebViewIni
     // 这种架构参考自 SDK25 中的WebFragment
     private boolean mIsWebViewAvailable = false;
 
+    private XiaoYunDelegate mTopDelegate = null;
+
     public WebDelegate() {
     }
 
@@ -61,6 +63,7 @@ public abstract class WebDelegate extends XiaoYunDelegate implements IWebViewIni
             //如果 没有初始化WebView过
             final IWebViewInitializer initializer = setInitializer();
             if (initializer != null) {
+
                 //弱引用处理
                 final WeakReference<WebView> webViewWeakReference =
                         new WeakReference<>(new WebView(getContext()), WEB_VIEW_QUEUE);
@@ -87,6 +90,17 @@ public abstract class WebDelegate extends XiaoYunDelegate implements IWebViewIni
             throw new NullPointerException("WebView is null!!!!!!!!!");
         }
         return mIsWebViewAvailable ? mWebView : null;
+    }
+
+    public void setTopDelegate(XiaoYunDelegate delegate) {
+        mTopDelegate = delegate;
+    }
+    public XiaoYunDelegate getTopDelegate() {
+        //有指定（setTopDelegate）则返回指定Delegate，没指定返回WebDelegate
+        if (mTopDelegate == null) {
+            mTopDelegate = this;
+        }
+        return mTopDelegate;
     }
 
     public String getUrl() {

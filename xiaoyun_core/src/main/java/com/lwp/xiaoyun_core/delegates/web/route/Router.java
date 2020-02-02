@@ -16,7 +16,10 @@ import com.lwp.xiaoyun_core.delegates.web.WebDelegateImpl;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/1 15:51
- *     desc   :
+ *     desc   : 封装
+ *              路由的截断和处理 逻辑
+ *              页面加载、跳转 逻辑
+ *
  * </pre>
  */
 public class Router {
@@ -44,18 +47,51 @@ public class Router {
             return true;
         }
 
-        //进行原生的跳转！！！！
-        //首先判断 当前Delegate 有没有 上层容器Delegate，
-        //有则从 上层容器Delegate 进行跳转，否则在当前跳转
-        final XiaoYunDelegate parentDelegate = delegate.getParentDelegate();
-        final WebDelegateImpl webDelegate = WebDelegateImpl.create(url);
-        if (parentDelegate == null) {
-            delegate.start(webDelegate);
-        } else {
-            parentDelegate.start(webDelegate);
-        }
+        //！！！！跳转！！进行原生的跳转！！！！
+        //
+        // 根据 getTopDelegate() 逻辑，
+        // （有指定则基于指定Delegate跳转，没指定则基于WebDelegate跳转）
+        //
+        // 如果不是null，
+        // 即我们在create WebDelegateImpl 之后有指定(setTopDelegate)了一个 TopDelegate 给它，
+        // 如 DiscoverDelegate.onLazyInitView 中delegate.setTopDelegate()，
+        // 则基于这个指定了的 TopDelegate 进行跳转（start）；
+        //
+        // 如果为null，
+        // 则使用时没有指定 TopDelegate，
+        // 则 基于 WebDelegate 本身进行跳转（WebDelegate的内容就只是一个WebView）
+        //
+        // 以上跳转，指在 WebDelegate 或者 指定的TopDelegate 这个FrameLayout的位置，
+        // 重新整一个WebDelegate，加载替换上去
 
-        //内容拦截至此初步完成，web页面凡是有location.host或者是a标签，
+        //下面拿到的是DiscoverDelegate.onLazyInitView 中指定好的 delegate.setTopDelegate()，！！！
+        // 下面的 delegate，是未跳转时的 WebDelegate实例！！！
+        final XiaoYunDelegate topDelegate = delegate.getTopDelegate();
+        // 下面这个 ！！url参数 ！！
+        // 乃是来自 WebViewClientImpl 的回调方法 shouldOverrideUrlLoading，
+        // 即 要跳转过去的 url ，即web页面的事件如 a标签 对应的 url，
+        // 这里再创建另外一个新的 WebDelegate 实例 ，这个实例没有setTopDelegate！！
+        // 这里是基于上一个WebDelegate的getTopDelegate 进行跳转！！！
+        final WebDelegateImpl webDelegate = WebDelegateImpl.create(url);
+        //基于 topDelegate跳转（加载替换）WebDelegate
+        topDelegate.start(webDelegate);
+
+
+//        //首先判断 当前Delegate 有没有 上层容器Delegate，
+//        //有则从 上层容器Delegate 进行跳转，否则在当前跳转
+//        final XiaoYunDelegate parentDelegate = delegate.getParentDelegate();
+//        //！！！！！！
+//        // 下面这个 ！！url参数 ！！
+//        // 乃是来自 WebViewClientImpl 的回调方法 shouldOverrideUrlLoading，
+//        // 即
+//        final WebDelegateImpl webDelegate = WebDelegateImpl.create(url);
+//        if (parentDelegate == null) {
+//            delegate.start(webDelegate);
+//        } else {
+//            parentDelegate.start(webDelegate);
+//        }
+
+        //！！！内容拦截至此初步完成，web页面凡是有location.host或者是 a标签，！！！
         // 全部都会在 WebViewClientImpl.shouldOverrideUrlLoading中被拦截下来，
         // 然后在原生中强制进行跳转
         //----------
@@ -63,7 +99,7 @@ public class Router {
         return true;
     }
 
-    //渲染页面
+    //渲染页面 的方法
     private void loadWebPage(WebView webView, String url) {
         if (webView != null) {
             //webView 页面渲染
@@ -72,7 +108,6 @@ public class Router {
             throw new NullPointerException("WebView is Null ！！！");
         }
     }
-
     //在项目的assets包下写的 js、html、样式，都会以！本地页面！的形式来进行 渲染
     private void loadLocalPage(WebView webView, String url) {
         //手动加个文件头 再渲染
