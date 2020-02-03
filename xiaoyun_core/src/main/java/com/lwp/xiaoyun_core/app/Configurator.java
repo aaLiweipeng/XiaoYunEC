@@ -2,9 +2,12 @@ package com.lwp.xiaoyun_core.app;
 
 import android.app.Activity;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
+import com.lwp.xiaoyun_core.delegates.web.event.Event;
+import com.lwp.xiaoyun_core.delegates.web.event.EventManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,6 +103,19 @@ public class Configurator {
     }
     public final Configurator withActivity(Activity activity) {
         XIAOYUN_CONFIGS.put(ConfigKeys.ACTIVITY, activity);
+        return this;
+    }
+    public final Configurator withJavaScriptInterface(@NonNull String name) {
+        //在JavaScriptInterface标志名需要改变的时候，我们设计成在配置项里面改就可以了，
+        // 就不用每次都跑去WebDelegate里边改了
+        XIAOYUN_CONFIGS.put(ConfigKeys.JAVASCRIPT_INTERFACE, name);
+        return this;
+    }
+    public final Configurator withWebEvent(@NonNull String name, @NonNull Event event) {
+
+        final EventManager manager = EventManager.getInstance();
+        //这里自然是使用了 向上转型，即 TestEvent实例 当做 父类Evnent实例 来用
+        manager.addEvent(name, event);
         return this;
     }
     //配置完成时，调用本方法，配置完成位置位

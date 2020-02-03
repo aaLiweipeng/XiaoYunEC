@@ -19,7 +19,7 @@ public enum ConfigKeys {
     WE_CHAT_APP_SECRET,
     ACTIVITY,
     HANDLER,
-    JAVASCRIPT_INTERFACE,
+    JAVASCRIPT_INTERFACE,//接口标志名
     WEB_HOST,
     USER_AGENTS,
     COOKIE

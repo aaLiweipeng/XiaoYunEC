@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.webkit.WebView;
 
+import com.lwp.xiaoyun_core.app.ConfigKeys;
+import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.delegates.web.route.RouteKeys;
 
@@ -82,7 +84,8 @@ public abstract class WebDelegate extends XiaoYunDelegate implements IWebViewIni
                 mWebView.setWebChromeClient(initializer.initWebChromeClient());
 
                 //添加JavaScript的接口，用于WebView跟原生进行交互
-                mWebView.addJavascriptInterface(XiaoYunWebInterface.create(this), "xiaoyun");
+                final String jSIName = XiaoYun.getConfiguration(ConfigKeys.JAVASCRIPT_INTERFACE);
+                mWebView.addJavascriptInterface(XiaoYunWebInterface.create(this), jSIName);
                 mIsWebViewAvailable = true;
             } else {
                 //如果初始器——initializer为null

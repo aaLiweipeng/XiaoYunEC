@@ -6,6 +6,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.database.DatabaseManager;
 import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun_core.app.XiaoYun;
+import com.lwp.xiaoyunec.evnet.TestEvent;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
 
 /**
@@ -25,6 +26,8 @@ public class ExampleApp extends Application {
                 .withApiHost("https://127.0.0.1/")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
+                .withJavaScriptInterface("xiaoyun")
+                .withWebEvent("test",new TestEvent())
 //                .withWeChatAppId("")
 //                .withWeChatAppSecret("")
                 .configure();

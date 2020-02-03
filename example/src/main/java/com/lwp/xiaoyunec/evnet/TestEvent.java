@@ -1,7 +1,9 @@
-package com.lwp.xiaoyun_core.delegates.web.event;
+package com.lwp.xiaoyunec.evnet;
 
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import com.lwp.xiaoyun_core.delegates.web.event.Event;
 
 /**
  * <pre>

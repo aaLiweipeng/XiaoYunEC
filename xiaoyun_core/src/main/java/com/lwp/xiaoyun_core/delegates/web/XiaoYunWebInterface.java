@@ -5,9 +5,6 @@ import android.webkit.JavascriptInterface;
 import com.alibaba.fastjson.JSON;
 import com.lwp.xiaoyun_core.delegates.web.event.Event;
 import com.lwp.xiaoyun_core.delegates.web.event.EventManager;
-import com.lwp.xiaoyun_core.delegates.web.event.TestEvent;
-
-import retrofit2.http.DELETE;
 
 /**
  * <pre>
@@ -37,15 +34,11 @@ final class XiaoYunWebInterface {
         final String actionValue = JSON.parseObject(params).getString("action");
 
         if (actionValue != null) {
-            switch (actionValue) {
-                case "test":
-                    //这里自然是使用了 向上转型，即 TestEvent实例 当做 父类Evnent实例 来用
-                    EventManager.getInstance().addEvent("test", new TestEvent());
-                    break;
-
-                default:
-                    break;
-            }
+//            switch (actionValue) {
+//                case "test":
+//                    EventManager.getInstance().addEvent("test", new TestEvent());
+//                    break;
+//            }
 
             //体会一下这里的两点巧妙地设计，
             // 其一，将 WebDelegate 作为参数设置进来了！
