@@ -13,7 +13,7 @@ public class TestEvent extends Event {
 
     @Override
     public String execute(String params) {
-        Toast.makeText(getContext(), params, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), getAction(), Toast.LENGTH_LONG).show();
         return null;
     }
 }
