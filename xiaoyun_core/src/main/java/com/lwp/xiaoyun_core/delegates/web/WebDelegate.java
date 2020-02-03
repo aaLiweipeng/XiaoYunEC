@@ -18,6 +18,11 @@ import java.lang.ref.WeakReference;
  *     desc   : 承载Web页面的 基础核心
  *
  *              这里使用 软引用/弱引用 来引用WebView，因为它内存比较敏感
+ *
+ *              将Url作为WebDelegate的成员变量，
+ *              初始化 或者 跳转的时候，都需要创建一个新的 WebDelegate，
+*              一个WebDelegate！！ 对应 一个WebView！！对应一个Url！！
+ *
  * </pre>
  */
 public abstract class WebDelegate extends XiaoYunDelegate implements IWebViewInitializer {

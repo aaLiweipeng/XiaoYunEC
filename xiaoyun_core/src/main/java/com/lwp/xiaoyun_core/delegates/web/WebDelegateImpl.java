@@ -27,6 +27,9 @@ import com.lwp.xiaoyun_core.delegates.web.route.Router;
  *
  *              另外，观 setLayout()，WebDelegate/WebDelegateImpl 这个碎片的内容，
  *              其实就只是个 WebView！！
+ *
+ *              初始化 或者 跳转的时候，都需要创建一个新的 WebDelegate，
+ *              一个WebDelegate！！ 对应 一个WebView！！对应一个Url！！
  * </pre>
  */
 public class WebDelegateImpl extends WebDelegate {

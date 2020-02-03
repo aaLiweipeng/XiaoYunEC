@@ -12,6 +12,17 @@
 <h1>这个是第一个本地页面</h1>
 
 <a href="second.html">点击跳转页面</a>
+<br>
+<br>
+<button id="testButton">测试事件</button>
 
+<script type="text/javascript">
+	document.getElementById('testButton').onclick = function(){
+	    var command = {
+	        'action':'test'
+	    };
+	    xiaoyun.event(JSON.stringify(command));
+	};
+</script>
 </body>
 </html>

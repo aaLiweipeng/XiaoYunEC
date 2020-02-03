@@ -1,5 +1,6 @@
 package com.lwp.xiaoyun_core.delegates.web;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,6 +15,7 @@ import android.webkit.WebView;
 public class WebViewInitializer {
 
     //传进来一个WebView 加工之后 返回
+    @SuppressLint("SetJavaScriptEnabled")
     public WebView createWebView(WebView webView) {
 
         WebView.setWebContentsDebuggingEnabled(true);
