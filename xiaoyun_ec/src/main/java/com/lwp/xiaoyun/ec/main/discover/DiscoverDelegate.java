@@ -36,7 +36,8 @@ public class DiscoverDelegate extends BottomItemDelegate {
         final WebDelegateImpl delegate = WebDelegateImpl.create("index.html");
         delegate.setTopDelegate(this.getParentDelegate());//即 EcBottomDelegate
 
-        //文件加载到WebView上，webView设置在Delegate中，Delegate加载到 Framelayout上
+        //文件 加载到 WebView上，webView 设置在 WebDelegate 中，
+        // WebDelegate加载到 DiscoverDelegate 布局中的 Framelayout上
         loadRootFragment(R.id.web_discovery_container, delegate);
     }
 

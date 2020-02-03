@@ -1,8 +1,10 @@
 package com.lwp.xiaoyun_core.delegates.web.event;
 
 import android.content.Context;
+import android.webkit.WebView;
 
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.delegates.web.WebDelegate;
 
 /**
  * <pre>
@@ -22,8 +24,13 @@ import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 public abstract class Event implements IEvent {
     private Context mContent = null;
     private String mAction = null;
-    private XiaoYunDelegate mDelegate = null;
+    private WebDelegate mDelegate = null;
     private String mUrl = null;
+    private WebView mWebView = null;
+
+    public WebView getWebView() {
+        return mDelegate.getWebView();
+    }
 
     public Context getContext() {
         return mContent;
@@ -41,11 +48,11 @@ public abstract class Event implements IEvent {
         this.mAction = mAction;
     }
 
-    public XiaoYunDelegate getDelegate() {
+    public WebDelegate getDelegate() {
         return mDelegate;
     }
 
-    public void setDelegate(XiaoYunDelegate mDelegate) {
+    public void setDelegate(WebDelegate mDelegate) {
         this.mDelegate = mDelegate;
     }
 

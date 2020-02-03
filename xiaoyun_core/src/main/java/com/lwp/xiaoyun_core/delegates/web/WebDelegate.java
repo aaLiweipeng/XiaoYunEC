@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
  *              将Url作为WebDelegate的成员变量，
  *              初始化 或者 跳转的时候，都需要创建一个新的 WebDelegate，
 *              一个WebDelegate！！ 对应 一个WebView！！对应一个Url！！
+ *              对应的 WebView 和 Url 都是WebDelegate 的 全局变量
  *
  * </pre>
  */
@@ -69,7 +70,8 @@ public abstract class WebDelegate extends XiaoYunDelegate implements IWebViewIni
             final IWebViewInitializer initializer = setInitializer();
             if (initializer != null) {
 
-                //弱引用处理
+                //建立WebView实例！！
+                // ！！弱引用处理
                 final WeakReference<WebView> webViewWeakReference =
                         new WeakReference<>(new WebView(getContext()), WEB_VIEW_QUEUE);
                 mWebView = webViewWeakReference.get();

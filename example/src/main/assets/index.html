@@ -17,6 +17,11 @@
 <button id="testButton">测试事件</button>
 
 <script type="text/javascript">
+
+    function nativeCall(){
+        alert('原生调用了JavaScript的方法！！！');
+    };
+
 	document.getElementById('testButton').onclick = function(){
 	    var command = {
 	        'action':'test'
