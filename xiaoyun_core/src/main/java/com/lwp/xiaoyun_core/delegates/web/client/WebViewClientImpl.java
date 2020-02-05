@@ -1,11 +1,18 @@
 package com.lwp.xiaoyun_core.delegates.web.client;
 
+import android.graphics.Bitmap;
+import android.os.Handler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.lwp.xiaoyun_core.app.XiaoYun;
+import com.lwp.xiaoyun_core.delegates.IPageLoadListener;
 import com.lwp.xiaoyun_core.delegates.web.WebDelegate;
 import com.lwp.xiaoyun_core.delegates.web.route.Router;
+import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
+import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
+
 
 import retrofit2.http.DELETE;
 
@@ -20,6 +27,13 @@ import retrofit2.http.DELETE;
 public class WebViewClientImpl extends WebViewClient {
 
     private final WebDelegate DELEGATE;
+    private IPageLoadListener mIPageLoadListener = null;
+
+    private static final Handler HANDLER = XiaoYun.getHandler();
+
+    public void setIPageLoadListener(IPageLoadListener listener) {
+        mIPageLoadListener = listener;
+    }
 
     public WebViewClientImpl(WebDelegate delegate) {
         DELEGATE = delegate;
@@ -31,8 +45,35 @@ public class WebViewClientImpl extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         XiaoYunLogger.d("shouldOverrideUrlLoading", url);
         //做 路由的截断和处理
-
-
         return Router.getInstance().handleWebUrl(DELEGATE, url);
+    }
+
+    //页面打开的一瞬间
+    @Override
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        super.onPageStarted(view, url, favicon);
+
+        //执行回调
+        if (mIPageLoadListener != null) {
+            mIPageLoadListener.onLoadStart();
+        }
+        //showLoader
+        XiaoYunLoader.showLoading(view.getContext(), LoaderStyle.LineScalePartyIndicator);
+    }
+
+    @Override
+    public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+
+        if (mIPageLoadListener != null) {
+            mIPageLoadListener.onLoadEnd();
+        }
+        //stopLoader
+        HANDLER.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                XiaoYunLoader.stopLoading();
+            }
+        },1000);
     }
 }

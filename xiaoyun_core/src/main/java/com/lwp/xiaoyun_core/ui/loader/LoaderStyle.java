@@ -9,7 +9,6 @@ package com.lwp.xiaoyun_core.ui.loader;
  */
 
 //一个让 IDE 忽略 “没有使用” 的警告
-@SuppressWarnings("unused")
 public enum LoaderStyle {
     BallPulseIndicator,
     BallGridPulseIndicator,

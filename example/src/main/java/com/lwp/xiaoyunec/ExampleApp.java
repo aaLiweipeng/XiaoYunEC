@@ -17,6 +17,7 @@ import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
  * </pre>
  */
 public class ExampleApp extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();

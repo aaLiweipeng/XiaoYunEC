@@ -71,7 +71,7 @@ public class XiaoYunLoader {
 
         if (dialogWindow != null) {
             //设置 Dialog 长宽
-            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            final WindowManager.LayoutParams lp = dialogWindow.getAttributes();
             lp.width = deviceWidth / LOADER_SIZE_SCALE;
             lp.height = deviceHeight / LOADER_SIZE_SCALE;
             lp.height = lp.height +  deviceHeight / LOADER_OFFSET_SCALE;//添加偏移

@@ -7,6 +7,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.lwp.xiaoyun_core.delegates.IPageLoadListener;
 import com.lwp.xiaoyun_core.delegates.web.chromeclient.WebChromeClientImpl;
 import com.lwp.xiaoyun_core.delegates.web.client.WebViewClientImpl;
 import com.lwp.xiaoyun_core.delegates.web.route.RouteKeys;
@@ -33,6 +34,8 @@ import com.lwp.xiaoyun_core.delegates.web.route.Router;
  * </pre>
  */
 public class WebDelegateImpl extends WebDelegate {
+
+    private IPageLoadListener mIPageLoadListener = null;
 
     /**
      * （下列注释，区分 通过Transaction的Fragment加载 及 WebView的网页加载）
@@ -81,6 +84,10 @@ public class WebDelegateImpl extends WebDelegate {
         return getWebView();
     }
 
+    public void setIPageLoadListener(IPageLoadListener listener) {
+        mIPageLoadListener = listener;
+    }
+
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         //在刚刚打开加载好页面的时候
@@ -108,6 +115,7 @@ public class WebDelegateImpl extends WebDelegate {
     @Override
     public WebViewClient initWebViewClient() {
         final WebViewClientImpl client = new WebViewClientImpl(this);
+        client.setIPageLoadListener(mIPageLoadListener);
         return client;
     }
     @Override

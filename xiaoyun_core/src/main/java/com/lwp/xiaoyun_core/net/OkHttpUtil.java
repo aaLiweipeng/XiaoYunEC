@@ -65,6 +65,13 @@ public class OkHttpUtil {
         mLoaderStyle = LoaderStyle.BallClipRotatePulseIndicator;
         return this;
     }
+    public final OkHttpUtil loader(Context context,LoaderStyle loaderStyle) {
+        mContext = context;
+        mLoaderStyle = loaderStyle;
+        return this;
+    }
+
+
     //关闭 Loader
     private void stopLoading() {
         if (mLoaderStyle != null) {

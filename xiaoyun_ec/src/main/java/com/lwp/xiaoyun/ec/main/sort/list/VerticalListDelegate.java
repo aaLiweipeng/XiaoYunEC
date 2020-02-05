@@ -17,6 +17,7 @@ import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
 import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
+import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 
 import java.io.IOException;
@@ -69,7 +70,7 @@ public class VerticalListDelegate extends XiaoYunDelegate {
         mRecyclerView.setAdapter(adapter);
 
         OkHttpUtil.build()
-                .loader(getContext())
+                .loader(getContext(), LoaderStyle.BallRotateIndicator)
                 .sendOkHttpRequest("http://lcjxg.cn/RestServer/api/sort_list.php", new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
