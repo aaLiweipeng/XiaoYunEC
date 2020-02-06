@@ -118,6 +118,11 @@ public class Configurator {
         manager.addEvent(name, event);
         return this;
     }
+    //浏览器加载的Host
+    public final Configurator withWebHost(String host) {
+        XIAOYUN_CONFIGS.put(ConfigKeys.WEB_HOST, host);
+        return this;
+    }
     //配置完成时，调用本方法，配置完成位置位
     public final void configure() {
         initIcons();//字体图标库是非常通用的，写在这里保证初始化完成时图标库也初始化完成

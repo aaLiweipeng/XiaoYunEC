@@ -2,9 +2,11 @@ package com.lwp.xiaoyun_core.delegates.web.client;
 
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.lwp.xiaoyun_core.app.ConfigKeys;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.IPageLoadListener;
 import com.lwp.xiaoyun_core.delegates.web.WebDelegate;
@@ -12,6 +14,7 @@ import com.lwp.xiaoyun_core.delegates.web.route.Router;
 import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
+import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
 
 
 import retrofit2.http.DELETE;
@@ -65,6 +68,9 @@ public class WebViewClientImpl extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
 
+        //同步cookie用
+        syncCookie();
+
         if (mIPageLoadListener != null) {
             mIPageLoadListener.onLoadEnd();
         }
@@ -75,5 +81,24 @@ public class WebViewClientImpl extends WebViewClient {
                 XiaoYunLoader.stopLoading();
             }
         },1000);
+    }
+
+    //获取浏览器cookie
+    private void syncCookie() {
+        //注意 WebViewInitializer 对应代码
+        final CookieManager manager = CookieManager.getInstance();
+        /*
+          注意，这里的Cookie和API请求的Cookie是不一样的，这个在网页不可见
+         */
+        final String webHost = XiaoYun.getConfiguration(ConfigKeys.WEB_HOST);
+        if (webHost != null) {//如果有配置了 WebHost
+            if (manager.hasCookies()) { //如果 存在cookie
+                final String cookieStr = manager.getCookie(webHost);//通过manager 把 网页的cookie 取出来
+                if (cookieStr != null && !cookieStr.equals("")) {//网页的cookie 非空非null
+                    //把网页的cookie 加进SP文件，在 AddCookieInterceptor 中 拦截 从SP文件取出 并同步
+                    XiaoyunPreference.addCustomAppProfile("cookie",cookieStr);
+                }
+            }
+        }
     }
 }

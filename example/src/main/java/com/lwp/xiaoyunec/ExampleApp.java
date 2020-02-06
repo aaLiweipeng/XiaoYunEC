@@ -6,6 +6,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.database.DatabaseManager;
 import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun_core.app.XiaoYun;
+import com.lwp.xiaoyun_core.net.rx.AddCookieInterceptor;
 import com.lwp.xiaoyunec.evnet.TestEvent;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
 
@@ -24,11 +25,13 @@ public class ExampleApp extends Application {
 
         XiaoYun.init(this)
                 .withInterceptor(new DebugInterceptor("user_profile", R.raw.user_profile))
+                .withInterceptor(new AddCookieInterceptor())//添加cookie同步拦截器
                 .withApiHost("https://127.0.0.1/")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .withJavaScriptInterface("xiaoyun")
                 .withWebEvent("test",new TestEvent())
+                .withWebHost("https://www.baidu.com/")
 //                .withWeChatAppId("")
 //                .withWeChatAppSecret("")
                 .configure();
