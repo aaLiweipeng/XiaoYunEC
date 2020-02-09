@@ -11,6 +11,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
     }
 
@@ -79,4 +80,6 @@ dependencies {
     //下面这个库 是为了让glide能使用OkHttp的网络层，
     // 这样的话在网络上会进行一系列的优化和加固
     implementation 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+    // 引入multidex库
+    implementation 'com.android.support:multidex:1.0.3'
 }

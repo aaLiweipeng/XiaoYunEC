@@ -1,6 +1,7 @@
 package com.lwp.xiaoyunec;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.lwp.xiaoyun.ec.database.DatabaseManager;
@@ -22,6 +23,9 @@ public class ExampleApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 初始化MultiDex
+        MultiDex.install(this);
 
         XiaoYun.init(this)
                 .withInterceptor(new DebugInterceptor("user_profile", R.raw.user_profile))
