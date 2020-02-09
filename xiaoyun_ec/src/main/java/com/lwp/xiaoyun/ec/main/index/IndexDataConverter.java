@@ -29,8 +29,10 @@ public class IndexDataConverter extends DataConverter {
      * 在这里 通过 继承得到的 DataConverter.getJsonData() 获取这个 Json数据，
      * 然后实现 数据转化
      *
-     * @return 返回转化结果，即上述的
-     * 一个包含了 若干个对应的 JavaBean/JavaEntity (MultipleItemEntity) 的 ArrayList (ENTITIES)
+     * @return 用于 返回转化结果，即上述的
+     *          一个包含了
+     *          若干个对应的  JavaBean/JavaEntity (MultipleItemEntity) 的
+     *          ArrayList (ENTITIES)
      */
     @Override
     public ArrayList<MultipleItemEntity> convert() {

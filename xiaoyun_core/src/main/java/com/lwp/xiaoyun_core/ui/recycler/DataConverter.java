@@ -19,7 +19,11 @@ public abstract class DataConverter {
 
     private String mJsonData = null;
 
-    //用于实现 数据转化过程 Json to JavaBean/JavaEntity
+    //用于实现 数据转化过程 Json to JavaBean/JavaEntity;
+    // Gson 是写好Bean之后，拿到JsonString之后 自动完成这个转化过程，
+    // 返回成对应的 JavaBean List，
+    // 不同的是，这里是 由我们实现一个 Concrete DataConverter，实现这个方法，
+    // 自己编写转化逻辑
     public abstract ArrayList<MultipleItemEntity> convert();
 
     public DataConverter setJsonData(String json) {

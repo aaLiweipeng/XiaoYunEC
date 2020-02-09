@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="104dp"
     android:layout_marginBottom="5dp"
     android:background="@drawable/item_shop_care_corner"
     android:orientation="horizontal">
@@ -17,8 +17,8 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/image_item_shop_cart"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
@@ -45,7 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:maxLines="2"
-            android:text="商品描述描述描述描述描述" />
+            android:text="商品描述描述描述描述描述"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_item_shop_cart_price"
@@ -53,44 +55,48 @@
             android:layout_height="wrap_content"
             android:text="6.66"
             android:textColor="@color/app_main"
+            android:textStyle="bold"
             android:typeface="monospace" />
     </android.support.v7.widget.LinearLayoutCompat>
     <!--商品信息结束-->
 
+    <!--数量调整模块-->
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:gravity="bottom"
+        android:gravity="bottom|center_horizontal"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/icon_item_minus"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:gravity="center"
+            android:padding="2dp"
             android:text="{fa-minus-square-o}"
-            android:textSize="24sp"/>
+            android:textSize="22sp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_item_shop_cart_count"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:gravity="center"
             android:text="100"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <com.joanzapata.iconify.widget.IconTextView
             android:id="@+id/icon_item_plus"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:gravity="center"
+            android:padding="2dp"
             android:text="{fa-plus-square-o}"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 

@@ -120,6 +120,7 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
         }
     }
 
+    //----------业务方法代码
     /**
      * @param contentId 根据这个id 创建对应的 ContentDelegate实例,把这个实例 接力给 switchContent()
      */
