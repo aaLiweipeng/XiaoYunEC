@@ -3,8 +3,8 @@
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:paddingTop="6dp"
-    android:paddingBottom="6dp">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <com.joanzapata.iconify.widget.IconTextView
         android:id="@+id/icon_bottom_item"
@@ -13,10 +13,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:textSize="25sp" />
+        android:textSize="23sp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_bottom_itme"
+        android:textSize="11sp"
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

@@ -27,7 +27,7 @@ public class TranslucentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     //颜色变化速率
     private static final int SHOW_SPEED = 3;
     //定义变化的颜色
-    private final RgbValue RGB_VALUE = RgbValue.create(0, 191, 255);
+    private final RgbValue RGB_VALUE = RgbValue.create(255, 85, 60);
 
 
     //注意！！！

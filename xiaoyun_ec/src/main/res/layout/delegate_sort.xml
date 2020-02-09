@@ -5,10 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:background="@color/app_main"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@android:color/holo_blue_light"
+        android:layout_height="65dp"
+        android:background="@color/app_main"
         android:gravity="center">
 
         <android.support.v7.widget.AppCompatTextView
@@ -18,7 +23,7 @@
             android:paddingTop="6dp"
             android:text="分类"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </android.support.v7.widget.Toolbar>
 
