@@ -7,27 +7,32 @@
     android:orientation="horizontal">
 
     <com.joanzapata.iconify.widget.IconTextView
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
         android:id="@+id/icon_item_shop_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:gravity="center"
+        android:textSize="20sp"
         android:text="{fa-check-circle}" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/image_item_shop_cart"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:background="@drawable/item_shop_care_img"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:padding="8dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="10dp" />
 
     <!--商品信息-->
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1.6"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="10dp">

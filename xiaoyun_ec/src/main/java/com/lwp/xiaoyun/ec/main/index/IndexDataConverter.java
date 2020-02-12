@@ -55,18 +55,22 @@ public class IndexDataConverter extends DataConverter {
             final ArrayList<String> bannersImages = new ArrayList<>();
 
             //根据json数据 判断item的Type
+            //01 10 11 00
             int type = 0;
+            //01
             if (imageUrl == null && text != null) {
                 type = ItemType.TEXT;
+
+            //10
             } else if (imageUrl != null && text == null) {
                 type = ItemType.IMAGE;
 
-                //01 10 11 00 往后就是图文都有或者都没有的了
+                //11 00 往后就是图文都有或者都没有的了
             } else if (imageUrl != null) {
-                //图文并茂
+                //图文并茂   11
                 type = ItemType.TEXT_IMAGE;
 
-                //往后就是 图文都没有的了
+                //往后就是 图文都没有的了 00
             } else if (banners != null) {
                 //图文都没有，那是不是有banners，有的话
 

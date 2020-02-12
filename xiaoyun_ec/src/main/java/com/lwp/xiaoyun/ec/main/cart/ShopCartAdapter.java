@@ -1,12 +1,16 @@
 package com.lwp.xiaoyun.ec.main.cart;
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
+import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
@@ -37,7 +41,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
     }
 
     @Override
-    protected void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
+    protected void convert(MultipleViewHolder holder, final MultipleItemEntity entity) {
         super.convert(holder, entity);
 
         switch (holder.getItemViewType()) {
@@ -70,6 +74,39 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         .centerCrop()
                         .dontAnimate()
                         .into(imgThumb);
+
+                //在左侧勾勾渲染之前改变全选与否状态
+//                entity.setField(ShopCartItemFields.IS_SELECTED, mIsSelectedAll);
+                final boolean isSelected = entity.getField(ShopCartItemFields.IS_SELECTED);
+                //根据数据状态显示 Item左侧选勾
+                if (isSelected) {
+                    //选中了
+                    iconIsSelected.setTextColor(
+                            ContextCompat.getColor(XiaoYun.getApplicationContext(), R.color.app_main));
+                } else {
+                    //没有选中
+                    iconIsSelected.setTextColor(Color.GRAY);
+                }
+                //添加左侧选勾点击事件
+                iconIsSelected.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        //没次点击都要重新取，不能用全局成员 isSelected
+                        final boolean currentSelected = entity.getField(ShopCartItemFields.IS_SELECTED);
+
+                        if (currentSelected) {
+                            //如果是选中了的，点击之后则变成 没选中的状态
+                            iconIsSelected.setTextColor(Color.GRAY);
+                            entity.setField(ShopCartItemFields.IS_SELECTED, false);
+                        } else {
+                            //如果是没选中，点击之后则变成 选中的状态
+                            iconIsSelected.setTextColor(
+                                    ContextCompat.getColor(XiaoYun.getApplicationContext(), R.color.app_main));
+                            entity.setField(ShopCartItemFields.IS_SELECTED, true);
+                        }
+                    }
+                });
 
                 break;
             default:
