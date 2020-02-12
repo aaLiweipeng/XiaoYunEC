@@ -1,12 +1,16 @@
 package com.lwp.xiaoyun.ec.main.cart;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun.ec.main.sort.content.SectionDataConverter;
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -39,6 +44,32 @@ public class ShopCartDelegate extends BottomItemDelegate {
 
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRecyclerView = null;
+    //全选图标
+    @BindView(R2.id.icon_shop_cart_select_all)
+    IconTextView mIconSelectAll = null;
+
+    //全选图标的点击事件
+    @OnClick(R2.id.icon_shop_cart_select_all)
+    void onClickSelectAll() {
+        final int tag = (int) mIconSelectAll.getTag();
+        if (tag == 0) {
+            //点击时，全选图标为 未选中状态，则点击后改为 选中状态
+            mIconSelectAll.setTextColor(
+                    ContextCompat.getColor(getContext(), R.color.app_main));//变色
+            mIconSelectAll.setTag(1);//用于 全选图标 点击事件判断
+            mAdapter.setIsSelectedAll(true);//用于控制Item
+            //更新RecyclerView的 显示状态！！！onBindViewHolder--即adapter的convert()会再次被回调
+            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
+        } else {
+            //点击时，全选图标为 选中状态，则点击后 改为 未选中状态
+            mIconSelectAll.setTextColor(Color.GRAY);//变色
+            mIconSelectAll.setTag(0);
+            mAdapter.setIsSelectedAll(false);
+            //更新RecyclerView的 显示状态！！！
+            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
+        }
+
+    }
 
     @Override
     public Object setLayout() {
@@ -48,10 +79,16 @@ public class ShopCartDelegate extends BottomItemDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
 
+        //取消默认的刷新动画，解决RecyclerView的 刷新闪烁问题
+        ((DefaultItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+
         mAdapter = new ShopCartAdapter(mData);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
+        //注意这里要对 全选图标的tag 初始化！！初始默认全选图标未选中
+        // （不然点击事件直接getTag为空指针报错！）
+        mIconSelectAll.setTag(0);
     }
 
     @Override

@@ -28,6 +28,10 @@ import static com.lwp.xiaoyun_core.ui.recycler.MultipleFields.*;
  * </pre>
  */
 public class ShopCartAdapter extends MultipleRecyclerAdapter {
+
+    //全选图标的tag
+    private boolean mIsSelectedAll = false;
+
     /**
      * 构造方法，设置成 protected，不被外部调用，就给下面的 简单工厂模式调用
      *
@@ -38,6 +42,11 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
 
         //添加购物测item布局
         addItemType(ShopCartItemType.SHOP_CART_ITEM, R.layout.item_shop_cart);
+    }
+
+    //设置全选图标的tag，供ShopCartDelegate.onClickSelectAll()调用
+    public void setIsSelectedAll(boolean isSelectedAll) {
+        mIsSelectedAll = isSelectedAll;
     }
 
     @Override
@@ -75,8 +84,12 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         .dontAnimate()
                         .into(imgThumb);
 
-                //在左侧勾勾渲染之前改变全选与否状态
-//                entity.setField(ShopCartItemFields.IS_SELECTED, mIsSelectedAll);
+                //在ShopCartDelegate.onClickSelectAll()，即全选图标被点击之后，
+                // 会处理tag值等数据配置，最后调用notify...()，通知RecyclerView刷新数据与UI，
+                // 则onBindViewHolder--即这里的convert()会再次被回调
+                //而在Item的左侧对勾的新一轮的 渲染之前，
+                // 将其选中状态 与 全选图标的选中状态 同步！！起到刷新UI的作用
+                entity.setField(ShopCartItemFields.IS_SELECTED, mIsSelectedAll);
                 final boolean isSelected = entity.getField(ShopCartItemFields.IS_SELECTED);
                 //根据数据状态显示 Item左侧选勾
                 if (isSelected) {
