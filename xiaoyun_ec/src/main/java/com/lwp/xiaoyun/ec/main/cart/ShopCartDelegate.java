@@ -41,35 +41,17 @@ public class ShopCartDelegate extends BottomItemDelegate {
 
     private List<MultipleItemEntity> mData = new ArrayList<>();
     private ShopCartAdapter mAdapter = null;
+    //购物车数量标记
+    // 当前 被选中的（要删除的）Item （的对勾Icon）的数量   列表的Item总数
+    private int mCurrentCount = 0;//
+    private int mTotalCount = 0;//
+    private double mTotalPrice = 0.00;
 
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRecyclerView = null;
     //全选图标
     @BindView(R2.id.icon_shop_cart_select_all)
     IconTextView mIconSelectAll = null;
-
-    //全选图标的点击事件
-    @OnClick(R2.id.icon_shop_cart_select_all)
-    void onClickSelectAll() {
-        final int tag = (int) mIconSelectAll.getTag();
-        if (tag == 0) {
-            //点击时，全选图标为 未选中状态，则点击后改为 选中状态
-            mIconSelectAll.setTextColor(
-                    ContextCompat.getColor(getContext(), R.color.app_main));//变色
-            mIconSelectAll.setTag(1);//用于 全选图标 点击事件判断
-            mAdapter.setIsSelectedAll(true);//用于控制Item
-            //更新RecyclerView的 显示状态！！！onBindViewHolder--即adapter的convert()会再次被回调
-            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
-        } else {
-            //点击时，全选图标为 选中状态，则点击后 改为 未选中状态
-            mIconSelectAll.setTextColor(Color.GRAY);//变色
-            mIconSelectAll.setTag(0);
-            mAdapter.setIsSelectedAll(false);
-            //更新RecyclerView的 显示状态！！！
-            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
-        }
-
-    }
 
     @Override
     public Object setLayout() {
@@ -140,8 +122,7 @@ public class ShopCartDelegate extends BottomItemDelegate {
             }
         });
     }
-
-//    @Override
+    //    @Override
 //    public void onSuccess(String response) {
 //        final ArrayList<MultipleItemEntity> data =
 //                new ShopCartDataConverter()
@@ -156,4 +137,78 @@ public class ShopCartDelegate extends BottomItemDelegate {
 //        mTvTotalPrice.setText(String.valueOf(mTotalPrice));
 //        checkItemCount();
 //    }
+
+    //全选图标的点击事件
+    @OnClick(R2.id.icon_shop_cart_select_all)
+    void onClickSelectAll() {
+
+        final int tag = (int) mIconSelectAll.getTag();
+        if (tag == 0) {
+            //点击时，全选图标为 未选中状态，则点击后改为 选中状态
+            mIconSelectAll.setTextColor(
+                    ContextCompat.getColor(getContext(), R.color.app_main));//变色
+            mIconSelectAll.setTag(1);//用于 全选图标 点击事件判断
+            mAdapter.setIsSelectedAll(true);//用于控制Item
+            //更新RecyclerView的 显示状态！！！onBindViewHolder--即adapter的convert()会再次被回调
+            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
+        } else {
+            //点击时，全选图标为 选中状态，则点击后 改为 未选中状态
+            mIconSelectAll.setTextColor(Color.GRAY);//变色
+            mIconSelectAll.setTag(0);
+            mAdapter.setIsSelectedAll(false);
+            //更新RecyclerView的 显示状态！！！
+            mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
+        }
+    }
+
+    //删除事件
+    @OnClick(R2.id.tv_top_shop_cart_remove_selected)
+    void onClickRemoveSelectedItem() {
+
+        final int size = mAdapter.getItemCount();
+        for (int i = size - 1; i >= 0; i--) {
+            MultipleItemEntity item = mAdapter.getItem(i);
+            if (item.getField(ShopCartItemFields.IS_SELECTED)) {
+                mAdapter.remove(i);
+            }
+        }
+
+//        //取到 Adapter中的所有数据
+//        final List<MultipleItemEntity> data = mAdapter.getData();
+//
+//        //用于存储 要删除的数据
+//        final List<MultipleItemEntity> deleteEntities = new ArrayList<>();
+//        for (MultipleItemEntity entity : data) {
+//            //遍历一个一个的Item数据
+//            // 把 被选中的Item的数据 加到 deleteEntities
+//            final boolean isSelected = entity.getField(ShopCartItemFields.IS_SELECTED);
+//            if (isSelected) {
+//                deleteEntities.add(entity);
+//            }
+//        }
+//        for (MultipleItemEntity entity : deleteEntities) {
+//            int removePosition;
+//            final int entityPosition = entity.getField(ShopCartItemFields.POSITION);
+//
+//            if (entityPosition > mCurrentCount - 1) {
+//                removePosition = entityPosition - (mTotalCount - mCurrentCount);
+//            } else {
+//                removePosition = entityPosition;
+//            }
+//            if (removePosition <= mAdapter.getItemCount()) {
+//                mAdapter.remove(removePosition);
+//                mCurrentCount = mAdapter.getItemCount();//
+//                //更新数据
+//                mAdapter.notifyItemRangeChanged(removePosition, mAdapter.getItemCount());
+//            }
+//        }
+    }
+
+    //清空所有数据
+    @OnClick(R2.id.tv_top_shop_cart_clear)
+    void onClickClear() {
+        mAdapter.getData().clear();
+        mAdapter.notifyDataSetChanged();
+//        checkItemCount();
+    }
 }

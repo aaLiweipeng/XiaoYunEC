@@ -90,6 +90,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                 //而在Item的左侧对勾的新一轮的 渲染之前，
                 // 将其选中状态 与 全选图标的选中状态 同步！！起到刷新UI的作用
                 entity.setField(ShopCartItemFields.IS_SELECTED, mIsSelectedAll);
+
                 final boolean isSelected = entity.getField(ShopCartItemFields.IS_SELECTED);
                 //根据数据状态显示 Item左侧选勾
                 if (isSelected) {
