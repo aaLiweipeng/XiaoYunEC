@@ -1,12 +1,15 @@
 package com.lwp.xiaoyun.ec.main.cart;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewStubCompat;
 import android.view.View;
 import android.widget.Toast;
 
@@ -42,7 +45,6 @@ public class ShopCartDelegate extends BottomItemDelegate {
     private List<MultipleItemEntity> mData = new ArrayList<>();
     private ShopCartAdapter mAdapter = null;
     //购物车数量标记
-    // 当前 被选中的（要删除的）Item （的对勾Icon）的数量   列表的Item总数
     private int mCurrentCount = 0;//
     private int mTotalCount = 0;//
     private double mTotalPrice = 0.00;
@@ -52,6 +54,8 @@ public class ShopCartDelegate extends BottomItemDelegate {
     //全选图标
     @BindView(R2.id.icon_shop_cart_select_all)
     IconTextView mIconSelectAll = null;
+    @BindView(R2.id.stub_no_item)
+    ViewStubCompat mStubNoItem = null;
 
     @Override
     public Object setLayout() {
@@ -93,7 +97,6 @@ public class ShopCartDelegate extends BottomItemDelegate {
                                 successHandler(jsonString);
                             }
                         });
-
 //        RestClient.builder()
 //                .url("shop_cart.php")
 //                .loader(getContext())
@@ -107,20 +110,19 @@ public class ShopCartDelegate extends BottomItemDelegate {
         mData = new ShopCartDataConverter()
                 .setJsonData(responseString)
                 .convert();
-
-
         XiaoYun.getHandler().post(new Runnable() {
             @Override
             public void run() {
                 //主线程
 
 //                Toast.makeText(getContext(), responseString, Toast.LENGTH_SHORT).show();
-
                 //设置 新数据
                 mAdapter.setNewData(mData);
                 mAdapter.notifyDataSetChanged();
+                checkItemCount();
             }
         });
+
     }
     //    @Override
 //    public void onSuccess(String response) {
@@ -172,7 +174,7 @@ public class ShopCartDelegate extends BottomItemDelegate {
                 mAdapter.remove(i);
             }
         }
-
+        checkItemCount();
 //        //取到 Adapter中的所有数据
 //        final List<MultipleItemEntity> data = mAdapter.getData();
 //
@@ -209,6 +211,29 @@ public class ShopCartDelegate extends BottomItemDelegate {
     void onClickClear() {
         mAdapter.getData().clear();
         mAdapter.notifyDataSetChanged();
-//        checkItemCount();
+        checkItemCount();
+    }
+
+    //检查Adapter中的 数据量，
+     @SuppressLint("RestrictedApi")
+    public void checkItemCount() {
+        final int count = mAdapter.getItemCount();//查看 Adapter中 是否还有数据
+
+         if (count == 0) {
+             //如果 Adapter中没有数据
+             final View stubView = mStubNoItem.inflate();
+             final AppCompatTextView tvToBuy =
+                     (AppCompatTextView) stubView.findViewById(R.id.tv_stub_to_buy);
+             tvToBuy.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Toast.makeText(getContext(), "这里空空如也，去逛逛吧~", Toast.LENGTH_SHORT).show();
+                 }
+             });
+             mRecyclerView.setVisibility(View.GONE);
+         } else {
+             //如果 Adapter中 有数据
+             mRecyclerView.setVisibility(View.VISIBLE);
+         }
     }
 }
