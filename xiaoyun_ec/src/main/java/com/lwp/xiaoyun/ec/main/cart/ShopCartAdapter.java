@@ -70,6 +70,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
     public double getTotalPrice() {
         return mTotalPrice;
     }
+    //计算刷新总价，点击全选时、购物车页面初始请求时调用
     public void initTotalData() {
 
         mTotalPrice = 0.00;

@@ -13,17 +13,23 @@ import android.support.v7.widget.ViewStubCompat;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
+import com.lwp.xiaoyun_core.net.RestClient;
+import com.lwp.xiaoyun_core.net.callback.ISuccess;
+import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,7 +51,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
     //购物车数量标记
     private int mCurrentCount = 0;//
     private int mTotalCount = 0;//
-    private double mTotalPrice = 0.00;
+    private double mTotalPrice = 0.00;//总价
 
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRecyclerView = null;
@@ -55,7 +61,8 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
     @BindView(R2.id.stub_no_item)
     ViewStubCompat mStubNoItem = null;
     @BindView(R2.id.tv_shop_cart_total_price)
-    AppCompatTextView mTvTotalPrice = null;
+    AppCompatTextView mTvTotalPrice = null;//显示总价的TextView
+
 
     @Override
     public Object setLayout() {
@@ -122,10 +129,10 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
                 mAdapter.setNewData(mData);
                 mAdapter.notifyDataSetChanged();
 
+                //初始化总价 以及 相关UI
                 mAdapter.initTotalData();
-
-                final double price = mAdapter.getTotalPrice();
-                mTvTotalPrice.setText(String.valueOf(price));
+                mTotalPrice = mAdapter.getTotalPrice();
+                mTvTotalPrice.setText(String.valueOf(mTotalPrice));
 
                 checkItemCount();
             }
@@ -229,6 +236,47 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
         mAdapter.getData().clear();
         mAdapter.notifyDataSetChanged();
         checkItemCount();
+    }
+
+    @OnClick(R2.id.tv_shop_cart_pay)
+    void onClickPay() {
+        createOrder();
+    }
+    //创建订单，注意，和支付是没有关系的
+    private void createOrder() {
+
+        final String orderUrl = "自己服务器的生成订单的API";
+        final WeakHashMap<String, Object> orderParams = new WeakHashMap<>();
+
+        orderParams.put("userid",123456);
+        orderParams.put("amount",0.01);//订单总价
+        orderParams.put("comment", "测试支付");//描述（需要传递给服务器的备注信息）
+        //自己服务器的订单API的约定（参考）
+        orderParams.put("type", 1);
+        orderParams.put("ordertype", 0);//订单类型
+        orderParams.put("isanonymous", true);
+        orderParams.put("followeduser", 0);
+        //加入我们自己准备的需要的订单的参数
+        RestClient.builder()
+                .url(orderUrl)
+                .loader(getContext())
+                .params(orderParams)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+
+                        //进行 具体的支付过程
+                        XiaoYunLogger.d("ORDER", response);
+                        final int orderId = JSON.parseObject(response).getInteger("result");
+//                        FastPay.create(ShopCartDelegate.this)
+//                                .setPayResultListener(ShopCartDelegate.this)
+//                                .setOrderId(orderId)
+//                                .beginPayDialog();
+                    }
+                })
+                .build()
+                .post();
+
     }
 
     //检查Adapter中的 数据量，
