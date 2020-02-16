@@ -2,21 +2,16 @@ package com.lwp.xiaoyun.ec.main.sort.list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun.ec.main.sort.SortDelegate;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun_core.net.RestClient;
-import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 
@@ -71,7 +66,7 @@ public class VerticalListDelegate extends XiaoYunDelegate {
 
         OkHttpUtil.build()
                 .loader(getContext(), LoaderStyle.BallRotateIndicator)
-                .sendOkHttpRequest("http://lcjxg.cn/RestServer/api/sort_list.php", new Callback() {
+                .sendGetRequest("http://lcjxg.cn/RestServer/api/sort_list.php", new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }

@@ -6,17 +6,27 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun_core.app.XiaoYun;
+import com.lwp.xiaoyun_core.net.OkHttpUtil;
+import com.lwp.xiaoyun_core.net.RestClient;
+import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleViewHolder;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.lwp.xiaoyun_core.ui.recycler.MultipleFields.*;
 
@@ -31,6 +41,9 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
 
     //全选图标的tag
     private boolean mIsSelectedAll = false;
+    private ICartItemListener mCartItemListener = null;
+    //购物车所有Item总价加起来的总价
+    private double mTotalPrice = 0.00;
 
     /**
      * 构造方法，设置成 protected，不被外部调用，就给下面的 简单工厂模式调用
@@ -39,7 +52,6 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
      */
     protected ShopCartAdapter(List<MultipleItemEntity> data) {
         super(data);
-
         //添加购物测item布局
         addItemType(ShopCartItemType.SHOP_CART_ITEM, R.layout.item_shop_cart);
     }
@@ -47,6 +59,28 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
     //设置全选图标的tag，供ShopCartDelegate.onClickSelectAll()调用
     public void setIsSelectedAll(boolean isSelectedAll) {
         mIsSelectedAll = isSelectedAll;
+    }
+
+    // 总价的逻辑接口 回调机制
+    //供 ShopCartDelegate 调用
+    public void setCartItemListener(ICartItemListener listener) {
+        mCartItemListener = listener;
+    }
+    //获得总价
+    public double getTotalPrice() {
+        return mTotalPrice;
+    }
+    public void initTotalData() {
+
+        mTotalPrice = 0.00;
+
+        //初始化总价
+        for (MultipleItemEntity data : mData) {
+            final double price = data.getField(ShopCartItemFields.PRICE);
+            final int count = data.getField(ShopCartItemFields.COUNT);
+            final double total = price * count;//单个Item的总价
+            mTotalPrice = mTotalPrice + total;
+        }
     }
 
     @Override
@@ -70,7 +104,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                 final AppCompatTextView tvPrice = holder.getView(R.id.tv_item_shop_cart_price);//
                 final IconTextView iconMinus = holder.getView(R.id.icon_item_minus);//
                 final IconTextView iconPlus = holder.getView(R.id.icon_item_plus);//
-                final AppCompatTextView tvCount = holder.getView(R.id.tv_item_shop_cart_count);//
+                final AppCompatTextView tvCount = holder.getView(R.id.tv_item_shop_cart_count);//Item商品数
                 final IconTextView iconIsSelected = holder.getView(R.id.icon_item_shop_cart);//
                 //加载 赋值
                 tvTitle.setText(title);
@@ -101,6 +135,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                     //没有选中
                     iconIsSelected.setTextColor(Color.GRAY);
                 }
+
                 //添加左侧选勾点击事件
                 iconIsSelected.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -121,6 +156,124 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         }
                     }
                 });
+
+                //添加加减按钮事件
+                iconMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final int currentCount = entity.getField(ShopCartItemFields.COUNT);
+
+                        //告诉服务器这里要 减1 了，等于1 则要删除掉item，不能减了
+                        if (Integer.parseInt(tvCount.getText().toString()) > 1) {
+
+                            //告诉服务器这里要 减1
+                            OkHttpUtil.build()
+                                    .loader(mContext)
+                                    .addPostKV("count", currentCount)
+                                    .sendPostRequest("http://lcjxg.cn/RestServer/api/shop_cart_count.php",
+                                            new Callback() {
+                                        @Override
+                                        public void onFailure(Call call, IOException e) {
+                                        }
+
+                                        @Override
+                                        public void onResponse(Call call, Response response) throws IOException {
+
+                                            //服务器成功响应，则数据上报完毕，
+                                            // 接着便 更新本地UI
+                                            int countNum = Integer.parseInt(tvCount.getText().toString());
+                                            countNum--;
+                                            tvCount.setText(String.valueOf(countNum));
+
+                                            //关于总价的 逻辑处理
+                                            if (mCartItemListener != null) {
+                                                mTotalPrice = mTotalPrice - price;
+                                                final double itemTotal = countNum * price;
+                                                mCartItemListener.onItemClick(itemTotal);//把总价传出去
+                                            }
+                                        }
+                                    });
+//                            //告诉服务器这里要 减1
+//                            RestClient.builder()
+//                                    .url("shop_cart_count.php")//通知
+//                                    .loader(mContext)
+//                                    .params("count", currentCount)
+//                                    .success(new ISuccess() {
+//                                        @Override
+//                                        public void onSuccess(String response) {
+//                                            //服务器成功响应，则数据上报完毕，
+//                                            // 接着便 更新本地UI
+//                                            int countNum = Integer.parseInt(tvCount.getText().toString());
+//                                            countNum--;
+//                                            tvCount.setText(String.valueOf(countNum));
+//
+//                                            //关于总价的 逻辑处理
+//                                            if (mCartItemListener != null) {
+//                                                mTotalPrice = mTotalPrice - price;
+//                                                final double itemTotal = countNum * price;
+//                                                mCartItemListener.onItemClick(itemTotal);//把总价传出去
+//                                            }
+//                                        }
+//                                    })
+//                                    .build()
+//                                    .post();
+                        }
+                    }
+                });
+                iconPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final int currentCount = entity.getField(ShopCartItemFields.COUNT);
+
+                        OkHttpUtil.build()
+                                .loader(mContext)
+                                .addPostKV("count", currentCount)
+                                .sendPostRequest("http://lcjxg.cn/RestServer/api/shop_cart_count.php",
+                                        new Callback() {
+                                            @Override
+                                            public void onFailure(Call call, IOException e) {
+                                            }
+
+                                            @Override
+                                            public void onResponse(Call call, Response response) throws IOException {
+
+                                                int countNum = Integer.parseInt(tvCount.getText().toString());
+                                                countNum++;
+                                                tvCount.setText(String.valueOf(countNum));
+
+                                                //关于总价的 逻辑处理
+                                                if (mCartItemListener != null) {
+                                                    mTotalPrice = mTotalPrice + price;
+                                                    final double itemTotal = countNum * price;
+                                                    mCartItemListener.onItemClick(itemTotal);
+                                                }
+                                            }
+                                        });
+
+//                        RestClient.builder()
+//                                .url("shop_cart_count.php")
+//                                .loader(mContext)
+//                                .params("count", currentCount)
+//                                .success(new ISuccess() {
+//                                    @Override
+//                                    public void onSuccess(String response) {
+//                                        int countNum = Integer.parseInt(tvCount.getText().toString());
+//                                        countNum++;
+//                                        tvCount.setText(String.valueOf(countNum));
+//
+//                                        //关于总价的 逻辑处理
+//                                        if (mCartItemListener != null) {
+//                                            mTotalPrice = mTotalPrice + price;
+//                                            final double itemTotal = countNum * price;
+//                                            mCartItemListener.onItemClick(itemTotal);
+//                                        }
+//                                    }
+//                                })
+//                                .build()
+//                                .post();
+                    }
+                });
+
 
                 break;
             default:

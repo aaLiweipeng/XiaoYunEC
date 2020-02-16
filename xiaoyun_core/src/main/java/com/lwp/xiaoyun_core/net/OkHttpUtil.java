@@ -6,8 +6,11 @@ import android.os.Handler;
 import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
 import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 
+import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * <pre>
@@ -33,15 +36,26 @@ public class OkHttpUtil {
     private static final Handler HANDLER = new Handler();
 
     //Loader
-    private  LoaderStyle mLoaderStyle;
-    private  Context mContext;
+    private LoaderStyle mLoaderStyle;
+    private Context mContext;
+
+    //post请求体
+    private FormBody.Builder mFormbody  = new FormBody.Builder();
 
 
+    //返回 本类实例
     public static OkHttpUtil build() {
         return new OkHttpUtil();
     }
 
-    public void sendOkHttpRequest(String address, okhttp3.Callback callback) {
+    //为 post请求体 添加键值
+    public final OkHttpUtil addPostKV(String key,Object value) {
+        mFormbody.add(key, String.valueOf(value));
+        return this;
+    }
+
+    //get请求
+    public void sendGetRequest(String address, Callback callback) {
 
         //展示 Loading！！（请求开始时）
         // 对应的 关闭的话在 RequestCallBacks 中 实现（请求结束时关闭！！）
@@ -58,6 +72,25 @@ public class OkHttpUtil {
 
         stopLoading();
     }
+    //post请求
+    public void sendPostRequest(String address, okhttp3.Callback callback) {
+
+        //展示 Loading！！（请求开始时）
+        // 对应的 关闭的话在 RequestCallBacks 中 实现（请求结束时关闭！！）
+        if (mLoaderStyle != null) {
+            XiaoYunLoader.showLoading(mContext, mLoaderStyle);
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(address)
+                .post(mFormbody.build())
+                .build();
+
+        client.newCall(request).enqueue(callback);
+
+        stopLoading();
+    }
 
     //配置Loader
     public final OkHttpUtil loader(Context context) {
@@ -65,7 +98,7 @@ public class OkHttpUtil {
         mLoaderStyle = LoaderStyle.BallClipRotatePulseIndicator;
         return this;
     }
-    public final OkHttpUtil loader(Context context,LoaderStyle loaderStyle) {
+    public final OkHttpUtil loader(Context context, LoaderStyle loaderStyle) {
         mContext = context;
         mLoaderStyle = loaderStyle;
         return this;
@@ -82,7 +115,7 @@ public class OkHttpUtil {
                     //关闭 Loader！！
                     XiaoYunLoader.stopLoading();
                 }
-            },1000);
+            }, 1000);
         }
     }
 

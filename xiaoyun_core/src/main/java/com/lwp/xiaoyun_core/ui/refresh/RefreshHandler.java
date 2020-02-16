@@ -1,20 +1,14 @@
 package com.lwp.xiaoyun_core.ui.refresh;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun_core.net.RestClient;
-import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.ui.recycler.DataConverter;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
@@ -121,7 +115,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
 
         OkHttpUtil.build()
                 .loader(mContext)
-                .sendOkHttpRequest(url, new Callback() {
+                .sendGetRequest(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -168,7 +162,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
         } else {
 
             OkHttpUtil.build()
-                    .sendOkHttpRequest(url + index, new Callback() {
+                    .sendGetRequest(url + index, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }

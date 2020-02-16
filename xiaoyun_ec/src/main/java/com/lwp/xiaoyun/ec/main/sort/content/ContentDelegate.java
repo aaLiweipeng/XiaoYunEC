@@ -9,12 +9,9 @@ import android.widget.Toast;
 
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
-import com.lwp.xiaoyun.ec.main.sort.list.VerticalListDataConverter;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun_core.net.RestClient;
-import com.lwp.xiaoyun_core.net.callback.ISuccess;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,7 +97,7 @@ public class ContentDelegate extends XiaoYunDelegate {
         mRecyclerView.setAdapter(sectionAdapter);
 
         OkHttpUtil.build()
-                .sendOkHttpRequest(
+                .sendGetRequest(
                         "http://lcjxg.cn/RestServer/api/sort_content_list.php?contentId=" + mContentId,
                         new Callback() {
                     @Override

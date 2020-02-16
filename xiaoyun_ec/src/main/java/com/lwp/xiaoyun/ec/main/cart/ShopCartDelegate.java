@@ -16,11 +16,9 @@ import android.widget.Toast;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
-import com.lwp.xiaoyun.ec.main.sort.content.SectionDataConverter;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
 
 import java.io.IOException;
@@ -40,7 +38,7 @@ import okhttp3.Response;
  *     desc   :
  * </pre>
  */
-public class ShopCartDelegate extends BottomItemDelegate {
+public class ShopCartDelegate extends BottomItemDelegate implements ICartItemListener{
 
     private List<MultipleItemEntity> mData = new ArrayList<>();
     private ShopCartAdapter mAdapter = null;
@@ -56,6 +54,8 @@ public class ShopCartDelegate extends BottomItemDelegate {
     IconTextView mIconSelectAll = null;
     @BindView(R2.id.stub_no_item)
     ViewStubCompat mStubNoItem = null;
+    @BindView(R2.id.tv_shop_cart_total_price)
+    AppCompatTextView mTvTotalPrice = null;
 
     @Override
     public Object setLayout() {
@@ -82,7 +82,7 @@ public class ShopCartDelegate extends BottomItemDelegate {
         super.onLazyInitView(savedInstanceState);
 
         OkHttpUtil.build()
-                .sendOkHttpRequest(
+                .sendGetRequest(
                         "http://lcjxg.cn/RestServer/api/shop_cart.php",
                         new Callback() {
                             @Override
@@ -116,9 +116,17 @@ public class ShopCartDelegate extends BottomItemDelegate {
                 //主线程
 
 //                Toast.makeText(getContext(), responseString, Toast.LENGTH_SHORT).show();
+                //设置总价回调接口
+                mAdapter.setCartItemListener(ShopCartDelegate.this);
                 //设置 新数据
                 mAdapter.setNewData(mData);
                 mAdapter.notifyDataSetChanged();
+
+                mAdapter.initTotalData();
+
+                final double price = mAdapter.getTotalPrice();
+                mTvTotalPrice.setText(String.valueOf(price));
+
                 checkItemCount();
             }
         });
@@ -153,6 +161,11 @@ public class ShopCartDelegate extends BottomItemDelegate {
             mAdapter.setIsSelectedAll(true);//用于控制Item
             //更新RecyclerView的 显示状态！！！onBindViewHolder--即adapter的convert()会再次被回调
             mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
+
+            //更新总价
+            mAdapter.initTotalData();
+            mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
+
         } else {
             //点击时，全选图标为 选中状态，则点击后 改为 未选中状态
             mIconSelectAll.setTextColor(Color.GRAY);//变色
@@ -160,6 +173,10 @@ public class ShopCartDelegate extends BottomItemDelegate {
             mAdapter.setIsSelectedAll(false);
             //更新RecyclerView的 显示状态！！！
             mAdapter.notifyItemRangeChanged(0,mAdapter.getItemCount());
+
+            //更新总价
+            mAdapter.initTotalData();
+            mTvTotalPrice.setText(String.valueOf(mAdapter.getTotalPrice()));
         }
     }
 
@@ -235,5 +252,18 @@ public class ShopCartDelegate extends BottomItemDelegate {
              //如果 Adapter中 有数据
              mRecyclerView.setVisibility(View.VISIBLE);
          }
+    }
+
+    /**
+     * ICartItemListener 总价逻辑回调接口
+     * 此处负责 具体实现 在ShopCartAdapter.加减按钮点击事件中抽象调用
+     * @param itemTotalPrice 来自 ShopCartAdapter 的 加减按钮点击事件
+     *                         单个item的总价钱
+     */
+    @Override
+    public void onItemClick(double itemTotalPrice) {
+        //拿到整个购物车页面的总价
+        final double price = mAdapter.getTotalPrice();
+        mTvTotalPrice.setText(String.valueOf(price));
     }
 }
