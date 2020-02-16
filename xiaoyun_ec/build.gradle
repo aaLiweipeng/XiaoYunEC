@@ -27,7 +27,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':xiaoyun_core')
+
     //Android Support 包
+
     //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -35,51 +37,73 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     //design包
     implementation 'com.android.support:design:28.0.0'
+
     //字体图标
     implementation 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
     implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+
     // Fragmentation 依赖
+
     // appcompat-v7包是必须的
     implementation 'me.yokeyword:fragmentation:1.3.8'
     implementation 'me.yokeyword:fragmentation-swipeback:1.3.8'
+
     //在边缘上滑动，可以回到上一个Fragment
+
     //引入ButterKnife
     implementation 'com.jakewharton:butterknife:9.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0'
+
     //网络请求依赖
     implementation 'com.squareup.okhttp3:okhttp:3.14.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+
     //    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+
     //对应Retrofit的 转换器 可以返回String类型
+
     //Loading
     implementation 'com.wang.avi:library:2.1.3'
+
     //Banner依赖
     implementation 'com.bigkoo:convenientbanner:2.0.5'
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+
     //    implementation 'androidx.recyclerview:recyclerview:1.0.0+'
+
     //Json 处理  用的是阿里巴巴的框架，解析的速度和应用性应该比Google的GSON和Jackson好很多
     implementation 'com.alibaba:fastjson:1.1.68.android'
+
     //数据库依赖
     implementation 'org.greenrobot:greendao-generator:3.2.2'
     implementation 'org.greenrobot:greendao:3.2.2'
+
     //Log
     implementation 'com.orhanobut:logger:2.2.0'
+
     //RecyclerView 依赖
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.16'
+
     //RecyclerView 分隔线
     implementation 'com.choices.divider:RecyclerView_Divider:1.0.0'
+
     //Google autoValue
     compileOnly 'com.google.auto.value:auto-value:1.2'
     annotationProcessor "com.google.auto.value:auto-value:1.2"
 
     //图片处理
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
     //下面这个库 是为了让glide能使用OkHttp的网络层，
+
     // 这样的话在网络上会进行一系列的优化和加固
     implementation 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+
     // 引入multidex库
     implementation 'com.android.support:multidex:1.0.3'
+    implementation project(':xiaoyun_ui')
 }

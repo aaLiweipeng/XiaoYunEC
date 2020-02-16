@@ -3,9 +3,9 @@ package com.lwp.xiaoyun.ec.main.cart;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.lwp.xiaoyun_core.ui.recycler.DataConverter;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun.ui.recycler.DataConverter;
+import com.lwp.xiaoyun.ui.recycler.MultipleFields;
+import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 
 import java.util.ArrayList;
 

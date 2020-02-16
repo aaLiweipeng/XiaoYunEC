@@ -2,24 +2,18 @@ package com.lwp.xiaoyunec;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.joanzapata.iconify.fonts.FontAwesomeModule;
-import com.lwp.xiaoyun.ec.icon.FontEcModule;
 import com.lwp.xiaoyun.ec.launcher.LauncherDelegate;
-import com.lwp.xiaoyun.ec.launcher.LauncherScrollDelegate;
 import com.lwp.xiaoyun.ec.main.EcBottomDelegate;
 import com.lwp.xiaoyun.ec.sign.ISignListener;
 import com.lwp.xiaoyun.ec.sign.SignInDelegate;
-import com.lwp.xiaoyun.ec.sign.SignUpDelegate;
+import com.lwp.xiaoyun.ui.launcher.ILauncherListener;
+import com.lwp.xiaoyun.ui.launcher.OnLauncherFinishTag;
 import com.lwp.xiaoyun_core.activities.ProxyActivity;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
-import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
-import com.lwp.xiaoyun_core.ui.launcher.ILauncherListener;
-import com.lwp.xiaoyun_core.ui.launcher.OnLauncherFinishTag;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 import qiu.niorgai.StatusBarCompat;

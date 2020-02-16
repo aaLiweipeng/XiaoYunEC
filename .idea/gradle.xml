@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/xiaoyun_compiler" />
             <option value="$PROJECT_DIR$/xiaoyun_core" />
             <option value="$PROJECT_DIR$/xiaoyun_ec" />
+            <option value="$PROJECT_DIR$/xiaoyun_ui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

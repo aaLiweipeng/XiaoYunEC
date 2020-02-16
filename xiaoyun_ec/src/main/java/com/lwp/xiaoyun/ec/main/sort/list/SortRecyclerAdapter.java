@@ -9,15 +9,13 @@ import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.main.sort.SortDelegate;
 import com.lwp.xiaoyun.ec.main.sort.content.ContentDelegate;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
-import com.lwp.xiaoyun_core.ui.recycler.ItemType;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleViewHolder;
+import com.lwp.xiaoyun.ui.recycler.ItemType;
+import com.lwp.xiaoyun.ui.recycler.MultipleFields;
+import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun.ui.recycler.MultipleRecyclerAdapter;
+import com.lwp.xiaoyun.ui.recycler.MultipleViewHolder;
 
 import java.util.List;
-
-import retrofit2.http.DELETE;
 
 /**
  * <pre>

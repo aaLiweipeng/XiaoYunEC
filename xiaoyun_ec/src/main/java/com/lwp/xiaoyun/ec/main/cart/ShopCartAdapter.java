@@ -6,20 +6,16 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun_core.net.RestClient;
-import com.lwp.xiaoyun_core.net.callback.ISuccess;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleRecyclerAdapter;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleViewHolder;
+import com.lwp.xiaoyun.ui.recycler.MultipleFields;
+import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun.ui.recycler.MultipleRecyclerAdapter;
+import com.lwp.xiaoyun.ui.recycler.MultipleViewHolder;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,7 +24,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.lwp.xiaoyun_core.ui.recycler.MultipleFields.*;
+import static com.lwp.xiaoyun.ui.recycler.MultipleFields.ID;
+import static com.lwp.xiaoyun.ui.recycler.MultipleFields.IMAGE_URL;
 
 /**
  * <pre>

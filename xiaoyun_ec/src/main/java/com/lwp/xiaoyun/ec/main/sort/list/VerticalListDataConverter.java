@@ -3,11 +3,10 @@ package com.lwp.xiaoyun.ec.main.sort.list;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.lwp.xiaoyun_core.ui.recycler.DataConverter;
-import com.lwp.xiaoyun_core.ui.recycler.ItemType;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun.ui.recycler.DataConverter;
+import com.lwp.xiaoyun.ui.recycler.ItemType;
+import com.lwp.xiaoyun.ui.recycler.MultipleFields;
+import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 
 
 

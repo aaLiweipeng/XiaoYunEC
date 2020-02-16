@@ -16,9 +16,6 @@ import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
 
-
-import retrofit2.http.DELETE;
-
 /**
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）

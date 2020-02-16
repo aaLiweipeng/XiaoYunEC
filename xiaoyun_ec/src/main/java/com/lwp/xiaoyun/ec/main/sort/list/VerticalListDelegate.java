@@ -13,7 +13,7 @@ import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
 import com.lwp.xiaoyun_core.ui.loader.LoaderStyle;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 
 import java.io.IOException;
 import java.util.ArrayList;

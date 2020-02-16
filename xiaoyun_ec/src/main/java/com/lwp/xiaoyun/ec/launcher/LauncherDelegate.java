@@ -8,12 +8,12 @@ import android.view.View;
 
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
+import com.lwp.xiaoyun.ui.launcher.ILauncherListener;
+import com.lwp.xiaoyun.ui.launcher.OnLauncherFinishTag;
+import com.lwp.xiaoyun.ui.launcher.ScrollLauncherTag;
 import com.lwp.xiaoyun_core.app.AccountManager;
 import com.lwp.xiaoyun_core.app.IUserChecker;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
-import com.lwp.xiaoyun_core.ui.launcher.ILauncherListener;
-import com.lwp.xiaoyun_core.ui.launcher.OnLauncherFinishTag;
-import com.lwp.xiaoyun_core.ui.launcher.ScrollLauncherTag;
 import com.lwp.xiaoyun_core.util.storage.XiaoyunPreference;
 import com.lwp.xiaoyun_core.util.timer.BaseTimerTask;
 import com.lwp.xiaoyun_core.util.timer.ITimerListener;

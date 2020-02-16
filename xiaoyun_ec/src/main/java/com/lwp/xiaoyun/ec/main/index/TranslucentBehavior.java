@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.lwp.xiaoyun.ec.R;
-import com.lwp.xiaoyun_core.ui.recycler.RgbValue;
+import com.lwp.xiaoyun.ui.recycler.RgbValue;
 
 /**
  * <pre>

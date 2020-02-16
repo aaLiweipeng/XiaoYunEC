@@ -1,7 +1,6 @@
 package com.lwp.xiaoyun.ec.main.index;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,26 +9,18 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun.ec.main.EcBottomDelegate;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
-import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun_core.ui.recycler.BaseDecoration;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleFields;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
-import com.lwp.xiaoyun_core.ui.refresh.RefreshHandler;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import com.lwp.xiaoyun.ui.recycler.BaseDecoration;
+import com.lwp.xiaoyun.ui.recycler.MultipleFields;
+import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun.ui.refresh.RefreshHandler;
 
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * <pre>

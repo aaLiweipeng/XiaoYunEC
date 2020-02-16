@@ -23,7 +23,7 @@ import com.lwp.xiaoyun_core.net.OkHttpUtil;
 import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
 import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
-import com.lwp.xiaoyun_core.ui.recycler.MultipleItemEntity;
+import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 import java.io.IOException;
@@ -264,8 +264,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-
-                        //进行 具体的支付过程
+                        //进行具体的支付
                         XiaoYunLogger.d("ORDER", response);
                         final int orderId = JSON.parseObject(response).getInteger("result");
 //                        FastPay.create(ShopCartDelegate.this)
