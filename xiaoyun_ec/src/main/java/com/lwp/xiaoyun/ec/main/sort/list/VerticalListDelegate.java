@@ -64,7 +64,7 @@ public class VerticalListDelegate extends XiaoYunDelegate {
         final SortRecyclerAdapter adapter = new SortRecyclerAdapter(data, delegate);
         mRecyclerView.setAdapter(adapter);
 
-        OkHttpUtil.build()
+        OkHttpUtil.create()
                 .loader(getContext(), LoaderStyle.BallRotateIndicator)
                 .sendGetRequest("http://lcjxg.cn/RestServer/api/sort_list.php", new Callback() {
                     @Override

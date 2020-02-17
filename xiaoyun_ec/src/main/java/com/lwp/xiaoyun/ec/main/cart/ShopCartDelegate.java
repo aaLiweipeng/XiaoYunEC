@@ -17,12 +17,12 @@ import com.alibaba.fastjson.JSON;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
+import com.lwp.xiaoyun.ec.pay.FastPay;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
 import com.lwp.xiaoyun_core.net.RestClient;
 import com.lwp.xiaoyun_core.net.callback.ISuccess;
-import com.lwp.xiaoyun_core.ui.loader.XiaoYunLoader;
 import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
@@ -88,7 +88,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        OkHttpUtil.build()
+        OkHttpUtil.create()
                 .sendGetRequest(
                         "http://lcjxg.cn/RestServer/api/shop_cart.php",
                         new Callback() {
@@ -240,7 +240,8 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
 
     @OnClick(R2.id.tv_shop_cart_pay)
     void onClickPay() {
-        createOrder();
+//        createOrder();
+        FastPay.create(this).beginPayDialog();
     }
     //创建订单，注意，和支付是没有关系的
     private void createOrder() {

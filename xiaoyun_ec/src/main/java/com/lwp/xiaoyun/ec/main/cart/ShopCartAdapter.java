@@ -12,7 +12,6 @@ import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.net.OkHttpUtil;
-import com.lwp.xiaoyun.ui.recycler.MultipleFields;
 import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun.ui.recycler.MultipleRecyclerAdapter;
 import com.lwp.xiaoyun.ui.recycler.MultipleViewHolder;
@@ -165,7 +164,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         if (Integer.parseInt(tvCount.getText().toString()) > 1) {
 
                             //告诉服务器这里要 减1
-                            OkHttpUtil.build()
+                            OkHttpUtil.create()
                                     .loader(mContext)
                                     .addPostKV("count", currentCount)
                                     .sendPostRequest("http://lcjxg.cn/RestServer/api/shop_cart_count.php",
@@ -223,7 +222,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                     public void onClick(View v) {
                         final int currentCount = entity.getField(ShopCartItemFields.COUNT);
 
-                        OkHttpUtil.build()
+                        OkHttpUtil.create()
                                 .loader(mContext)
                                 .addPostKV("count", currentCount)
                                 .sendPostRequest("http://lcjxg.cn/RestServer/api/shop_cart_count.php",

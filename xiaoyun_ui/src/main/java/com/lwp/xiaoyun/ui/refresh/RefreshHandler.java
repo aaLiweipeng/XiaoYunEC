@@ -113,7 +113,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
         RECYCLERVIEW.setAdapter(mAdapter);
 
 
-        OkHttpUtil.build()
+        OkHttpUtil.create()
                 .loader(mContext)
                 .sendGetRequest(url, new Callback() {
             @Override
@@ -161,7 +161,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
             //否则进行网络请求
         } else {
 
-            OkHttpUtil.build()
+            OkHttpUtil.create()
                     .sendGetRequest(url + index, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

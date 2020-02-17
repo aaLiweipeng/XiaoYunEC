@@ -96,7 +96,7 @@ public class ContentDelegate extends XiaoYunDelegate {
                         R.layout.item_section_header, mData);
         mRecyclerView.setAdapter(sectionAdapter);
 
-        OkHttpUtil.build()
+        OkHttpUtil.create()
                 .sendGetRequest(
                         "http://lcjxg.cn/RestServer/api/sort_content_list.php?contentId=" + mContentId,
                         new Callback() {

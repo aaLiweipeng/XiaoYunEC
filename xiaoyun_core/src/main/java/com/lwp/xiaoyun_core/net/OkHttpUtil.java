@@ -42,8 +42,8 @@ public class OkHttpUtil {
     private FormBody.Builder mFormbody  = new FormBody.Builder();
 
 
-    //返回 本类实例
-    public static OkHttpUtil build() {
+    //静态工厂方法   返回 本类实例
+    public static OkHttpUtil create() {
         return new OkHttpUtil();
     }
 
