@@ -32,7 +32,8 @@ public abstract class BottomItemDelegate extends XiaoYunDelegate {
 
     @Override
     public boolean onBackPressedSupport() {
-        //System.currentTimeMillis() - TOUCH_TIME  乃是两次点击 的间隔
+        //System.currentTimeMillis() - TOUCH_TIME  乃是两次点击 的间隔，
+        //即 短时间内点击两次
         if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
             _mActivity.finish();
         } else {
@@ -40,43 +41,7 @@ public abstract class BottomItemDelegate extends XiaoYunDelegate {
             TOUCH_TIME = System.currentTimeMillis();
             Toast.makeText(_mActivity, "双击退出" + XiaoYun.getApplicationContext().getString(R.string.app_name), Toast.LENGTH_SHORT).show();
         }
-        //返回true 表示我这里已经把事件消耗掉了
+        //返回true 表示我这里已经把事件消耗掉了（如果返回false 不消耗这个事件）
         return true;
     }
-
-//    private long mExitTime = 0;
-//    private static final int EXIT_TIME = 2000;
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        final View rootView = getView();
-//        if (rootView != null) {
-//            rootView.setFocusableInTouchMode(true);
-//            rootView.requestFocus();
-//            rootView.setOnKeyListener(this);
-//        }
-//    }
-//
-//    @Override
-//    public boolean onKey(View v, int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-//            if ((System.currentTimeMillis() - mExitTime) > mExitTime) {
-//                Toast.makeText(getContext(), "双击退出" + getString(R.string.app_name), Toast.LENGTH_SHORT).show();
-//                mExitTime = System.currentTimeMillis();
-//            } else {
-//                //短时间内点击两次
-//                //_mActivity = (SupportActivity) mDelegate.getActivity();
-//                _mActivity.finish();
-//                //归个零
-//                if (mExitTime != 0) {
-//                    mExitTime = 0;
-//                }
-//            }
-//            //返回true 表示我这里已经把事件消耗掉了
-//            return true;
-//        }
-//        //如果没点击返回键，返回false 不消耗这个事件
-//        return false;
-//    }
 }

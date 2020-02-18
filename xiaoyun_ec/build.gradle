@@ -106,4 +106,7 @@ dependencies {
     // 引入multidex库
     implementation 'com.android.support:multidex:1.0.3'
     implementation project(':xiaoyun_ui')
+
+    //圆形图片
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }
