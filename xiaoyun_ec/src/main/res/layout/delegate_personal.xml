@@ -65,9 +65,9 @@
                 android:id="@+id/tv_all_account_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:text="{fa-chevron-right}"
@@ -96,6 +96,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text="{fa-credit-card}"
+                    android:textColor="@color/app_main"
                     android:textSize="20sp" />
 
                 <TextView
@@ -123,6 +124,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text="{fa-truck}"
+                    android:textColor="@color/app_main"
                     android:textSize="20sp" />
 
                 <TextView
@@ -151,6 +153,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text="{fa-clone}"
+                    android:textColor="@color/app_main"
                     android:textSize="20sp" />
 
                 <TextView
@@ -178,6 +181,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:text="{fa-comments-o}"
+                    android:textColor="@color/app_main"
                     android:textSize="20sp" />
 
                 <TextView

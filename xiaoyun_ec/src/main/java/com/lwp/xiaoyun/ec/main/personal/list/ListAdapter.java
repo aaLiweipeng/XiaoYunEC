@@ -36,6 +36,12 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
                 helper.setText(R.id.tv_arrow_value, item.getValue());
                 break;
 
+            case ListItemType.ITEM_AVATAR:
+                break;
+
+            case ListItemType.ITEM_SWITCH:
+                break;
+
             default:
                 break;
         }

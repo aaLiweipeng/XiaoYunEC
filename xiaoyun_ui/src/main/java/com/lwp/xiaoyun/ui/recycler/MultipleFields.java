@@ -9,6 +9,7 @@ package com.lwp.xiaoyun.ui.recycler;
  */
 public enum MultipleFields {
     ITEM_TYPE,
+    TITLE,
     TEXT,
     IMAGE_URL,
     BANNERS,

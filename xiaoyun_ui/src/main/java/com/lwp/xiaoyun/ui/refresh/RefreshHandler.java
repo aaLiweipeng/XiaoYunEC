@@ -126,6 +126,8 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
 //                //测试成功
 //                Toast.makeText(XiaoYun.getApplicationContext(), response.body().string(), Toast.LENGTH_SHORT).show();
 //                Looper.loop();// 进入loop中的循环，查看消息队列
+
+                //子线程！！！
                 String jsonString = response.body().string();
                 final JSONObject object = JSON.parseObject(jsonString);
                 BEAN.setTotal(object.getInteger("total"))
@@ -133,6 +135,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
                 data.addAll(CONVERTER.setJsonData(jsonString).convert());
 
                 XiaoYun.getHandler().post(new Runnable() {
+                //切到主线程！！！
                     @Override
                     public void run() {
                         mAdapter.setNewData(data);

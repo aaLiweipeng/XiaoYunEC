@@ -38,6 +38,8 @@ public class WebDelegateImpl extends WebDelegate {
     private IPageLoadListener mIPageLoadListener = null;
 
     /**
+     * 工厂模式
+     *
      * （下列注释，区分 通过Transaction的Fragment加载 及 WebView的网页加载）
      * ！！！
      * 与 WebDelegate 的 加载渲染 （指通过 Transaction的Fragment加载）
