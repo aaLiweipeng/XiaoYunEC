@@ -1,5 +1,9 @@
 package com.lwp.xiaoyun.ec.main.personal.list;
 
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lwp.xiaoyun.ec.R;
@@ -37,9 +41,19 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
                 break;
 
             case ListItemType.ITEM_AVATAR:
+                //要加载的 只有头像，其他写死了
+                Glide.with(mContext)
+                        .load(item.getImageUrl())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .dontAnimate()
+                        .centerCrop()
+                        .into((ImageView) helper.getView(R.id.img_arrow_avatar));
                 break;
-
             case ListItemType.ITEM_SWITCH:
+//                helper.setText(R.id.tv_arrow_switch_text,item.getText());
+//                final SwitchCompat switchCompat = helper.getView(R.id.list_item_switch);
+//                switchCompat.setChecked(true);
+//                switchCompat.setOnCheckedChangeListener(item.getmOnCheckedChangeListener());
                 break;
 
             default:

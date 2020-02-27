@@ -13,6 +13,7 @@ import com.lwp.xiaoyun.ec.main.personal.list.ListAdapter;
 import com.lwp.xiaoyun.ec.main.personal.list.ListBean;
 import com.lwp.xiaoyun.ec.main.personal.list.ListItemType;
 import com.lwp.xiaoyun.ec.main.personal.order.OrderListDelegate;
+import com.lwp.xiaoyun.ec.main.personal.profile.UserProfileDelegate;
 import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 
@@ -62,6 +63,11 @@ public class PersonalDelegate extends BottomItemDelegate {
         final OrderListDelegate delegate = new OrderListDelegate();
         delegate.setArguments(mArgs);
         getParentDelegate().getSupportDelegate().start(delegate);
+    }
+    //头像的 点击事件
+    @OnClick(R2.id.img_user_avatar)
+    void onClickAvatar() {
+        getParentDelegate().getSupportDelegate().start(new UserProfileDelegate());
     }
 
     @Override

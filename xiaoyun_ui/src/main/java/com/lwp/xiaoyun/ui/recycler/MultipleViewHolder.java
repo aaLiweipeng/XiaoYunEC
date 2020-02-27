@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/8 6:49
  *     desc   :
+ *              提取出来，必要时可以封装业务逻辑
  *              使用 简单工厂模式 返回实例
  * </pre>
  */

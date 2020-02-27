@@ -10,6 +10,9 @@ import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/18 14:20
  *     desc   : 因为这里变量比较多，用建造者模式
+ *              用于存储数据，
+ *              在Delegate（如PersonalDelegate）中使用，
+ *              配置到RecyclerView（.Adapter中），在Adapter中 取出数据并 加载UI
  * </pre>
  */
 public class ListBean implements MultiItemEntity {
@@ -18,10 +21,11 @@ public class ListBean implements MultiItemEntity {
     private String mImageUrl = null;
     private String mText = null;
     private String mValue = null;
-    private int mId = 0;
+    private int mId = 0;//为了某些需求，用于区别是哪个Item来设置的
     private XiaoYunDelegate mDelegate = null;//用于跳转
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = null;
 
+    //因为这里变量比较多，用建造者模式
     public ListBean(int mItemType, String mImageUrl, String mText,
                     String mValue, int mId, XiaoYunDelegate mDelegate,
                     CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener) {
@@ -86,7 +90,7 @@ public class ListBean implements MultiItemEntity {
         }
     }
 
-    public String getmImageUrl() {
+    public String getImageUrl() {
         return mImageUrl;
     }
 
