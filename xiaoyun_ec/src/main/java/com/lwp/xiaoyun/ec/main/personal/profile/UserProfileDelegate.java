@@ -11,6 +11,7 @@ import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun.ec.main.personal.list.ListAdapter;
 import com.lwp.xiaoyun.ec.main.personal.list.ListBean;
 import com.lwp.xiaoyun.ec.main.personal.list.ListItemType;
+import com.lwp.xiaoyun.ec.main.personal.settings.NameDelegate;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class UserProfileDelegate extends XiaoYunDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
 
-        //一般这些数据都是写死的
+        //一般这些数据都是写死的，或者在某些回调里面要 动态更新 也是可以的
         final ListBean image = new ListBean.Builder()
                 .setItemType(ListItemType.ITEM_AVATAR)
                 .setId(1)
@@ -49,7 +50,7 @@ public class UserProfileDelegate extends XiaoYunDelegate {
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(2)
                 .setText("姓名")
-//                .setDelegate(new NameDelegate())
+                .setDelegate(new NameDelegate())
                 .setValue("凌川江雪")
                 .build();
 
@@ -78,6 +79,6 @@ public class UserProfileDelegate extends XiaoYunDelegate {
         mRecyclerView.setLayoutManager(manager);
         final ListAdapter adapter = new ListAdapter(data);
         mRecyclerView.setAdapter(adapter);
-//        mRecyclerView.addOnItemTouchListener(new UserProfileClickListener(this));
+        mRecyclerView.addOnItemTouchListener(new UserProfileClickListener(this));//点击事件
     }
 }

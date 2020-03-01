@@ -14,7 +14,7 @@ import java.util.List;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/18 16:37
- *     desc   :
+ *     desc   : “我的”页面
  * </pre>
  */
 public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHolder> {
@@ -36,12 +36,13 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
 
         switch (helper.getItemViewType()) {
             case ListItemType.ITEM_NORMAL:
+                //个人信息的Item
                 helper.setText(R.id.tv_arrow_text, item.getText());
                 helper.setText(R.id.tv_arrow_value, item.getValue());
                 break;
 
             case ListItemType.ITEM_AVATAR:
-                //要加载的 只有头像，其他写死了
+                //头像
                 Glide.with(mContext)
                         .load(item.getImageUrl())
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
