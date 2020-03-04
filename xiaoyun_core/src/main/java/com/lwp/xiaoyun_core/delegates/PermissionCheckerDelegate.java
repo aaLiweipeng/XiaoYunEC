@@ -2,11 +2,19 @@ package com.lwp.xiaoyun_core.delegates;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.lwp.xiaoyun_core.ui.camera.CameraImageBean;
+import com.lwp.xiaoyun_core.ui.camera.RequestCodes;
 import com.lwp.xiaoyun_core.ui.camera.XiaoYunCamera;
+import com.lwp.xiaoyun_core.util.callback.CallbackManager;
+import com.lwp.xiaoyun_core.util.callback.CallbackType;
+import com.lwp.xiaoyun_core.util.callback.IGlobalCallback;
+import com.yalantis.ucrop.UCrop;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -41,7 +49,9 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
         XiaoYunCamera.start(this);
     }
 
-    //开始请求权限
+    //开始请求权限，
+    //在进行 需要权限的操作时！！！ 调用；
+    // 如项目中 点击个人具体信息页的头像时！
     public void startCameraWithCheck() {
         //开始请求权限（相机、读写）
         PermissionCheckerDelegatePermissionsDispatcher.startCameraWithPermissionCheck(this);
@@ -92,5 +102,62 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
 
         //PermissionCheckerDelegatePermissionsDispatcher 是注解自动生成的！！
         PermissionCheckerDelegatePermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
+    // 本方法是对应 startActivityForResult()的回调
+    // 前两个case 与 CameraHandler中的 DELEGATE.startActivityForResult() 相对应
+    // .
+    // 后两个case 与 前两个case中的 UCrop.start()相对应，
+    // 实际上 UCrop.start()源码中，封装了startActivityForResult()
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            switch (requestCode) {
+                case RequestCodes.TAKE_PHOTO:
+                    //获取到 存储照片的 临时文件路径
+                    final Uri resultUri = CameraImageBean.getInstance().getPath();
+                    UCrop.of(resultUri, resultUri)//一参为 欲剪裁图片的路径，二参为 放置剪切完图片的路径
+                            .withMaxResultSize(400, 400)
+                            .start(getContext(), this);//start()用意看源码
+                    break;
+
+                case RequestCodes.PICK_PHOTO:
+
+                    if (data != null) {
+                        final Uri pickPath = data.getData();//拿到用户选择的图片的路径
+
+                        //从相册选择后 需要有个路径 来存放 剪裁过的图片
+                        final String pickCropPath = XiaoYunCamera.createCropFile().getPath();
+
+                        UCrop.of(pickPath, Uri.parse(pickCropPath))
+                                .withMaxResultSize(400, 400)
+                                .start(getContext(), this);
+                    }
+                    break;
+
+                case RequestCodes.CROP_PHOTO:
+
+                    final Uri cropUri = UCrop.getOutput(data);
+
+                    //拿到剪裁后的数据进行处理
+                    @SuppressWarnings("unchecked")
+                    final IGlobalCallback<Uri> callback = CallbackManager
+                            .getInstance()
+                            .getCallback(CallbackType.ON_CROP);//拿到回调接口
+                    if (callback != null) {
+                        callback.executeCallback(cropUri);//执行回调接口方法
+                    }
+                    break;
+
+                case RequestCodes.CROP_ERROR:
+                    Toast.makeText(getContext(), "剪裁出错", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

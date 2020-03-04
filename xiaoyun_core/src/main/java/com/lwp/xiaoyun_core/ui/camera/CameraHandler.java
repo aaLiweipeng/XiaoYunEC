@@ -30,6 +30,9 @@ import java.io.File;
 public class CameraHandler implements View.OnClickListener {
 
     private final AlertDialog DIALOG;
+    //这个Delegate乃是 个人具体信息页 UserProfileDelegate
+    // （哪个继承自XiaoYunDelegate的 delegate 调用了 PermissionCheckerDelegate.startCameraWithCheck()，
+    // 这个Delegate就是 哪个，UserProfileDelegate 中的点击事件中，调用了 startCameraWithCheck()）
     private final PermissionCheckerDelegate DELEGATE;
 
     public CameraHandler(PermissionCheckerDelegate delegate) {
@@ -69,16 +72,20 @@ public class CameraHandler implements View.OnClickListener {
     //拍照取图
     public void takePhoto() {
         final String currentPhotoName = getPhotoName();
+
         //拍照意图
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //File 临时文件句柄   临时文件：这里是系统相册目录下的当前文件名的文件临时句柄
-        //CAMERA_PHOTO_DIR 系统相册目录
+        //CAMERA_PHOTO_DIR 系统相册目录！！！
         final File tempFile = new File(FileUtil.CAMERA_PHOTO_DIR, currentPhotoName);
 
-        //兼容7.0及以上的写法
+        //下面是创建临时文件，存储拍的照片
+        // 兼容7.0及以上的写法
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
             final ContentValues contentValues = new ContentValues(1);
             contentValues.put(MediaStore.Images.Media.DATA, tempFile.getPath());
+
             //使用 ContentProvider 的方式
             final Uri uri = DELEGATE.getContext().getContentResolver().
                     insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
@@ -87,8 +94,10 @@ public class CameraHandler implements View.OnClickListener {
             final File realFile =
                     FileUtils.getFileByPath(FileUtil.getRealFilePath(DELEGATE.getContext(), uri));
 
+            //把临时照片文件路径存起来，方便后面使用（如PermissionCheckerDelegate.onActivityResult()）
             final Uri realUri = Uri.fromFile(realFile);
             CameraImageBean.getInstance().setPath(realUri);
+            //把临时文件Uri路径设置给照片的输出端（EXTRA_OUTPUT）
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         } else {
 

@@ -27,6 +27,15 @@
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="true"/>
+        android:supportsRtl="true">
+
+        <!--图片剪裁Activity-->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    </application>
+
+
 
 </manifest>

@@ -2,15 +2,26 @@ package com.lwp.xiaoyun.ec.main.personal.profile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.main.personal.list.ListBean;
 import com.lwp.xiaoyun.ui.date.DateDialogUtil;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
+import com.lwp.xiaoyun_core.net.RestClient;
+import com.lwp.xiaoyun_core.net.callback.ISuccess;
+import com.lwp.xiaoyun_core.util.callback.CallbackManager;
+import com.lwp.xiaoyun_core.util.callback.CallbackType;
+import com.lwp.xiaoyun_core.util.callback.IGlobalCallback;
+import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
 import retrofit2.http.DELETE;
 
@@ -41,8 +52,51 @@ public class UserProfileClickListener extends SimpleClickListener {
         final int id = bean.getId();//id 来自 UserProfileDelegate！！！
         switch (id) {
             case 1:
-                //个人具体信息页面头像点击，启动照相机或选择图片，
-                // 开始请求权限，
+                //个人具体信息页面头像点击，启动照相机或选择图片
+                CallbackManager.getInstance()
+                        .addCallback(CallbackType.ON_CROP, new IGlobalCallback<Uri>() {
+                            @Override
+                            public void executeCallback(Uri args) {
+                                XiaoYunLogger.d("ON_CROP", args);
+                                Toast.makeText(DELEGATE.getContext(), args+"", Toast.LENGTH_SHORT).show();
+                                final ImageView avatar = (ImageView) view.findViewById(R.id.img_arrow_avatar);
+                                Glide.with(DELEGATE)
+                                        .load(args)
+                                        .into(avatar);
+
+//                                RestClient.builder()
+//                                        .url(UploadConfig.UPLOAD_IMG)
+//                                        .loader(DELEGATE.getContext())
+//                                        .file(args.getPath())
+//                                        .success(new ISuccess() {
+//                                            @Override
+//                                            public void onSuccess(String response) {
+//                                                LatteLogger.d("ON_CROP_UPLOAD", response);
+//                                                final String path = JSON.parseObject(response).getJSONObject("result")
+//                                                        .getString("path");
+//
+//                                                //通知服务器更新信息
+//                                                RestClient.builder()
+//                                                        .url("user_profile.php")
+//                                                        .params("avatar", path)
+//                                                        .loader(DELEGATE.getContext())
+//                                                        .success(new ISuccess() {
+//                                                            @Override
+//                                                            public void onSuccess(String response) {
+//                                                                //获取更新后的用户信息，然后更新本地数据库
+//                                                                //没有本地数据的APP，每次打开APP都请求API，获取信息
+//                                                            }
+//                                                        })
+//                                                        .build()
+//                                                        .post();
+//                                            }
+//                                        })
+//                                        .build()
+//                                        .upload();
+                            }
+                        });
+
+                // 开始请求权限!!!
                 // 随后进行权限结果处理——
                 // 成功则开始选图或拍照，失败则。。详见 PermissionCheckerDelegate
                 DELEGATE.startCameraWithCheck();
