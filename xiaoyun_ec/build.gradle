@@ -108,5 +108,11 @@ dependencies {
     implementation project(':xiaoyun_ui')
 
     //圆形图片
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+
+    //工具包
+    implementation 'com.blankj:utilcode:1.7.1'
+    //动态权限处理
+    implementation 'com.github.hotchemi:permissionsdispatcher:2.4.0'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
 }

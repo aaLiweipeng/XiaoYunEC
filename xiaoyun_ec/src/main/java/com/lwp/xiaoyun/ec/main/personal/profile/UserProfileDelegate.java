@@ -23,7 +23,7 @@ import butterknife.BindView;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/23 1:09
- *     desc   :
+ *     desc   : 个人具体信息页面（头像、姓名、性别、生日）
  * </pre>
  */
 public class UserProfileDelegate extends XiaoYunDelegate {
@@ -79,6 +79,7 @@ public class UserProfileDelegate extends XiaoYunDelegate {
         mRecyclerView.setLayoutManager(manager);
         final ListAdapter adapter = new ListAdapter(data);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addOnItemTouchListener(new UserProfileClickListener(this));//点击事件
+        //个人具体信息页面 点击事件监听器
+        mRecyclerView.addOnItemTouchListener(new UserProfileClickListener(this));
     }
 }

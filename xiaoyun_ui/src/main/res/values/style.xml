@@ -6,7 +6,7 @@
         <item name="android:windowFrame">@null</item>
         <!--悬浮-->
         <item name="android:windowIsFloating">true</item>
-        <!--不需要全透明，即半透明-->
+        <!--半透明-->
         <item name="android:windowIsTranslucent">false</item>
         <!--不需要标题-->
         <item name="android:windowNoTitle">true</item>
@@ -23,17 +23,13 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
-        <!--允许透明-->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
-
-    <!--从底下往上弹、退场弹回底下的动画-->
     <style name="anim_panel_up_from_bottom" parent="@android:style/Animation">
-        <!--进入动画-->
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
-        <!--退场动画-->
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
+
 </resources>

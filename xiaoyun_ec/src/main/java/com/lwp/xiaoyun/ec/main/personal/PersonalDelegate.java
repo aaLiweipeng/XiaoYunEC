@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/18 13:35
- *     desc   :
+ *     desc   : “我的”页面
  * </pre>
  */
 public class PersonalDelegate extends BottomItemDelegate {
@@ -64,7 +64,7 @@ public class PersonalDelegate extends BottomItemDelegate {
         delegate.setArguments(mArgs);
         getParentDelegate().getSupportDelegate().start(delegate);
     }
-    //头像的 点击事件
+    //“我的”页面中的 头像的 点击事件
     @OnClick(R2.id.img_user_avatar)
     void onClickAvatar() {
         getParentDelegate().getSupportDelegate().start(new UserProfileDelegate());

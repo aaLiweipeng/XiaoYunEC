@@ -18,12 +18,12 @@ import retrofit2.http.DELETE;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/27 17:12
- *     desc   :
+ *     desc   : 个人具体信息页面 点击事件监听器
  * </pre>
  */
 public class UserProfileClickListener extends SimpleClickListener {
 
-    //把 UserProfileDelegate的实例 传进来
+    //把 UserProfileDelegate（个人具体信息页面）的实例 传进来
     private final XiaoYunDelegate DELEGATE;
 
     private String[] mGenders = new String[]{"男","女","保密"};
@@ -38,11 +38,14 @@ public class UserProfileClickListener extends SimpleClickListener {
     public void onItemClick(BaseQuickAdapter adapter, final View view, int position) {
         //源码，Listener中有 成员变量baseQuickAdapter，存储了RecyclerView的Adapter
         final ListBean bean = (ListBean) baseQuickAdapter.getData().get(position);//拿到对应Item的数据Bean
-        final int id = bean.getId();
+        final int id = bean.getId();//id 来自 UserProfileDelegate！！！
         switch (id) {
             case 1:
-                //启动照相机或选择图片
-
+                //个人具体信息页面头像点击，启动照相机或选择图片，
+                // 开始请求权限，
+                // 随后进行权限结果处理——
+                // 成功则开始选图或拍照，失败则。。详见 PermissionCheckerDelegate
+                DELEGATE.startCameraWithCheck();
                 break;
             case 2:
                 //姓名信息更新

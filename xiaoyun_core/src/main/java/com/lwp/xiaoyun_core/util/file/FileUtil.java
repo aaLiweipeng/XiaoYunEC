@@ -54,22 +54,24 @@ public final class FileUtil {
     public static final String WEB_CACHE_DIR =
             Environment.getExternalStorageDirectory().getPath() + "/app_web_cache/";
 
-    //系统相机目录
+    //系统相机目录！！！
     public static final String CAMERA_PHOTO_DIR =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/Camera/";
 
-    //按照模板返回 由 文件头 和 当前系统时间 组合而成的 命名字符串
+    //按照 模板 返回 由 文件头 和 当前系统时间 组合而成的 命名字符串
     private static String getTimeFormatName(String timeFormatHeader) {
         final Date date = new Date(System.currentTimeMillis());
-        //必须要加上单引号
+        //必须要加上单引号 下面是是格式化模板
         final SimpleDateFormat dateFormat = new SimpleDateFormat("'" + timeFormatHeader + "'" + TIME_FORMAT, Locale.getDefault());
         return dateFormat.format(date);
     }
 
     /**
-     * @param timeFormatHeader 格式化的头(除去时间部分)
-     * @param extension        后缀名
-     * @return 返回时间格式化后的文件名（文件头 + 时间 + 文件名）！！
+     * @param timeFormatHeader 调用者自己指定的文件头(除去时间部分)
+     * @param extension         文件的后缀名，同样由 调用者指定
+     * @return 返回 模板格式化后 的文件名（指定文件头 + 格式化的时间）！！
+     *
+     *          模板：文件头_当前时间.后缀
      */
     public static String getFileNameByTime(String timeFormatHeader, String extension) {
         return getTimeFormatName(timeFormatHeader) + "." + extension;
@@ -77,7 +79,7 @@ public final class FileUtil {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private static File createDir(String sdcardDirName) {
-        //拼接成SD卡中完整的dir
+        //拼接成 指向SD卡目录的 完整的dir
         final String dir = SDCARD_DIR + "/" + sdcardDirName + "/";
         final File fileDir = new File(dir);
         if (!fileDir.exists()) {
@@ -86,10 +88,18 @@ public final class FileUtil {
         return fileDir;
     }
 
+    /**
+     *
+     * @param sdcardDirName 调用者指定的 sd卡根目录的下级目录名
+     *                      （sd卡根目录再往下的 用于存储所创建文件目录，
+     *                        创建的时候 由调用者 指定）
+     * @param fileName  要创建的 文件名
+     * @return 在本地sd卡 创建 文件的目录 以及 文件实例句柄，以及返回这个文件句柄
+     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static File createFile(String sdcardDirName, String fileName) {
 
-        //在本地sd卡 创建下载文件的目录 以及 文件实例句柄，以及返回这个文件句柄
+        //在本地sd卡 创建 文件的目录 以及 文件实例句柄，以及返回这个文件句柄
         return new File(createDir(sdcardDirName), fileName);
     }
 

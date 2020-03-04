@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.Utils;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.lwp.xiaoyun_core.delegates.web.event.Event;
@@ -127,6 +128,7 @@ public class Configurator {
     public final void configure() {
         initIcons();//字体图标库是非常通用的，写在这里保证初始化完成时图标库也初始化完成
         XIAOYUN_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
+        Utils.init(XiaoYun.getApplicationContext());//初始化工具包库
     }
 
 

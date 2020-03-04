@@ -1,5 +1,7 @@
 package com.lwp.xiaoyun.ui.launcher;
 
+import com.lwp.ui.R;
+
 /**
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
@@ -33,6 +35,7 @@ package com.lwp.xiaoyun.ui.launcher;
 public interface ILauncherListener {
 
     void onLauncherFinish(OnLauncherFinishTag tag);
+
 }
 
 

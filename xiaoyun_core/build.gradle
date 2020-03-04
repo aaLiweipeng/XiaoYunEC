@@ -120,4 +120,13 @@ dependencies {
 
     // 引入multidex库
     implementation 'com.android.support:multidex:1.0.3'
+
+    //工具包
+    implementation 'com.blankj:utilcode:1.7.1'
+    //动态权限处理
+    api 'com.github.hotchemi:permissionsdispatcher:3.0.1'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
+    //图片剪裁
+    implementation 'com.github.yalantis:ucrop:2.2.1-native'
 }
+

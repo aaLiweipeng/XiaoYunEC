@@ -48,6 +48,7 @@ public class FastPay implements View.OnClickListener {
     public void beginPayDialog() {
         mDialog.show();
         final Window window = mDialog.getWindow();
+
         if (window != null) {
             //加载布局，设置UI、动画
             window.setContentView(R.layout.dialog_pay_panel);//Dialog布局
