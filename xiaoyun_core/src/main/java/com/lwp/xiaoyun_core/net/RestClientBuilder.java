@@ -82,6 +82,7 @@ public class RestClientBuilder {
         PARAMS.put(key, value);
         return this;
     }
+    //文件上传
     public final RestClientBuilder file(File file) {
         this.mFile = file;
         return this;

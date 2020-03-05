@@ -44,55 +44,41 @@ public class UserProfileClickListener extends SimpleClickListener {
         DELEGATE = delegate;
     }
 
-    //二参这个View，是被点击的整个Item，可以用这个View实例来find Item中的其他组件
+    //二参这个View，是被点击的整个Item，可以用这个View实例来find Item中的其他组件！！！！
     @Override
     public void onItemClick(BaseQuickAdapter adapter, final View view, int position) {
         //源码，Listener中有 成员变量baseQuickAdapter，存储了RecyclerView的Adapter
-        final ListBean bean = (ListBean) baseQuickAdapter.getData().get(position);//拿到对应Item的数据Bean
-        final int id = bean.getId();//id 来自 UserProfileDelegate！！！
+        //这里 拿到对应Item的数据Bean
+        final ListBean bean = (ListBean) baseQuickAdapter.getData().get(position);
+
+        //id 来自 UserProfileDelegate！！！
+        final int id = bean.getId();
+
         switch (id) {
             case 1:
-                //个人具体信息页面头像点击，启动照相机或选择图片
+                //个人具体信息页面头像的点击事件处理，
+                // 启动照相机或选择图片，剪裁后，更新UI、上传图片
                 CallbackManager.getInstance()
                         .addCallback(CallbackType.ON_CROP, new IGlobalCallback<Uri>() {
                             @Override
                             public void executeCallback(Uri args) {
+                                //本回调在此处 具体实现
+                                // 在PermissionCheckerDelegate.onActivityResult()中 被调用
+                                // .
+                                // args乃是 存储剪裁后图片 的Uri
+
+                                //用于调试
                                 XiaoYunLogger.d("ON_CROP", args);
                                 Toast.makeText(DELEGATE.getContext(), args+"", Toast.LENGTH_SHORT).show();
+
+                                //用剪裁后的图片更新UI
                                 final ImageView avatar = (ImageView) view.findViewById(R.id.img_arrow_avatar);
                                 Glide.with(DELEGATE)
                                         .load(args)
                                         .into(avatar);
 
-//                                RestClient.builder()
-//                                        .url(UploadConfig.UPLOAD_IMG)
-//                                        .loader(DELEGATE.getContext())
-//                                        .file(args.getPath())
-//                                        .success(new ISuccess() {
-//                                            @Override
-//                                            public void onSuccess(String response) {
-//                                                LatteLogger.d("ON_CROP_UPLOAD", response);
-//                                                final String path = JSON.parseObject(response).getJSONObject("result")
-//                                                        .getString("path");
-//
-//                                                //通知服务器更新信息
-//                                                RestClient.builder()
-//                                                        .url("user_profile.php")
-//                                                        .params("avatar", path)
-//                                                        .loader(DELEGATE.getContext())
-//                                                        .success(new ISuccess() {
-//                                                            @Override
-//                                                            public void onSuccess(String response) {
-//                                                                //获取更新后的用户信息，然后更新本地数据库
-//                                                                //没有本地数据的APP，每次打开APP都请求API，获取信息
-//                                                            }
-//                                                        })
-//                                                        .build()
-//                                                        .post();
-//                                            }
-//                                        })
-//                                        .build()
-//                                        .upload();
+                                //上传文件
+//                                uploadAvatar(args);
                             }
                         });
 
@@ -141,6 +127,41 @@ public class UserProfileClickListener extends SimpleClickListener {
             default:
                 break;
         }
+    }
+
+    private void uploadAvatar(Uri args) {
+
+        //把图片上传到服务器
+        RestClient.builder()
+                .url("user_profile.php")
+                .loader(DELEGATE.getContext())
+                .file(args.getPath())
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        XiaoYunLogger.d("ON_CROP_UPLOAD", response);
+                        final String path = JSON.parseObject(response).getJSONObject("result")
+                                .getString("path");
+
+
+                        //通知服务器更新信息，这部分也可以在服务器更新
+                        RestClient.builder()
+                                .url("user_profile.php")
+                                .params("avatar", path)
+                                .loader(DELEGATE.getContext())
+                                .success(new ISuccess() {
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        //获取更新后的用户信息，然后更新本地数据库
+                                        //没有本地数据的APP，每次打开APP都请求API，获取信息
+                                    }
+                                })
+                                .build()
+                                .post();
+                    }
+                })
+                .build()
+                .upload();
     }
 
     private void getGenderDialog(DialogInterface.OnClickListener listener) {

@@ -142,13 +142,14 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
 
                     final Uri cropUri = UCrop.getOutput(data);
 
-                    //拿到剪裁后的数据进行处理
+                    //拿到剪裁后的图片，进行后续的处理，
+                    // 处理的内容通过接口回调暴露给别处具体实现，这里仅负责 抽象调用
                     @SuppressWarnings("unchecked")
                     final IGlobalCallback<Uri> callback = CallbackManager
                             .getInstance()
                             .getCallback(CallbackType.ON_CROP);//拿到回调接口
                     if (callback != null) {
-                        callback.executeCallback(cropUri);//执行回调接口方法
+                        callback.executeCallback(cropUri);//执行回调接口方法，进行后续处理
                     }
                     break;
 
