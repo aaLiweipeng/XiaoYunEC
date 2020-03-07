@@ -47,7 +47,9 @@ public class UserProfileClickListener extends SimpleClickListener {
     //二参这个View，是被点击的整个Item，可以用这个View实例来find Item中的其他组件！！！！
     @Override
     public void onItemClick(BaseQuickAdapter adapter, final View view, int position) {
-        //源码，Listener中有 成员变量baseQuickAdapter，存储了RecyclerView的Adapter
+
+        //源码，Listener中有 成员变量baseQuickAdapter，存储了RecyclerView的 Adapter！！！
+        // 不同 SimpleClickListener 中 拿到的 Adapter实例及其数据是不一样的！！！
         //这里 拿到对应Item的数据Bean
         final ListBean bean = (ListBean) baseQuickAdapter.getData().get(position);
 
@@ -89,7 +91,7 @@ public class UserProfileClickListener extends SimpleClickListener {
                 break;
             case 2:
                 //姓名信息更新
-                //拿到 NameDelegate实例， 在 UserProfileDelegate中已经set过了
+                //拿到 NameDelegate实例， 在 UserProfileDelegate 中已经set过了, 用作 跳转目的地
                 final XiaoYunDelegate nameDelegate = bean.getDelegate();
                 DELEGATE.getSupportDelegate().start(nameDelegate);
                 break;

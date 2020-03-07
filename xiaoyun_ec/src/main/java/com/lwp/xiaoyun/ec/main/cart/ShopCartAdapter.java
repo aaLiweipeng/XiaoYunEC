@@ -167,7 +167,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                             OkHttpUtil.create()
                                     .loader(mContext)
                                     .addPostKV("count", currentCount)
-                                    .sendPostRequest("http://lcjxg.cn/RestServer/api/shop_cart_count.php",
+                                    .sendPostRequest("http://47.100.78.251/RestServer/api/shop_cart_count.php",
                                             new Callback() {
                                         @Override
                                         public void onFailure(Call call, IOException e) {
@@ -225,7 +225,7 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         OkHttpUtil.create()
                                 .loader(mContext)
                                 .addPostKV("count", currentCount)
-                                .sendPostRequest("http://lcjxg.cn/RestServer/api/shop_cart_count.php",
+                                .sendPostRequest("http://47.100.78.251/RestServer/api/shop_cart_count.php",
                                         new Callback() {
                                             @Override
                                             public void onFailure(Call call, IOException e) {

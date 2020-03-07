@@ -233,6 +233,6 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener
     //上拉加载回调逻辑，监听器在firstPage()中设置了
     @Override
     public void onLoadMoreRequested() {
-        paging("http://lcjxg.cn/RestServer/api/refresh.php?index=");
+        paging("http://47.100.78.251/RestServer/api/refresh.php?index=");
     }
 }

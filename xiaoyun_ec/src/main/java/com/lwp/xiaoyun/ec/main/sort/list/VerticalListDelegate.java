@@ -66,7 +66,7 @@ public class VerticalListDelegate extends XiaoYunDelegate {
 
         OkHttpUtil.create()
                 .loader(getContext(), LoaderStyle.BallRotateIndicator)
-                .sendGetRequest("http://lcjxg.cn/RestServer/api/sort_list.php", new Callback() {
+                .sendGetRequest("http://47.100.78.251/RestServer/api/sort_list.php", new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }

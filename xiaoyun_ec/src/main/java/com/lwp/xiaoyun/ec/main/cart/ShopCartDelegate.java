@@ -90,7 +90,7 @@ public class ShopCartDelegate extends BottomItemDelegate implements ICartItemLis
 
         OkHttpUtil.create()
                 .sendGetRequest(
-                        "http://lcjxg.cn/RestServer/api/shop_cart.php",
+                        "http://47.100.78.251/RestServer/api/shop_cart.php",
                         new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {

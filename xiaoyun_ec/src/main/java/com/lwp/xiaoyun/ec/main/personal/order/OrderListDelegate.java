@@ -77,7 +77,7 @@ public class OrderListDelegate extends XiaoYunDelegate {
 //        "http://lcjxg.cn/RestServer/api/order_list.php?type=" + mType，
         OkHttpUtil.create()
                 .sendGetRequest(
-                        "http://lcjxg.cn/RestServer/api/order_list.php" ,
+                        "http://47.100.78.251/RestServer/api/order_list.php" ,
                         new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {

@@ -106,7 +106,7 @@ public class IndexDelegate extends BottomItemDelegate {
         initRefreshLayout();
         initRecyclerView();
         mRefreshHandler.setContext(getContext());
-        mRefreshHandler.firstPage("http://lcjxg.cn/RestServer/api/index.php");
+        mRefreshHandler.firstPage("http://47.100.78.251/RestServer/api/index.php");
 
     }
 

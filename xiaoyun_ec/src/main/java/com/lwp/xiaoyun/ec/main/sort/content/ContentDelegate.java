@@ -98,7 +98,7 @@ public class ContentDelegate extends XiaoYunDelegate {
 
         OkHttpUtil.create()
                 .sendGetRequest(
-                        "http://lcjxg.cn/RestServer/api/sort_content_list.php?contentId=" + mContentId,
+                        "http://47.100.78.251/RestServer/api/sort_content_list.php?contentId=" + mContentId,
                         new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
