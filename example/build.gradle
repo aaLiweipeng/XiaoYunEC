@@ -11,6 +11,17 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "dbff1eec8ea0f18e54ca776b",
+                JPUSH_CHANNEL: "developer-default",
+        ]
+
     }
     buildTypes {
         release {
@@ -68,4 +79,9 @@ dependencies {
     // 引入multidex库
     implementation 'com.android.support:multidex:1.0.3'
     implementation project(path: ':xiaoyun_ui')
+
+    implementation 'com.alibaba:fastjson:1.1.68.android'
+
+    implementation 'cn.jiguang.sdk:jpush:3.0.1'
+    implementation 'cn.jiguang.sdk:jcore:1.1.0'
 }

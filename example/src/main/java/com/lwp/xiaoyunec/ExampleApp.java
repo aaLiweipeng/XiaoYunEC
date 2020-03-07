@@ -11,6 +11,8 @@ import com.lwp.xiaoyun_core.net.rx.AddCookieInterceptor;
 import com.lwp.xiaoyunec.evnet.TestEvent;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
@@ -40,6 +42,10 @@ public class ExampleApp extends Application {
 //                .withWeChatAppSecret("")
                 .configure();
         DatabaseManager.getInstance().init(this);
+
+        //开启极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
 
 
 //        initStetho();

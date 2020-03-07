@@ -16,6 +16,7 @@ import com.lwp.xiaoyun_core.app.XiaoYun;
 import com.lwp.xiaoyun_core.delegates.XiaoYunDelegate;
 import com.lwp.xiaoyun_core.util.log.XiaoYunLogger;
 
+import cn.jpush.android.api.JPushInterface;
 import qiu.niorgai.StatusBarCompat;
 
 
@@ -34,6 +35,18 @@ public class ExampleActivity extends ProxyActivity implements
         XiaoYun.getConfigurator().withActivity(this);//配置全局 Activity
 
         StatusBarCompat.translucentStatusBar(this, true);//沉浸式状态栏
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
     }
 
     @Override
