@@ -15,6 +15,7 @@ import com.lwp.xiaoyun.ec.main.personal.list.ListBean;
 import com.lwp.xiaoyun.ec.main.personal.list.ListItemType;
 import com.lwp.xiaoyun.ec.main.personal.order.OrderListDelegate;
 import com.lwp.xiaoyun.ec.main.personal.profile.UserProfileDelegate;
+import com.lwp.xiaoyun.ec.main.personal.settings.SettingsDelegate;
 import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 
@@ -92,6 +93,7 @@ public class PersonalDelegate extends BottomItemDelegate {
         final ListBean system = new ListBean.Builder()
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(2)
+                .setDelegate(new SettingsDelegate())
                 .setText("系统设置")
                 .build();
 

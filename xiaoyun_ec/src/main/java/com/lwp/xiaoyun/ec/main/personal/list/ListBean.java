@@ -22,7 +22,7 @@ public class ListBean implements MultiItemEntity {
     private String mText = null;
     private String mValue = null;
     private int mId = 0;//为了某些需求，用于区别是哪个Item来设置的
-    private XiaoYunDelegate mDelegate = null;//用于跳转
+    private XiaoYunDelegate mDelegate = null;//用于跳转，具体可以 查一下哪里用到了本类的 getDelegate()
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = null;
 
     //因为这里变量比较多，用建造者模式
@@ -80,6 +80,7 @@ public class ListBean implements MultiItemEntity {
             return this;
         }
 
+        //用于跳转，具体可以 查一下哪里用到了 ListBean.getDelegate()
         public Builder setDelegate(XiaoYunDelegate delegate) {
             this.delegate = delegate;
             return this;
@@ -112,6 +113,7 @@ public class ListBean implements MultiItemEntity {
         return mId;
     }
 
+    //拿到Delegate，用于跳转
     public XiaoYunDelegate getDelegate() {
         return mDelegate;
     }
