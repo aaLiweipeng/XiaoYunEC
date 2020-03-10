@@ -31,7 +31,7 @@ import okhttp3.Response;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/2/19 0:54
- *     desc   : 订单状态（待付款、待收货等）的页面
+ *     desc   : 订单状态（待付款、待收货等）的 内容页面
  * </pre>
  */
 public class OrderListDelegate extends XiaoYunDelegate {
@@ -67,7 +67,7 @@ public class OrderListDelegate extends XiaoYunDelegate {
         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
-
+        mRecyclerView.addOnItemTouchListener(new OrderListClickListener(this));
     }
 
     @Override
