@@ -8,6 +8,7 @@ import java.util.WeakHashMap;
  *     time   : 2020/3/5 6:22
  *     desc   : 【回调机制】
  *              集成本工具包，可以在任何位置设置回调！！！
+ *              存储、添加接口实例
  * </pre>
  */
 public class CallbackManager {
@@ -22,6 +23,7 @@ public class CallbackManager {
     public static CallbackManager getInstance() {
         return Holder.INSTANCE;
     }
+
 
     public CallbackManager addCallback(Object tag, IGlobalCallback callback) {
         CALLBACKS.put(tag, callback);

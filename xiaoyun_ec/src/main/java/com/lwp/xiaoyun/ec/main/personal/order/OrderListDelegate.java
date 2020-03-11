@@ -67,6 +67,7 @@ public class OrderListDelegate extends XiaoYunDelegate {
         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
+        //点击事件
         mRecyclerView.addOnItemTouchListener(new OrderListClickListener(this));
     }
 
@@ -83,7 +84,6 @@ public class OrderListDelegate extends XiaoYunDelegate {
                             public void onFailure(Call call, IOException e) {
                                 Toast.makeText(getContext(), "没有对应页面数据或者网络错误", Toast.LENGTH_SHORT).show();
                             }
-
                             @Override
                             public void onResponse(Call call, Response response) throws IOException {
 
@@ -101,8 +101,6 @@ public class OrderListDelegate extends XiaoYunDelegate {
                                         mAdapter.notifyDataSetChanged();
                                     }
                                 });
-
-//                          mRecyclerView.addOnItemTouchListener(new OrderListClickListener(OrderListDelegate.this));
                             }
                         });
 
@@ -119,8 +117,6 @@ public class OrderListDelegate extends XiaoYunDelegate {
 //                        data = new OrderListDataConverter().setJsonData(response).convert();
 //                        mAdapter.setNewData(data);
 //                        mAdapter.notifyDataSetChanged();
-//
-////                        mRecyclerView.addOnItemTouchListener(new OrderListClickListener(OrderListDelegate.this));
 //                    }
 //                })
 //                .build()

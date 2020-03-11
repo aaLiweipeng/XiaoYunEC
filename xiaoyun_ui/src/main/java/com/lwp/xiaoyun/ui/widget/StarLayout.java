@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 /**
  * <pre>
- *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/3/10 6:38
  *     desc   : 自定义控件 —— 星级评分
  * </pre>
@@ -31,7 +30,7 @@ public class StarLayout extends LinearLayoutCompat implements View.OnClickListen
     //用来 存储 本类实例（LinearLayout）中的 所有星星实例
     private final ArrayList<IconTextView> STARS = new ArrayList<>();
 
-    //处理成 只调用 一个构造方法
+    //处理成 最终只调用 一个构造方法
     public StarLayout(Context context) {
         this(context, null);
     }

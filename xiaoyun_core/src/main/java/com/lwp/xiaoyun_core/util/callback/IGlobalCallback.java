@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/3/5 6:22
- *     desc   : 全局回调
+ *     desc   : 全局回调 使用泛型T 响应式编程
  * </pre>
  */
 public interface IGlobalCallback<T> {
