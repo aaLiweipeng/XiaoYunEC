@@ -12,8 +12,10 @@ import com.lwp.xiaoyun_core.net.rx.AddCookieInterceptor;
 import com.lwp.xiaoyun_core.util.callback.CallbackManager;
 import com.lwp.xiaoyun_core.util.callback.CallbackType;
 import com.lwp.xiaoyun_core.util.callback.IGlobalCallback;
+import com.lwp.xiaoyunec.evnet.ShareEvent;
 import com.lwp.xiaoyunec.evnet.TestEvent;
 import com.lwp.xiaoyun_core.net.Interceptor.DebugInterceptor;
+import com.mob.MobSDK;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -41,6 +43,7 @@ public class ExampleApp extends Application {
                 .withIcon(new FontEcModule())
                 .withJavaScriptInterface("xiaoyun")
                 .withWebEvent("test",new TestEvent())
+                .withWebEvent("share",new ShareEvent())//分享事件
                 .withWebHost("https://www.baidu.com/")
 //                .withWeChatAppId("")
 //                .withWeChatAppSecret("")
@@ -72,6 +75,10 @@ public class ExampleApp extends Application {
                         }
                     }
                 });
+
+        //Mob平台！！
+        MobSDK.init(this, "2e5a4408beb65", "e5f591d6fee5ed283b9910e3724fc2eb");
+
 //        initStetho();
     }
 

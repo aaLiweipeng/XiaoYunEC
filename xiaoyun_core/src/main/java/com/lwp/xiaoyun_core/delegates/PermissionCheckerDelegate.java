@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.lwp.xiaoyun_core.ui.camera.CameraImageBean;
 import com.lwp.xiaoyun_core.ui.camera.RequestCodes;
 import com.lwp.xiaoyun_core.ui.camera.XiaoYunCamera;
+import com.lwp.xiaoyun_core.ui.scanner.ScannerDelegate;
 import com.lwp.xiaoyun_core.util.callback.CallbackManager;
 import com.lwp.xiaoyun_core.util.callback.CallbackType;
 import com.lwp.xiaoyun_core.util.callback.IGlobalCallback;
@@ -37,7 +39,7 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
 
     //本方法不是 直接拿来调用的，是用来生成代码的
     // （这里具体实现，在 生成类PermissionCheckerDelegatePermissionsDispatcher中 抽象调用）
-    // 动态申请权限成功后，执行本方法
+    // 动态申请权限成功后，执行本方法！！！！
     // .
     // 所以它不能是private static，否则annotationProcessor或者注解 没办法正常读取解析
     //@NeedsPermission注解的意义：
@@ -46,9 +48,10 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
     @NeedsPermission({Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void startCamera() {
         // 动态申请权限（相机、读写）成功后！！！ 执行本方法！！！
+
+        //弹出Dialog弹框 内容：三个按钮，拍照 选图 取消
         XiaoYunCamera.start(this);
     }
-
     //开始请求权限，
     //在进行 需要权限的操作时！！！ 调用；
     // 如项目中 点击个人具体信息页的头像时！
@@ -56,6 +59,27 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
         //开始请求权限（相机、读写）
         PermissionCheckerDelegatePermissionsDispatcher.startCameraWithPermissionCheck(this);
     }
+
+
+    //扫描二维码(不直接调用)
+    //本方法不是 直接拿来调用的，是用来生成代码的
+    // （这里具体实现，在 生成类PermissionCheckerDelegatePermissionsDispatcher中 抽象调用）
+    // 动态申请权限成功后，执行本方法！！！！
+    // .   类同startCamera()
+    @NeedsPermission(Manifest.permission.CAMERA)
+    void startScan(BaseDelegate delegate) {
+        // 动态申请权限（相机）成功后！！！ 执行本方法！！！
+
+        //从 ndexDelegate的ParentDelegate 跳转到 ScannerDelegate（主页到扫描页）
+        delegate.getSupportDelegate().startForResult(new ScannerDelegate(), RequestCodes.SCAN);
+    }
+    public void startScanWithCheck(BaseDelegate delegate) {
+        //BaseDelegate delegate 传进来 IndexDelegate的ParentDelegate实例
+
+        //开始请求权限（相机）
+        PermissionCheckerDelegatePermissionsDispatcher.startScanWithPermissionCheck(this, delegate);
+    }
+
 
     //注解在当用户拒绝了权限请求时需要调用的方法上
     @OnPermissionDenied({Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE})

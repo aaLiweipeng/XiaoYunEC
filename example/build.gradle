@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 28
@@ -33,6 +34,34 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+MobSDK {
+    appKey "2e5a4408beb65"
+    appSecret "e5f591d6fee5ed283b9910e3724fc2eb"
+    SMSSDK {}
+    ShareSDK {
+        loopShare true
+        devInfo {
+            Wechat {
+                appId "wx5ea323bbb7d0914b"
+                appSecret "1dc287e1e9837e0b59e7d30db6f862a0"
+                userName "gh_afb25ac019c9"
+                path "pages/index/index.html?id=1"
+                withShareTicket true
+                miniprogramType 2
+            }
+
+            WechatMoments {
+                appId "wx5ea323bbb7d0914b"
+                appSecret "1dc287e1e9837e0b59e7d30db6f862a0"
+            }
+            WechatFavorite {
+                appId "wx5ea323bbb7d0914b"
+                appSecret "1dc287e1e9837e0b59e7d30db6f862a0"
+            }
+        }
     }
 }
 
@@ -82,6 +111,10 @@ dependencies {
 
     implementation 'com.alibaba:fastjson:1.1.68.android'
 
+    //极光推送
     implementation 'cn.jiguang.sdk:jpush:3.0.1'
     implementation 'cn.jiguang.sdk:jcore:1.1.0'
+
+    //二维码扫描
+    implementation 'me.dm7.barcodescanner:zbar:1.9.3'
 }

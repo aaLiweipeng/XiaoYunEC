@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 28
@@ -128,5 +129,9 @@ dependencies {
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
     //图片剪裁
     implementation 'com.github.yalantis:ucrop:2.2.1-native'
+    //二维码扫描
+    implementation 'me.dm7.barcodescanner:zbar:1.9.3'
+
+
 }
 

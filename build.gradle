@@ -8,7 +8,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.3.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
-        classpath 'com.mob.sdk:MobSDK:+'
+        // 注册MobSDK
+        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
     }
 }
 
@@ -17,6 +18,10 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven {
+            url "http://mvn.mob.com/android"
+        }
+
     }
 }
 

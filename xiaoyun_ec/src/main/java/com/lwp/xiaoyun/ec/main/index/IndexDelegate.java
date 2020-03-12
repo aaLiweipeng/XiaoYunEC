@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
@@ -19,8 +20,12 @@ import com.lwp.xiaoyun.ui.recycler.BaseDecoration;
 import com.lwp.xiaoyun.ui.recycler.MultipleFields;
 import com.lwp.xiaoyun.ui.recycler.MultipleItemEntity;
 import com.lwp.xiaoyun.ui.refresh.RefreshHandler;
+import com.lwp.xiaoyun_core.util.callback.CallbackManager;
+import com.lwp.xiaoyun_core.util.callback.CallbackType;
+import com.lwp.xiaoyun_core.util.callback.IGlobalCallback;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * <pre>
@@ -42,12 +47,29 @@ public class IndexDelegate extends BottomItemDelegate {
     @BindView(R2.id.et_search_view)
     AppCompatEditText mSearchView = null;
 
+    @OnClick(R2.id.icon_index_scan)
+    void onClickScanQrCode() {
+        startScanWithCheck(this.getParentDelegate());
+    }
+
     private RefreshHandler mRefreshHandler = null;
 //    private static int HEHE = 0;
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, new IndexDataConverter());
+
+        //二维码回调
+        CallbackManager.getInstance()
+                .addCallback(CallbackType.ON_SCAN, new IGlobalCallback<String>() {
+                    @Override
+                    public void executeCallback(@Nullable String args) {
+                        //对二维码的内容进行处理
+
+                        Toast.makeText(getContext(), "扫描到的二维码的内容是： " + args, Toast.LENGTH_LONG).show();
+                    }
+                });
+
 //        if (HEHE == 0) {
 //            OkHttpUtil.sendOkHttpRequest("http://lcjxg.cn/RestServer/api/index.php", new Callback() {
 //                @Override

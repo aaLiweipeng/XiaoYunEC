@@ -3,14 +3,14 @@ $(function () {
         var json = {
             action: "share",
             params: {
-                imageUrl:"http://i9.qhimg.com/t017d891ca365ef60b5.jpg",
-                url:"https://www.baidu.com",
-                title:"标题",
-                text:"描述"
+                imageUrl:"http://47.100.78.251/img/headimg/zhudi.jpg",
+                url:"http://47.100.78.251/cz/",
+                title:"XiaoYunEC",
+                text:"来自XiaoYunEC的分享的内容"
             }
         };
 
-        latte.event(JSON.stringify(json));
+        xiaoyun.event(JSON.stringify(json));
 
     });
 
@@ -20,7 +20,7 @@ $(function () {
                 action: "comment"
             };
 
-            latte.event(JSON.stringify(json));
+            xiaoyun.event(JSON.stringify(json));
 
         });
 });
