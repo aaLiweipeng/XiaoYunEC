@@ -15,6 +15,7 @@ import com.joanzapata.iconify.widget.IconTextView;
 import com.lwp.xiaoyun.ec.R;
 import com.lwp.xiaoyun.ec.R2;
 import com.lwp.xiaoyun.ec.main.EcBottomDelegate;
+import com.lwp.xiaoyun.ec.main.index.search.SearchDelegate;
 import com.lwp.xiaoyun_core.delegates.bottom.BottomItemDelegate;
 import com.lwp.xiaoyun.ui.recycler.BaseDecoration;
 import com.lwp.xiaoyun.ui.recycler.MultipleFields;
@@ -31,10 +32,10 @@ import butterknife.OnClick;
  * <pre>
  *     author : 李蔚蓬（简书_凌川江雪）
  *     time   : 2020/1/4 3:25
- *     desc   :
+ *     desc   : 主页页面
  * </pre>
  */
-public class IndexDelegate extends BottomItemDelegate {
+public class IndexDelegate extends BottomItemDelegate implements View.OnFocusChangeListener {
 
     @BindView(R2.id.rv_index)
     RecyclerView mRecyclerView = null;
@@ -45,7 +46,7 @@ public class IndexDelegate extends BottomItemDelegate {
     @BindView(R2.id.icon_index_scan)
     IconTextView mIconScan = null;
     @BindView(R2.id.et_search_view)
-    AppCompatEditText mSearchView = null;
+    AppCompatEditText mSearchView = null;//搜索框
 
     @OnClick(R2.id.icon_index_scan)
     void onClickScanQrCode() {
@@ -69,6 +70,9 @@ public class IndexDelegate extends BottomItemDelegate {
                         Toast.makeText(getContext(), "扫描到的二维码的内容是： " + args, Toast.LENGTH_LONG).show();
                     }
                 });
+
+        //搜索框 聚焦监听
+        mSearchView.setOnFocusChangeListener(this);
 
 //        if (HEHE == 0) {
 //            OkHttpUtil.sendOkHttpRequest("http://lcjxg.cn/RestServer/api/index.php", new Callback() {
@@ -135,5 +139,13 @@ public class IndexDelegate extends BottomItemDelegate {
     @Override
     public Object setLayout() {
         return R.layout.delegate_index;
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus) {
+            //如果组件被聚焦！！跳转！
+            getParentDelegate().getSupportDelegate().start(new SearchDelegate());
+        }
     }
 }
