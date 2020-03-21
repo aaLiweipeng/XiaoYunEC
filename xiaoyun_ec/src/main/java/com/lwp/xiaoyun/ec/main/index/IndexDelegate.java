@@ -71,7 +71,7 @@ public class IndexDelegate extends BottomItemDelegate implements View.OnFocusCha
                     }
                 });
 
-        //搜索框 聚焦监听
+        //设置 聚焦回调监听
         mSearchView.setOnFocusChangeListener(this);
 
 //        if (HEHE == 0) {
@@ -122,7 +122,9 @@ public class IndexDelegate extends BottomItemDelegate implements View.OnFocusCha
 
         // 返回 父级容器Delegate 本Delegate乃是位于 容器Delegate中的FrameLayout中
         final EcBottomDelegate ecBottomDelegate = getParentDelegate();
-        mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));//添加点击事件
+
+        //添加点击事件
+        mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));
 
     }
 

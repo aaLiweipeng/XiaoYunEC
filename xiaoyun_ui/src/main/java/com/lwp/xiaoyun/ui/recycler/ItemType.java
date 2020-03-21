@@ -18,4 +18,6 @@ public class ItemType {
     public static final int BANNER = 4;//轮播图
 
     public static final int VERTICAL_MENU_LIST = 5;//分类页左侧List
+
+    public static final int SINGLE_BIG_IMAGE = 6;//商品详情页中的图片Delegate
 }

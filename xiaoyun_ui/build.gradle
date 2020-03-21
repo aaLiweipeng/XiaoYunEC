@@ -150,4 +150,9 @@ dependencies {
     //工具包
     implementation 'com.blankj:utilcode:1.7.1'
 
+    //View动画依赖
+    api 'com.nineoldandroids:library:2.4.0'
+    api 'com.daimajia.easing:library:1.0.1@aar'
+    api 'com.daimajia.androidanimations:library:1.1.3@aar'
+
 }

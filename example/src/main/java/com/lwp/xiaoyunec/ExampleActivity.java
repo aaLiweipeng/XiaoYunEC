@@ -34,7 +34,8 @@ public class ExampleActivity extends ProxyActivity implements
         }
         XiaoYun.getConfigurator().withActivity(this);//配置全局 Activity
 
-        StatusBarCompat.translucentStatusBar(this, true);//沉浸式状态栏
+        //沉浸式状态栏
+        StatusBarCompat.translucentStatusBar(this, true);
     }
 
     @Override
